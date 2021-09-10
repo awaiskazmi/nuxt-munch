@@ -1,0 +1,42 @@
+@font-face {
+  font-family: 'Roobert';
+  src: url('~/assets/fonts/roobert-bold-webfont.woff2') format('woff2'),
+       url('~/assets/fonts/roobert-bold-webfont.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roobert';
+  src: url('~/assets/fonts/roobert-regular-webfont.woff2') format('woff2'),
+       url('~/assets/fonts/roobert-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+$font-family-sans-serif: 'Roobert', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+$primary: #F95050;
+$secondary: #51a7d9;
+$warning: #FDDB83;
+
+$spacer: 1rem;
+
+$spacers: (
+  6: ($spacer * 5),
+  7: ($spacer * 6),
+  8: ($spacer * 7),
+  9: ($spacer * 8),
+  10: ($spacer * 9),
+);
+
+$input-padding-x: 1.25rem;
+$input-padding-y: .75rem;
+
+// $btn-padding-x: 2rem;
+// $btn-padding-y: .75rem;
+
+$btn-padding-x-lg: 1.25rem;
+$btn-padding-y-lg: .75rem;
+$btn-font-size-lg: 1rem;

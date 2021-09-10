@@ -1,0 +1,21 @@
+.hrh {
+  display: flex;
+  align-items: center;
+
+  &::before,
+  &::after {
+    content: '';
+    display: flex;
+    flex-grow: 1;
+    background-color: #e4d9d9;
+    height: 1px;
+  }
+
+  &::before {
+    margin-right: .5rem;
+  }
+
+  &::after {
+    margin-left: .5rem;
+  }
+}
