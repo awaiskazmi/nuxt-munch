@@ -4,7 +4,7 @@
       <div class="container">
         <div class="row">
           <div class="col">
-            <h1 class="font-weight-bold">Feeling Peckish? Snack time!</h1>
+            <h1 class="font-weight-bold">Feeling Peckish? Snack time, bro!</h1>
             <p>We will deliver your snacks within minutes</p>
           </div>
         </div>
