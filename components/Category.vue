@@ -1,6 +1,6 @@
 <template>
   <nuxt-link :to="'/category/' + id" class="category">
-    <div class="img-wrapper">
+    <div class="img-wrapper img">
       <img
         :src="
           'https://munchies-qa.impact.venturedive.com/v2/public/resources/' +
