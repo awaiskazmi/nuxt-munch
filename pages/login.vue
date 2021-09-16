@@ -49,42 +49,49 @@
 
 <script>
 export default {
+  middleware({ store, redirect }) {
+    if (store.state.auth) {
+      return redirect("/");
+    }
+  },
   layout: "half-form",
   data() {
     return {
-      email: "",
-      password: "",
-      grant_type: "password",
+      email: "umair.mansoor+72@venturedive.com",
+      password: "Umair.123",
     };
   },
   computed: {
     tokenPayload() {
-      let payload = {
-        email: this.email,
-        password: this.password,
-        grant_type: this.grant_type,
-      };
-      return JSON.stringify(payload);
+      let formData = new FormData();
+      formData.append("email", this.email);
+      formData.append("password", this.password);
+      return formData;
     },
   },
   methods: {
     handleSubmit() {
-      this.$axios
-        .post(
-          "/oauth/token?deviceToken=WEB&" + this.tokenPayload,
-          this.tokenPayload,
-          {
-            headers: {
-              Authorization: "Basic " + this.tokenPayload,
-            },
-          }
-        )
-        .then((res) => console.log(res));
-      console.log("form submission", this.tokenPayload);
+      this.$axios({
+        mode: "cors",
+        method: "post",
+        url: "/api/proceed-login",
+        data: this.tokenPayload,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }).then((res) => {
+        if (res.data.access_token) {
+          localStorage.setItem("m_token", res.data.access_token);
+          localStorage.setItem("m_user", JSON.stringify(res.data));
+          this.$store.commit("setCurrentUser", res.data);
+          this.$store.commit("setAuth", true);
+          this.$store.commit("setAuthToken", res.data.access_token);
+          window.location.replace("/");
+        }
+      });
     },
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

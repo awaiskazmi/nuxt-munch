@@ -2,14 +2,16 @@
   <div class="container py-5">
     <div class="row">
       <div class="col">
-        <h2 class="font-weight-bold">Categories</h2>
+        <h2>Categories</h2>
         <div class="categories">
           <Category
-            v-for="c in categories.categories"
+            v-for="(c, index) in categories.categories"
             :key="c.id"
             :id="c.id"
             :name="c.name"
             :imageUrl="c.imageUrl"
+            data-aos="flip-down"
+            :data-aos-delay="index * 50"
           />
         </div>
       </div>
@@ -41,5 +43,9 @@ export default {
 .categories
   display: grid
   gap: 30px
-  grid-template-columns: repeat( 4, 1fr)
+  grid-template-columns: repeat(4, 1fr)
+
+  @media(max-width: 768px)
+    gap: 15px
+    grid-template-columns: repeat(2, 1fr)
 </style>

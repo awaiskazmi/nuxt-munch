@@ -9,11 +9,15 @@ export const getters = {
     return state.categories;
   },
   getCategoryById: (state) => (id) => {
-    return state.users.find(user => user.id === id);
+    return state.categories.find(category => category.id === id);
   },
 }
 
 export const actions = {
+  async nuxtServerInit({ rootState, commit }, { req }) {
+    const res = await this.$axios.get('/qa/v2/public/hub-product-category/all');
+    commit('setCategories', res.data.data)
+  },
   fetchCategories(state) { },
 }
 

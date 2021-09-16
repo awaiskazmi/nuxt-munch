@@ -4,7 +4,7 @@
       <div class="container">
         <div class="row">
           <div class="col">
-            <h1 class="font-weight-bold">Feeling Peckish? Snack time!</h1>
+            <h1 data-aos="flip-up">Feeling Peckish? Snack time!</h1>
             <p>We will deliver your snacks within minutes</p>
           </div>
         </div>
@@ -17,7 +17,7 @@
                 placeholder="Enter location"
               />
               <div class="input-group-append">
-                <button class="btn btn-primary" type="button">Let's Go'</button>
+                <button class="btn btn-primary" type="button">Let's Go</button>
               </div>
             </div>
             <p>Checkout where we currently deliver</p>
