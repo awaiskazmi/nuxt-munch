@@ -1,7 +1,9 @@
 <template>
   <NuxtLink :class="'m-btn btn btn-' + classes" :to="url">
     <span v-if="icon" class="m-btn-icon material-icons">{{ icon }}</span>
-    <slot></slot>
+    <span class="m-btn-label">
+      <slot></slot>
+    </span>
   </NuxtLink>
 </template>
 
@@ -15,8 +17,8 @@ export default {
     full: Boolean,
     url: {
       type: String,
-      default: "#",
-    },
+      default: "#"
+    }
   },
   computed: {
     classes() {
@@ -28,8 +30,8 @@ export default {
         else classArr.push("btn-link");
       }
       return classArr.join(" ");
-    },
-  },
+    }
+  }
 };
 </script>
 

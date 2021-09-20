@@ -1,0 +1,33 @@
+.m-input {
+	position: relative;
+
+	.m-input-field {
+		height: 40px;
+	}
+
+	.m-btn-icon {
+		font-size: 24px;
+		position: absolute;
+		top: 8px;
+	}
+
+	&.prepend {
+		.m-input-field {
+			padding-left: 40px;
+		}
+
+		.m-btn-icon-prepend {
+			left: 8px;
+		}
+	}
+
+	&.append {
+		.m-input-field {
+			padding-right: 40px;
+		}
+
+		.m-btn-icon-append {
+			right: 8px;
+		}
+	}
+}

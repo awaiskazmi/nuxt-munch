@@ -4,7 +4,7 @@
       <img
         :src="
           'https://munchies-qa.impact.venturedive.com/v2/public/resources/' +
-          imageUrl
+            imageUrl
         "
         :alt="name"
       />
