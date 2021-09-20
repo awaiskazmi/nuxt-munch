@@ -1,0 +1,26 @@
+.m-btn {
+  display: flex;
+  align-items: center;
+
+  .m-btn-icon {
+    font-size: 16px;
+    margin-right: 12px;
+  }
+
+  &.btn-cart,
+  &.btn-location {
+    background-color: #eee;
+  }
+
+  &.btn-location {
+    color: $primary;
+  }
+
+  &.btn-link {
+    color: #000;
+    &:hover {
+      text-decoration: none;
+      background-color: #eee;
+    }
+  }
+}

@@ -1,32 +1,56 @@
 <template>
   <header>
-    <NuxtLink class="navbar-brand" to="/">
-      <img src="~/assets/images/logo.png" alt=""
-    /></NuxtLink>
-    <client-only>
-      <nav>
-        <ul class="align-items-center">
-          <li>
-            <NuxtLink to="/profile">{{ user.name }}</NuxtLink>
-          </li>
-          <li v-if="!auth">
-            <NuxtLink class="btn btn-outline-primary" to="/login"
-              >Sign in</NuxtLink
-            >
-          </li>
-          <li v-if="!auth">
-            <NuxtLink class="btn btn-primary" to="/signup">Sign up</NuxtLink>
-          </li>
-          <li v-if="auth">
-            <NavLogout />
-          </li>
-        </ul>
-      </nav>
-    </client-only>
+    <div class="d-flex align-items-center">
+      <NuxtLink class="navbar-brand" to="/">
+        <img src="~/assets/images/logo.png" alt="" height="40"
+      /></NuxtLink>
+      <Button rounded type="location" icon="place">Add Location</Button>
+      <NavToggle />
+    </div>
+    <div>
+      <client-only>
+        <nav>
+          <ul class="align-items-center">
+            <li>
+              <NuxtLink to="/profile">{{ user.name }}</NuxtLink>
+            </li>
+            <li v-if="!auth">
+              <Button url="/signup" rounded type="link" icon="search"
+                >Search</Button
+              >
+            </li>
+            <li v-if="!auth">
+              <Button url="/signup" rounded type="link" icon="local_offer"
+                >Promos</Button
+              >
+            </li>
+            <li v-if="!auth">
+              <Button url="/signup" rounded type="link" icon="account_circle"
+                >Sign in</Button
+              >
+            </li>
+            <li v-if="auth">
+              <NavLogout />
+            </li>
+            <li>
+              <Button
+                url="/orders/view-cart"
+                rounded
+                icon="shopping_cart"
+                type="cart"
+                >Cart . {{ this.$store.state.cart }} items</Button
+              >
+            </li>
+          </ul>
+        </nav>
+      </client-only>
+    </div>
   </header>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   computed: {
     auth() {

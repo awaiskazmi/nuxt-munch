@@ -1,6 +1,7 @@
 export const state = () => ({
 	auth: false,
 	token: "",
+	cart: 0,
 });
 
 // export const getters = {

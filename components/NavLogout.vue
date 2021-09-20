@@ -6,7 +6,6 @@
 export default {
 	methods: {
 		onClick() {
-			console.log("loggin out");
 			localStorage.removeItem("m_token");
 			localStorage.removeItem("m_user");
 			this.$store.commit("setCurrentUser", {});
