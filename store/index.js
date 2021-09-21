@@ -2,8 +2,7 @@ export const state = () => ({
   auth: false,
   token: "",
   cart: 0,
-  // location: "702, 7 Tariq Rd, Delhi CHS"
-  location: ""
+  location: "",
 });
 
 // export const getters = {
@@ -20,5 +19,8 @@ export const mutations = {
   },
   setAuthToken(state, token) {
     state.token = token;
-  }
+  },
+  setUserLocation(state, location) {
+    state.location = location;
+  },
 };

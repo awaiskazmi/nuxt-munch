@@ -1,5 +1,15 @@
 <template>
-  <NuxtLink :class="'m-btn btn btn-' + classes" :to="url">
+  <button
+    v-if="isButton"
+    :class="'m-btn btn btn-' + classes"
+    @click="$emit('click')"
+  >
+    <span v-if="icon" class="m-btn-icon material-icons">{{ icon }}</span>
+    <span class="m-btn-label">
+      <slot></slot>
+    </span>
+  </button>
+  <NuxtLink v-else :class="'m-btn btn btn-' + classes" :to="url">
     <span v-if="icon" class="m-btn-icon material-icons">{{ icon }}</span>
     <span class="m-btn-label">
       <slot></slot>
@@ -17,8 +27,9 @@ export default {
     full: Boolean,
     url: {
       type: String,
-      default: "#"
-    }
+      default: "#",
+    },
+    isButton: Boolean,
   },
   computed: {
     classes() {
@@ -30,8 +41,8 @@ export default {
         else classArr.push("btn-link");
       }
       return classArr.join(" ");
-    }
-  }
+    },
+  },
 };
 </script>
 

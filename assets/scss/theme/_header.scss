@@ -1,12 +1,15 @@
 .nav-toggler {
+  padding: 0;
+  border: none;
   cursor: pointer;
   width: 21px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
+  position: relative;
 
-  .bar {
+  .bars {
     flex-grow: 1;
     flex-shrink: 0;
     margin: 2px 0;
@@ -14,5 +17,24 @@
     height: 2px;
     border-radius: 100px;
     background-color: #000;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      display: block;
+      height: 2px;
+      width: 100%;
+      background-color: #000;
+      border-radius: 100px;
+    }
+
+    &::before {
+      top: -4px;
+    }
+
+    &::after {
+      bottom: -4px;
+    }
   }
 }

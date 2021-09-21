@@ -21,6 +21,12 @@ export default {
       { name: "format-detection", content: "telephone=no" },
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    script: [
+      {
+        src:
+          "https://maps.googleapis.com/maps/api/js?key=AIzaSyAPKd8J7z0XQQdt2qXtMIjHqJMBUdN8tWs&libraries=places",
+      },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -60,17 +66,17 @@ export default {
   },
 
   proxy: {
-    '/api/': {
-      target: 'https://test.munchieshome.com',
-      pathRewrite: { "^/api/": "" }
+    "/api/": {
+      target: "https://test.munchieshome.com",
+      pathRewrite: { "^/api/": "" },
     },
-    '/qa/': {
-      target: 'https://munchies-qa.impact.venturedive.com',
-      pathRewrite: { "^/qa/": "" }
+    "/qa/": {
+      target: "https://munchies-qa.impact.venturedive.com",
+      pathRewrite: { "^/qa/": "" },
     },
-    '/test/': {
-      target: 'https://awais-users.000webhostapp.com/api',
-      pathRewrite: { "^/test/": "" }
+    "/test/": {
+      target: "https://awais-users.000webhostapp.com/api",
+      pathRewrite: { "^/test/": "" },
     },
   },
 

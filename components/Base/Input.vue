@@ -4,9 +4,10 @@
 			prepend
 		}}</span>
 		<input
+			:id="id"
 			:type="type"
 			:placeholder="placeholder"
-			class="m-input-field form-control"
+			:class="'m-input-field form-control ' + variant"
 		/>
 		<span v-if="append" class="m-btn-icon m-btn-icon-append material-icons">{{
 			append
@@ -17,6 +18,7 @@
 <script>
 export default {
 	props: {
+		id: String,
 		placeholder: {
 			type: String,
 			default: "",
@@ -27,6 +29,7 @@ export default {
 		},
 		prepend: String,
 		append: String,
+		variant: String,
 	},
 	data() {
 		return {};
@@ -34,6 +37,7 @@ export default {
 	computed: {
 		classes() {
 			let classArr = [];
+			classArr.push(this.variant);
 			if (this.prepend) classArr.push("prepend");
 			if (this.append) classArr.push("append");
 			return classArr.join(" ");

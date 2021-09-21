@@ -6,7 +6,12 @@
 		border-bottom: none;
 	}
 
+	.modal-footer {
+		border-top: none;
+	}
+
 	.modal-content {
+		height: 100vh;
 		border-radius: 0;
 		border: none;
 	}

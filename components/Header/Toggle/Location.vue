@@ -1,7 +1,12 @@
 <template>
-  <BaseButton v-b-toggle.sidebar-1 rounded type="location" icon="place">{{
-    locationLabel
-  }}</BaseButton>
+  <BaseButton
+    isButton
+    v-b-toggle.sidebar-1
+    rounded
+    type="location"
+    icon="place"
+    >{{ locationLabel }}</BaseButton
+  >
 </template>
 
 <script>
@@ -12,13 +17,14 @@ export default {
     ...mapState(["location"]),
     locationLabel() {
       return this.location ? this.location : "Add location";
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
-a {
+a,
+button {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

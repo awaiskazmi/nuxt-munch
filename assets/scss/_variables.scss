@@ -38,25 +38,26 @@ $secondary: #51a7d9;
 $warning: #fddb83;
 $light: #f5f5f5;
 $dark: #000;
+$text-light: #757575;
 
 $spacer: 1rem;
 
 $spacers: (
   6: (
-    $spacer * 5
+    $spacer * 5,
   ),
   7: (
-    $spacer * 6
+    $spacer * 6,
   ),
   8: (
-    $spacer * 7
+    $spacer * 7,
   ),
   9: (
-    $spacer * 8
+    $spacer * 8,
   ),
   10: (
-    $spacer * 9
-  )
+    $spacer * 9,
+  ),
 );
 
 $input-padding-x: 1.25rem;
@@ -69,5 +70,13 @@ $btn-padding-x-lg: 1.25rem;
 $btn-padding-y-lg: 0.75rem;
 $btn-font-size-lg: 1rem;
 
-$input-btn-focus-color: $dark;
+$border-radius: 8px;
+
+$input-btn-focus-color: #000;
 $input-btn-focus-box-shadow: none;
+
+// HELPERS
+
+.cursor-pointer {
+  cursor: pointer;
+}

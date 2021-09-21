@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container p-0">
     <header class="d-block d-md-flex">
       <div class="d-flex align-items-center overflow-hidden">
         <NuxtLink class="navbar-brand" to="/">
@@ -8,7 +8,7 @@
         <HeaderToggleLocation />
         <HeaderToggleNavbar />
       </div>
-      <b-collapse visible id="collapse-1" class="">
+      <b-collapse visible id="collapse-1">
         <client-only>
           <nav>
             <ul class="d-block d-md-flex align-items-center">
@@ -17,13 +17,13 @@
               </li>
               <li><HeaderToggleSearch /></li>
               <li v-if="!auth">
-                <BaseButton url="/signup" rounded type="link" icon="local_offer"
+                <BaseButton url="/orders" rounded type="link" icon="local_offer"
                   >Promos</BaseButton
                 >
               </li>
               <li v-if="!auth">
                 <BaseButton
-                  url="/signup"
+                  url="/login"
                   rounded
                   type="link"
                   icon="account_circle"
@@ -50,6 +50,7 @@
     <HeaderModals>
       <HeaderModalLocation />
       <HeaderModalSearch />
+      <HeaderModalSuggestion />
       <!-- <HeaderModalProfile /> -->
     </HeaderModals>
   </div>
@@ -68,6 +69,9 @@ export default {
     // user() {
     //   return this.$store.state.currentUser.user;
     // }
+  },
+  mounted() {
+    console.log(this.$refs);
   },
 };
 </script>

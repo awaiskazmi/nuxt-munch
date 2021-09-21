@@ -10,13 +10,12 @@
     >
       <div class="py-6 px-4">
         <p class="my-4 h2 font-weight-bold">Delivery Location</p>
-        <BaseInput placeholder="Search Location" prepend="search" />
+        <!-- <BaseInput placeholder="Search Location" prepend="search" /> -->
+        <HeaderAutocomplete />
         <p class="mt-3">
           <small><strong>Or you can also</strong></small>
         </p>
-        <BaseButton type="outline-secondary" full icon="my_location"
-          >Use Current Location</BaseButton
-        >
+        <HeaderGeolocation />
         <p class="h3 font-weight-bold mt-4">Popular Locations</p>
       </div>
     </b-sidebar>
