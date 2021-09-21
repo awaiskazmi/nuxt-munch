@@ -1,0 +1,21 @@
+footer {
+	h5,
+	.h5 {
+		font-size: 18px;
+		font-weight: 700;
+		margin-bottom: 2rem;
+	}
+	@media (max-width: 768px) {
+		h5,
+		.h5 {
+			margin-bottom: 1rem;
+			font-size: 14px;
+		}
+		a {
+			font-size: 12px;
+		}
+		.copyrights {
+			font-size: 10px;
+		}
+	}
+}
