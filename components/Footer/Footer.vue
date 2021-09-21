@@ -108,7 +108,7 @@
       <div class="row py-md-4 align-items-center">
         <div class="col-auto">
           <p class="m-0 copyrights">
-            &copy; Copyright 2021 — MUNCHIES — All rights reserved
+            &copy; Copyright {{ year }} — MUNCHIES — All rights reserved
           </p>
         </div>
         <div class="col-auto ml-auto">
@@ -125,7 +125,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      year: new Date().getFullYear()
+    };
+  }
+};
 </script>
 
 <style scoped lang="sass">

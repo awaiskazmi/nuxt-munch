@@ -1,8 +1,11 @@
 export default {
+  privateRuntimeConfig: {
+    googlePlacesAPI: "${GOOGLE_PLACES_API}"
+  },
   server: {
     port: 3000, // default: 3000
     host: "0.0.0.0", // default: localhost,
-    timing: false,
+    timing: false
   },
 
   // Target: https://go.nuxtjs.dev/config-target
@@ -12,21 +15,20 @@ export default {
   head: {
     title: "Munchies App",
     htmlAttrs: {
-      lang: "en",
+      lang: "en"
     },
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { hid: "description", name: "description", content: "" },
-      { name: "format-detection", content: "telephone=no" },
+      { name: "format-detection", content: "telephone=no" }
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
     script: [
       {
-        src:
-          "https://maps.googleapis.com/maps/api/js?key=AIzaSyAPKd8J7z0XQQdt2qXtMIjHqJMBUdN8tWs&libraries=places",
-      },
-    ],
+        src: `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_PLACES_API}&libraries=places`
+      }
+    ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -35,7 +37,7 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: "~/plugins/client.js" },
-    { src: "~/plugins/aos.client" },
+    { src: "~/plugins/aos.client" }
     // { src: "~/plugins/test.server" },
   ],
 
@@ -55,12 +57,12 @@ export default {
     "@nuxtjs/style-resources",
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
-    "@nuxtjs/proxy",
+    "@nuxtjs/proxy"
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    proxy: true,
+    proxy: true
     // baseURL: "https://munchies-qa.impact.venturedive.com",
     // baseURL: "http://test.munchieshome.com",
   },
@@ -68,16 +70,16 @@ export default {
   proxy: {
     "/api/": {
       target: "https://test.munchieshome.com",
-      pathRewrite: { "^/api/": "" },
+      pathRewrite: { "^/api/": "" }
     },
     "/qa/": {
       target: "https://munchies-qa.impact.venturedive.com",
-      pathRewrite: { "^/qa/": "" },
+      pathRewrite: { "^/qa/": "" }
     },
     "/test/": {
       target: "https://awais-users.000webhostapp.com/api",
-      pathRewrite: { "^/test/": "" },
-    },
+      pathRewrite: { "^/test/": "" }
+    }
   },
 
   // googleFonts: {
@@ -88,13 +90,13 @@ export default {
 
   bootstrapVue: {
     bootstrapCSS: false,
-    bootstrapVueCSS: false,
+    bootstrapVueCSS: false
   },
 
   styleResources: {
-    scss: "@/assets/scss/_variables.scss",
+    scss: "@/assets/scss/_variables.scss"
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {}
 };
