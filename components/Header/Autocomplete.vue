@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
 	data() {
 		return {
@@ -30,7 +32,13 @@ export default {
 			predictions: [],
 		};
 	},
+	computed: {
+		// location() {
+			// return this.$store.state.location;
+		// }
+	},
 	methods: {
+		...mapActions(['getServiceArea']),
 		onclick() {
 			if (this.predictions) {
 				this.showPredictions = true;
@@ -40,6 +48,7 @@ export default {
 			this.location = label;
 			this.showPredictions = false;
       this.$store.commit("setUserLocation", label);
+      this.getLatLng(this.location);
 		},
 		onkeypress() {
 			if (this.location.length < 3) {
@@ -59,6 +68,28 @@ export default {
 			this.predictions = predictions;
 			this.showPredictions = true;
 		},
+		getLatLng(address) {
+			const geocoder = new google.maps.Geocoder();
+			geocoder.geocode({
+				'address': address
+			}, (results, status) => {
+				if (status == google.maps.GeocoderStatus.OK) {
+					let latLng = {};
+					latLng.lat = results[0].geometry.location.lat();
+					latLng.lng = results[0].geometry.location.lng();
+					localStorage.setItem("m_latlng", JSON.stringify(latLng));
+					this.$store.commit("serUserLatLng", latLng);
+
+					// get service area payload
+					let payload = {
+						lat: latLng.lat,
+						lng: latLng.lng,
+						address: address
+					}
+					this.$store.dispatch('getServiceArea', payload);
+				}
+			})
+		}
 	},
 	mounted() {
 		// console.log(this.$refs);

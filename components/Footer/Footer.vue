@@ -112,10 +112,10 @@
           </p>
         </div>
         <div class="col-auto ml-auto">
-          <NuxtLink to="/" class="m-0"
+          <NuxtLink to="/" class="social-icon m-0"
             ><img src="~/assets/images/icon-facebook.svg" height="24"
           /></NuxtLink>
-          <NuxtLink to="/" class="m-0">
+          <NuxtLink to="/" class="social-icon my-0 ml-2">
             <img src="~/assets/images/icon-instagram.svg" height="24" />
           </NuxtLink>
         </div>
@@ -128,9 +128,9 @@
 export default {
   data() {
     return {
-      year: new Date().getFullYear()
+      year: new Date().getFullYear(),
     };
-  }
+  },
 };
 </script>
 
