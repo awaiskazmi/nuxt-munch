@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5 p-lg-6">
+  <div class="p-2 p-lg-6 flex-grow-1">
     <h1>Sign in</h1>
     <p>Welcome back! Time to munch on some snacks.</p>
     <form @submit.prevent="handleSubmit" class="mt-5" autocomplete="off">
@@ -15,11 +15,10 @@
       </div>
       <div class="form-group">
         <label>Password:</label>
-        <input
-          v-model="password"
+        <BaseInputPassword
           type="password"
-          class="form-control"
           placeholder="Enter password"
+          variant="lg"
         />
       </div>
       <div class="form-group text-right">
@@ -93,5 +92,3 @@ export default {
   },
 };
 </script>
-
-<style></style>

@@ -4,7 +4,7 @@
     <div class="container-fluid">
       <div id="layout" class="row">
         <div class="col-6 p-0 img-bg d-none d-lg-flex"></div>
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-6 d-flex">
           <nuxt />
         </div>
       </div>

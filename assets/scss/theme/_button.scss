@@ -1,4 +1,5 @@
 .m-btn {
+  appearance: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -7,10 +8,18 @@
     text-decoration: none;
   }
 
+  &.m-btn-toggle {
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
   .m-btn-icon {
     font-size: 16px;
     margin-right: 12px;
     flex-shrink: 0;
+    border: 0;
   }
 
   &.btn-cart,
