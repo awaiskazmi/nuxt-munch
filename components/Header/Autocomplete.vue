@@ -49,6 +49,7 @@ export default {
 			this.showPredictions = false;
       this.$store.commit("setUserLocation", label);
       this.getLatLng(this.location);
+      this.$emit('onselect');
 		},
 		onkeypress() {
 			if (this.location.length < 3) {
@@ -58,11 +59,16 @@ export default {
 			clearTimeout(this.timer);
 			this.timer = setTimeout(() => {
 				this.getSearchResults(this.location);
-			}, 700);
+			}, 50);
 		},
 		getSearchResults(query) {
 			const service = new google.maps.places.AutocompleteService();
-			service.getQueryPredictions({ input: query }, this.getSuggestions);
+			// service.getQueryPredictions({ input: query }, this.getSuggestions);
+			service.getPlacePredictions({
+				input: 'Karachi, ' + query,
+				// types: ['(cities)'],
+				componentRestrictions: {country: 'pk'},
+			}, this.getSuggestions);
 		},
 		getSuggestions(predictions, stats) {
 			this.predictions = predictions;

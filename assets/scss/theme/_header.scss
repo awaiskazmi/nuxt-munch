@@ -17,6 +17,7 @@
     height: 2px;
     border-radius: 100px;
     background-color: #000;
+    transition: all 0.2s ease;
 
     &::before,
     &::after {
@@ -27,6 +28,7 @@
       width: 100%;
       background-color: #000;
       border-radius: 100px;
+      transition: all 0.2s ease;
     }
 
     &::before {
@@ -35,6 +37,32 @@
 
     &::after {
       bottom: -4px;
+    }
+  }
+
+  &.active .bars {
+    margin: 0;
+    background-color: transparent;
+
+    &::before {
+      top: 0;
+      transform: rotateZ(45deg);
+    }
+    &::after {
+      bottom: 0;
+      transform: rotateZ(-45deg);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-menu {
+    display: none;
+    max-height: 75vh;
+    overflow: auto;
+
+    &.active {
+      display: block;
     }
   }
 }

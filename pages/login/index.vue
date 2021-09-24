@@ -19,10 +19,11 @@
           type="password"
           placeholder="Enter password"
           variant="lg"
+          v-model="password"
         />
       </div>
       <div class="form-group text-right">
-        <NuxtLink class="text-secondary" to="/forgot-password"
+        <NuxtLink class="text-secondary" to="/login/forgot-password"
           >Forgot password?</NuxtLink
         >
       </div>
@@ -56,8 +57,8 @@ export default {
   layout: "half-form",
   data() {
     return {
-      email: "umair.mansoor+72@venturedive.com",
-      password: "Umair.123",
+      email: "",
+      password: "",
     };
   },
   computed: {

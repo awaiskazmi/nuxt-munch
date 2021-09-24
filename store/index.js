@@ -16,16 +16,16 @@ export const actions = {
     console.log("PAYLOAD", payload);
 
     let formData = new FormData();
-    let coordinates = {
-      lat: payload.lat,
-      lng: payload.lng,
-    };
+    // let coordinates = {
+    //   lat: payload.lat,
+    //   lng: payload.lng,
+    // };
 
     formData.append("coordinates[lat]", payload.lat);
     formData.append("coordinates[lng]", payload.lng);
     formData.append("address", payload.address);
 
-    console.log("FORM DATA", JSON.stringify(coordinates));
+    // console.log("FORM DATA", JSON.stringify(coordinates));
 
     const res = await this.$axios({
       mode: "cors",

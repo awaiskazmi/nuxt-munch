@@ -4,7 +4,9 @@
       :id="id"
       :type="type"
       :placeholder="placeholder"
-      :class="'m-input-field form-control ' + variant"
+      :class="'m-input-field form-control ' + variant + ' ' + classList"
+      :value="value"
+      @input="$emit('input', $event.target.value)"
     />
     <button
       @click.prevent="onclick"
@@ -24,6 +26,8 @@ export default {
       default: "",
     },
     variant: String,
+    classList: String,
+    value: String,
   },
   data() {
     return {

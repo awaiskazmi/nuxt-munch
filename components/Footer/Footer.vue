@@ -137,6 +137,10 @@ export default {
 <style scoped lang="sass">
 footer
   background: url('~/assets/images/footer-bg.svg') top right/contain no-repeat
+
+  @media (max-width: 768px)
+    background-position: top center
+    background-size: cover
 small
   font-size: 12px
   color: #808080

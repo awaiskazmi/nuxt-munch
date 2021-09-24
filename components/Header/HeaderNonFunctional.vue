@@ -1,37 +1,22 @@
 <template>
   <div class="container p-0">
     <header class="d-block d-md-flex">
-      <div class="d-flex align-items-center overflow-hidden">
+      <div
+        class="d-flex align-items-center justify-content-between overflow-hidden"
+      >
         <NuxtLink class="navbar-brand" to="/">
           <img src="~/assets/images/logo.png" alt="" height="40"
         /></NuxtLink>
-        <HeaderToggleLocation />
         <HeaderToggleNavbar @click="onNavToggle" :class="navMenu" />
-      </div>
-      <div class="pt-3 pb-2 d-block d-md-none">
-        <BaseInput
-          v-b-modal.modal-search
-          prepend="search"
-          placeholder="I'm craving for"
-        />
       </div>
       <client-only>
         <div class="nav-menu" :class="navMenu">
-          <div v-if="!auth">
-            <HeaderNavbarNavNotLoggedIn />
-          </div>
-          <div v-else>
-            <HeaderNavbarNavLoggedIn />
+          <div>
+            <HeaderNavbarNavNonFunctional />
           </div>
         </div>
       </client-only>
     </header>
-    <HeaderModals>
-      <HeaderModalLocation />
-      <HeaderModalSearch />
-      <HeaderModalSuggestion />
-      <!-- <HeaderModalProfile /> -->
-    </HeaderModals>
   </div>
 </template>
 

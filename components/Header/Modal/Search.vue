@@ -14,9 +14,9 @@
             />
           </div>
           <div class="col-auto ml-auto">
-            <BaseButton isButton type="m-btn-action" @click="close()"
-              >&times;</BaseButton
-            >
+            <BaseButton isButton type="m-btn-action" @click="close()">
+              <span class="material-icons">close</span>
+            </BaseButton>
           </div>
         </div>
       </div>

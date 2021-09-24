@@ -1,5 +1,5 @@
 <template>
-  <BaseButton isButton @click="onClick" rounded type="primary"
+  <BaseButton isButton icon="local_offer" @click="onClick" type="link"
     >Logout</BaseButton
   >
 </template>

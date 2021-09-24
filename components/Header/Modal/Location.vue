@@ -8,16 +8,25 @@
       backdrop
       shadow
     >
-      <div class="py-6 px-4">
-        <p class="my-4 h2 font-weight-bold">Delivery Location</p>
-        <!-- <BaseInput placeholder="Search Location" prepend="search" /> -->
-        <HeaderAutocomplete />
-        <p class="mt-3">
-          <small><strong>Or you can also</strong></small>
-        </p>
-        <HeaderGeolocation />
-        <p class="h3 font-weight-bold mt-4">Popular Locations</p>
-      </div>
+      <template #default="{ hide }">
+        <div class="py-6 px-4">
+          <BaseButton
+            isButton
+            type="m-btn-action m-sidebar-close"
+            @click="hide"
+          >
+            <span class="material-icons">close</span>
+          </BaseButton>
+          <p class="my-4 h2 font-weight-bold">Delivery Location</p>
+          <!-- <BaseInput placeholder="Search Location" prepend="search" /> -->
+          <HeaderAutocomplete @onselect="hide" />
+          <p class="mt-3">
+            <small><strong>Or you can also</strong></small>
+          </p>
+          <HeaderGeolocation />
+          <p class="h3 font-weight-bold mt-4">Popular Locations</p>
+        </div>
+      </template>
     </b-sidebar>
   </div>
 </template>

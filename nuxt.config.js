@@ -1,7 +1,10 @@
 export default {
+  // .ENV VARIABLES
   privateRuntimeConfig: {
     googlePlacesAPI: "${GOOGLE_PLACES_API}",
   },
+
+  // SERVER CONFIG
   server: {
     port: 3000, // default: 3000
     host: "0.0.0.0", // default: localhost,
@@ -46,8 +49,16 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    "@nuxtjs/prismic",
     // '@nuxtjs/google-fonts'
   ],
+
+  prismic: {
+    endpoint: "https://munchies-web.prismic.io/api/v2",
+    linkResolver: "@/plugins/link-resolver",
+    modern: true,
+    /* see configuration for more */
+  },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [

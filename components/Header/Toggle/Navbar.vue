@@ -1,6 +1,6 @@
 <template>
   <button
-    v-b-toggle.collapse-1
+    @click="$emit('click')"
     class="d-flex d-md-none nav-toggler flex-shrink-0"
   >
     <div class="bars"></div>

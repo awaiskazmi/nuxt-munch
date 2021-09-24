@@ -1,6 +1,11 @@
-h1, h2 {
+h1,
+h2 {
   font-weight: bold;
   letter-spacing: -2px;
+}
+
+label {
+  font-weight: 600;
 }
 
 .hrh {
@@ -9,7 +14,7 @@ h1, h2 {
 
   &::before,
   &::after {
-    content: '';
+    content: "";
     display: flex;
     flex-grow: 1;
     background-color: #e4d9d9;
@@ -17,10 +22,10 @@ h1, h2 {
   }
 
   &::before {
-    margin-right: .5rem;
+    margin-right: 0.5rem;
   }
 
   &::after {
-    margin-left: .5rem;
+    margin-left: 0.5rem;
   }
 }
