@@ -1,7 +1,11 @@
 export default {
   // .ENV VARIABLES
+  publicRuntimeConfig: {
+    googleSheetKey: "${GOOGLE_SHEET_KEY}",
+  },
   privateRuntimeConfig: {
     googlePlacesAPI: "${GOOGLE_PLACES_API}",
+    googleSheetID: "${GOOGLE_SHEET_ID}",
   },
 
   // SERVER CONFIG
@@ -49,16 +53,8 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    "@nuxtjs/prismic",
     // '@nuxtjs/google-fonts'
   ],
-
-  prismic: {
-    endpoint: "https://munchies-web.prismic.io/api/v2",
-    linkResolver: "@/plugins/link-resolver",
-    modern: true,
-    /* see configuration for more */
-  },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
@@ -90,6 +86,10 @@ export default {
     "/test/": {
       target: "https://awais-users.000webhostapp.com/api",
       pathRewrite: { "^/test/": "" },
+    },
+    "/sheet/": {
+      target: `https://sheets.googleapis.com/v4/spreadsheets/${process.env.GOOGLE_SHEET_ID}`,
+      pathRewrite: { "^/sheet/": "" },
     },
   },
 

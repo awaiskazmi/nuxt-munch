@@ -4,8 +4,8 @@
       <div class="container">
         <div class="row">
           <div class="col">
-            <h1 data-aos="flip-up">Feeling Peckish? Snack time!</h1>
-            <p>We will deliver your snacks within minutes</p>
+            <h1 data-aos="flip-up">{{ title }}</h1>
+            <p>{{ subtitle }}</p>
           </div>
         </div>
         <div class="row">
@@ -30,7 +30,21 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      title: "",
+      subtitle: "",
+    };
+  },
+  async fetch() {
+    const sheetData = await this.$axios.$get(
+      `/sheet/values/B1:B2?key=${this.$config.googleSheetKey}`
+    );
+    this.title = sheetData.values[0][0];
+    this.subtitle = sheetData.values[1][0];
+  },
+};
 </script>
 
 <style lang="scss" scoped>
