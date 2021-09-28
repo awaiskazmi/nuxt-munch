@@ -11,6 +11,7 @@
       :phone="phone"
       v-if="phoneVerified && !otpVerified"
       @otpVerified="onOtpVerified"
+      @editPhone="phoneVerified = false"
     />
     <!-- STEP 3 : Set New Password -->
     <ForgotPasswordSetNew :token="token" v-if="phoneVerified && otpVerified" />

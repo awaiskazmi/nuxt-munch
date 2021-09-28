@@ -3,18 +3,25 @@
     <h1>Reset password</h1>
     <p>Enter your mobile number, and we'll send a code to confirm it.</p>
     <label class="d-block text-left" for="">Phone Number</label>
-    <input
+    <BaseInput
       @focus="onfocus"
+      placeholder="3001111222"
+      variant="md"
+      prependText="+92"
       v-model="phone"
-      type="text"
-      placeholder="Example +923211111111"
-      class="form-control"
+      maxLength="10"
       :class="invalid"
     />
     <div class="invalid-feedback text-left">Phone number doesn't exist</div>
     <Button @click="onclick" class="btn btn-primary mt-4"
       >Reset Password</Button
     >
+    <div class="mt-5">
+      <NuxtLink class="text-muted d-inline-flex align-items-center" to="/login">
+        <span class="material-icons mr-1">arrow_back</span>
+        <small>Back to login</small></NuxtLink
+      >
+    </div>
   </div>
 </template>
 
@@ -46,14 +53,14 @@ export default {
         const res = await this.$axios.post(
           "/qa/v1/public/verificationCode/VERIFICATION_TYPE_FORGOT",
           {
-            phoneNumber: this.phone,
+            phoneNumber: `+92${this.phone}`,
             roleConstant: "ROLE_CUSTOMER",
           },
           config
         );
         if (res.status == 200) {
           let verifiedData = {
-            phone: this.phone,
+            phone: `+92${this.phone}`,
             code: res.data.data.code,
           };
           this.$emit("phoneVerified", verifiedData);

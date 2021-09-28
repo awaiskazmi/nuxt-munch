@@ -2,60 +2,73 @@
   <div class="p-2 p-lg-6 flex-grow-1">
     <h1>Sign up</h1>
     <p>Let's get you signed up to Munchies!</p>
-    <form @submit="onsubmit" class="mt-5" autocomplete="off">
+    <form @submit.prevent="handleSubmit" class="mt-5" autocomplete="off">
       <input type="hidden" autocomplete="off" />
       <div class="row">
         <div class="col-12 col-lg-6">
           <div class="form-group">
-            <label>Name:</label>
-            <input
-              type="text"
-              class="form-control"
+            <label>Name</label>
+            <BaseInput
               placeholder="Enter your name"
+              variant="md"
+              v-model="name"
             />
           </div>
         </div>
         <div class="col-12 col-lg-6">
           <div class="form-group">
-            <label>Phone Number:</label>
-            <input
-              type="email"
-              class="form-control"
-              placeholder="+92 0000000"
+            <label>Phone Number</label>
+            <BaseInput
+              prependText="+92"
+              placeholder="1111111"
+              variant="md"
+              v-model="phone"
+              maxLength="10"
+              :class="phoneError ? 'is-invalid' : ''"
             />
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-12 col-lg-6">
+        <div class="col-12">
           <div class="form-group">
-            <label>Email:</label>
-            <input
+            <label>Email</label>
+            <BaseInput
+              placeholder="Enter your email"
+              variant="md"
               type="email"
-              class="form-control"
-              placeholder="Enter password"
+              v-model="email"
+              :class="emailError ? 'is-invalid' : ''"
             />
           </div>
         </div>
-        <div class="col-12 col-lg-6">
+        <div class="col-12">
           <div class="form-group">
-            <label>Password:</label>
-            <input
+            <label>Password</label>
+            <BaseInputPassword
               type="password"
-              class="form-control"
               placeholder="Enter password"
+              variant="md"
+              v-model="password"
+              :class="passwordError ? 'is-invalid' : ''"
             />
+            <small class="form-text text-muted"
+              >Lowercase, uppercase, and special characters e.g. ! @ # ?
+              .</small
+            >
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-12 col-lg-6">
+        <div class="col-12">
           <div class="form-group">
-            <label>Confirm password:</label>
-            <input
-              type="phone"
-              class="form-control"
-              placeholder="Re-enter password"
+            <label>Confirm password</label>
+            <BaseInputPassword
+              type="password"
+              placeholder="Enter password"
+              variant="md"
+              v-model="repassword"
+              :class="passwordError ? 'is-invalid' : ''"
             />
           </div>
         </div>
@@ -67,14 +80,23 @@
           class="btn btn-primary btn-block btn-lg"
         />
       </div>
+      <div v-if="formInvalid" class="form-group my-4">
+        <b-alert
+          @dismissed="formInvalid = false"
+          show
+          dismissible
+          variant="danger"
+          >{{ errorMsg }}</b-alert
+        >
+      </div>
     </form>
     <div>
-      <div class="hrh">or Sign up via</div>
+      <div class="hrh my-4">or sign up via</div>
     </div>
-    <div class="form-group text-center py-3">
+    <div class="form-group text-center">
       <p>
         Already have an account?
-        <NuxtLink class="text-secondary" to="/login">Sign in</NuxtLink>
+        <NuxtLink to="/login">Sign in</NuxtLink>
       </p>
     </div>
   </div>
@@ -83,11 +105,87 @@
 <script>
 export default {
   layout: "half-form",
+  data() {
+    return {
+      name: "",
+      phone: "",
+      email: "",
+      password: "",
+      repassword: "",
+      emailError: false,
+      phoneError: false,
+      passwordError: false,
+      formInvalid: false,
+      errorMsg: "",
+    };
+  },
+  computed: {
+    prePhone() {
+      return `+92${this.phone}`;
+    },
+    userObject() {
+      return {
+        email: this.email,
+        password: this.password,
+      };
+    },
+    tokenPayload() {
+      let formData = new FormData();
+      formData.append("email", this.email);
+      formData.append("password", this.password);
+      formData.append("phone", this.phone);
+      formData.append("username", this.name);
+      return formData;
+    },
+  },
   methods: {
-    onsubmit(e) {
-      e.preventDefault();
-      console.log("signing up");
-      window.location = "/signup/verify";
+    handleSubmit() {
+      // Reset all errors
+      this.emailError = false;
+      this.phoneError = false;
+      this.passwordError = false;
+      this.formInvalid = false;
+
+      this.$axios({
+        mode: "cors",
+        method: "post",
+        url: "/api/proceed-signup",
+        data: this.tokenPayload,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+        .then(({ data }) => {
+          console.log(data);
+          let { code, message, autoLoginToken } = data;
+
+          // FAILURE
+
+          // Invalid Phone
+          if (code === 2106) {
+            this.errorMsg = message;
+            this.formInvalid = true;
+            this.phoneError = true;
+          }
+          // Invalid Email
+          if (code === 2254) {
+            this.errorMsg = message;
+            this.formInvalid = true;
+            this.emailError = true;
+          }
+          // Weak Password
+          if (code === 2256) {
+            this.errorMsg = message;
+            this.formInvalid = true;
+            this.passwordError = true;
+          }
+
+          // SUCCESS
+          if (autoLoginToken) {
+            this.$loginUser(this.userObject);
+          }
+        })
+        .catch((err) => console.log(err));
     },
   },
 };

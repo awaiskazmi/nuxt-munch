@@ -5,27 +5,22 @@ export const state = () => ({
   location: "",
   latLng: {},
   serviceArea: -1,
+  globalSearchQuery: "",
 });
 
-// export const getters = {
-
-// }
+export const getters = {
+  getglobalSearchQuery: (state) => {
+    return state.globalSearchQuery;
+  }
+}
 
 export const actions = {
   async getServiceArea({ commit }, payload) {
-    console.log("PAYLOAD", payload);
-
     let formData = new FormData();
-    // let coordinates = {
-    //   lat: payload.lat,
-    //   lng: payload.lng,
-    // };
 
     formData.append("coordinates[lat]", payload.lat);
     formData.append("coordinates[lng]", payload.lng);
     formData.append("address", payload.address);
-
-    // console.log("FORM DATA", JSON.stringify(coordinates));
 
     const res = await this.$axios({
       mode: "cors",
@@ -59,4 +54,7 @@ export const mutations = {
   setServiceArea(state, id) {
     state.serviceArea = id;
   },
-};
+  setglobalSearchQuery(state, query) {
+    state.globalSearchQuery = query;
+  }
+}

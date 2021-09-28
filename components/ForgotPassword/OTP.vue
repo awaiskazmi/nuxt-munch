@@ -4,14 +4,15 @@
     <p>Please enter the 4-digit verification code sent to your number</p>
     <div class="d-inline-flex align-items-center mb-4">
       <span>{{ phone }}</span>
-      <NuxtLink to="/forgot-password" class="material-icons">edit</NuxtLink>
+      <button @click="$emit('editPhone')" class="m-btn btn btn-link p-1 ml-1">
+        <span class="material-icons">edit</span>
+      </button>
     </div>
     <SignupVerifyCodeInput
       @otpVerified="otpVerified"
       :otp="otp"
       :phone="phone"
     />
-    <NuxtLink to="/forgot-password/new">Set New Password</NuxtLink>
   </div>
 </template>
 

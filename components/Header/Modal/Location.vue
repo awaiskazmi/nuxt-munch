@@ -2,7 +2,7 @@
   <div>
     <b-sidebar
       width="460px"
-      id="sidebar-1"
+      id="sidebar-location"
       bg-variant="white"
       no-header
       backdrop

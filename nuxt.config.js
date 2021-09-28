@@ -44,6 +44,8 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: "~/plugins/client.js" },
+    // client side only
+    { src: "~/plugins/userLogin.client.js" },
     { src: "~/plugins/aos.client" },
     // { src: "~/plugins/test.server" },
   ],
@@ -90,6 +92,10 @@ export default {
     "/sheet/": {
       target: `https://sheets.googleapis.com/v4/spreadsheets/${process.env.GOOGLE_SHEET_ID}`,
       pathRewrite: { "^/sheet/": "" },
+    },
+    "/mock/": {
+      target: `https://615205d94a5f22001701d5d3.mockapi.io/api/v1`,
+      pathRewrite: { "^/mock/": "" },
     },
   },
 

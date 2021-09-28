@@ -13,6 +13,7 @@
           v-b-modal.modal-search
           prepend="search"
           placeholder="I'm craving for"
+          :value="search"
         />
       </div>
       <client-only>
@@ -26,17 +27,19 @@
         </div>
       </client-only>
     </header>
-    <HeaderModals>
+    <client-only>
+      <HeaderModalSuggestion />
       <HeaderModalLocation />
       <HeaderModalSearch />
-      <HeaderModalSuggestion />
-      <!-- <HeaderModalProfile /> -->
-    </HeaderModals>
+      <div v-if="auth">
+        <HeaderModalProfile />
+      </div>
+    </client-only>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 
 export default {
   data() {
@@ -52,6 +55,18 @@ export default {
   computed: {
     ...mapState(["auth"]),
     ...mapState(["currentUser"]),
+    ...mapGetters({
+      getSearchQuery: "getglobalSearchQuery",
+    }),
+    search: {
+      get() {
+        return this.getSearchQuery;
+      },
+      set(query) {
+        this.$store.commit("setglobalSearchQuery", query);
+        return query;
+      },
+    },
     navMenu() {
       return this.isNavActive ? "active" : "";
     },

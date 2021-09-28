@@ -26,15 +26,27 @@
               <p>Let us know what to add to Munchies</p>
               <div class="form-group mt-5">
                 <label class="m-input-label">Product Name</label>
-                <BaseInput placeholder="Enter product name" />
+                <BaseInput
+                  v-model="product"
+                  variant="md"
+                  placeholder="Enter product name"
+                />
               </div>
               <div class="form-group">
                 <label class="m-input-label">Weight</label>
-                <BaseInput placeholder="Enter product weight" />
+                <BaseInput
+                  v-model="weight"
+                  variant="md"
+                  placeholder="Enter product weight"
+                />
               </div>
               <div class="form-group">
                 <label class="m-input-label">Flavour</label>
-                <BaseInput placeholder="Enter product flavour" />
+                <BaseInput
+                  v-model="flavour"
+                  variant="md"
+                  placeholder="Enter product flavour"
+                />
               </div>
             </div>
           </div>
@@ -48,7 +60,15 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      product: "",
+      weight: "",
+      flavour: "",
+    };
+  },
+};
 </script>
 
 <style></style>

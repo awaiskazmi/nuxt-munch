@@ -1,4 +1,23 @@
 export default ({ app }, inject) => {
+  // GLOBAL METHODS
+
+  // TEST METHOD
+  inject('mLogin', (userObject) => {
+    console.log('...GLOBAL METHOD...', userObject);
+  })
+  // SET LOCATION
+  inject('setLocation', (location) => {
+    localStorage.setItem("m_location_name", location);
+    app.store.commit("setUserLocation", location);
+  })
+
+
+
+
+
+
+
+
   // get logged in user data
   if (process.client) {
     // set logged in userdata

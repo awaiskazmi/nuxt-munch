@@ -1,7 +1,7 @@
 <template>
   <BaseButton
     isButton
-    v-b-toggle.sidebar-1
+    v-b-toggle.sidebar-location
     rounded
     type="location"
     icon="place"

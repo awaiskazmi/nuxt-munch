@@ -10,6 +10,9 @@
         placeholder="Enter password"
         variant="lg"
       />
+      <small class="form-text text-left text-muted"
+        >Lowercase, uppercase, and special characters e.g. ! @ # ? .</small
+      >
     </div>
     <div class="form-group">
       <label for="" class="d-block text-left">Confirm Password</label>

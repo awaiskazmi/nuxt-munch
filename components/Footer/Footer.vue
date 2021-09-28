@@ -75,30 +75,52 @@
           <div class="row no-gutters">
             <div class="col">
               <ul class="list-unstyled">
-                <li><NuxtLink to="/">PECHS</NuxtLink></li>
-                <li><NuxtLink to="#">DHA</NuxtLink></li>
-                <li><NuxtLink to="#">Clifton</NuxtLink></li>
+                <li><button class="btn btn-link">PECHS</button></li>
+                <li>
+                  <button class="btn btn-link">DHA</button>
+                </li>
+                <li>
+                  <button class="btn btn-link">Clifton</button>
+                </li>
               </ul>
             </div>
             <div class="col">
               <ul class="list-unstyled">
-                <li><NuxtLink to="/">Nazimabad</NuxtLink></li>
-                <li><NuxtLink to="#">Gulshan e Iqbal</NuxtLink></li>
-                <li><NuxtLink to="#">Gulistan e Jauhar</NuxtLink></li>
+                <li>
+                  <button class="btn btn-link">Nazimabad</button>
+                </li>
+                <li>
+                  <button class="btn btn-link">Gulshan e Iqbal</button>
+                </li>
+                <li>
+                  <button class="btn btn-link">Gulistan e Jauhar</button>
+                </li>
               </ul>
             </div>
             <div class="col">
               <ul class="list-unstyled">
-                <li><NuxtLink to="/">North Nazimabad</NuxtLink></li>
-                <li><NuxtLink to="#">Saddar</NuxtLink></li>
-                <li><NuxtLink to="#">Garden</NuxtLink></li>
+                <li>
+                  <button class="btn btn-link">North Nazimabad</button>
+                </li>
+                <li>
+                  <button class="btn btn-link">Saddar</button>
+                </li>
+                <li>
+                  <button class="btn btn-link">Garden</button>
+                </li>
               </ul>
             </div>
             <div class="col">
               <ul class="list-unstyled">
-                <li><NuxtLink to="/">Soldier Bazar</NuxtLink></li>
-                <li><NuxtLink to="#">Federal B Area</NuxtLink></li>
-                <li><NuxtLink to="#">North Karachi</NuxtLink></li>
+                <li>
+                  <button class="btn btn-link">Soldier Bazar</button>
+                </li>
+                <li>
+                  <button class="btn btn-link">Federal B Area</button>
+                </li>
+                <li>
+                  <button class="btn btn-link">North Karachi</button>
+                </li>
               </ul>
             </div>
           </div>
@@ -144,8 +166,10 @@ footer
 small
   font-size: 12px
   color: #808080
-a
+a,
+.btn-link
   display: inline-block
   color: #808080
+  padding: 0
   margin-bottom: 1rem
 </style>

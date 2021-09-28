@@ -5,8 +5,10 @@
       :type="type"
       :placeholder="placeholder"
       :class="'m-input-field form-control ' + variant + ' ' + classList"
+      :required="required"
       :value="value"
       @input="$emit('input', $event.target.value)"
+      @focus="$emit('focus')"
     />
     <button
       @click.prevent="onclick"
@@ -27,6 +29,7 @@ export default {
     },
     variant: String,
     classList: String,
+    required: Boolean,
     value: String,
   },
   data() {

@@ -1,6 +1,12 @@
 <template>
-  <BaseButton isButton icon="local_offer" @click="onClick" type="link"
-    >Logout</BaseButton
+  <BaseButton
+    isButton
+    full
+    class="m-btn-align-left mt-2"
+    icon="local_offer"
+    @click="onClick"
+    type="link"
+    >Sign out</BaseButton
   >
 </template>
 

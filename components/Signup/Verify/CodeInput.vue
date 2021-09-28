@@ -9,6 +9,7 @@
         @keyup="onkeyup"
         type="text"
         class="form-control"
+        maxlength="1"
         :class="invalid"
       />
       <input
@@ -20,6 +21,7 @@
         @keyup="onkeyup"
         type="text"
         class="form-control"
+        maxlength="1"
         :class="invalid"
       />
       <input
@@ -30,6 +32,7 @@
         @keyup="onkeyup"
         type="text"
         class="form-control"
+        maxlength="1"
         :class="invalid"
       />
       <input
@@ -40,6 +43,7 @@
         @keyup="onkeyup"
         type="text"
         class="form-control"
+        maxlength="1"
         :class="invalid"
       />
     </div>
@@ -48,7 +52,9 @@
     </div>
     <div class="row mt-4">
       <div class="col">
-        <button class="btn btn-outline-primary btn-block">Resend Code</button>
+        <button disabled class="btn btn-outline-primary btn-block">
+          Resend Code
+        </button>
       </div>
       <div class="col">
         <button @click="onverify" class="btn btn-primary btn-block">
@@ -97,8 +103,9 @@ export default {
     onkeyup(e) {
       let id = parseInt(e.target.id);
       let target = id + 1 > 4 ? 4 : id + 1;
-      if (e.target.value.length >= 1) {
+      if (e.target.value.length == 1) {
         document.getElementById(target).focus();
+        document.getElementById(target).select();
         return;
       }
     },
@@ -113,10 +120,11 @@ export default {
           },
         };
         try {
+          console.log(this.otp, this.userInput, this.phone);
           const res = await this.$axios.put(
             "/qa/v1/public/verificationCode/checking-code/VERIFICATION_TYPE_FORGOT",
             {
-              code: this.userInput,
+              code: this.otp,
               phoneNumber: this.phone,
               roleConstant: "ROLE_CUSTOMER",
             },
@@ -127,7 +135,7 @@ export default {
           }
         } catch (err) {
           this.phoneInvalid = true;
-          console.log(err);
+          console.log(err.response);
         }
       }
     },
