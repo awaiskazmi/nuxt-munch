@@ -1,8 +1,8 @@
 <template>
-  <div class="container py-5">
+  <div class="container px-0 py-5">
     <div class="row">
       <div class="col">
-        <h2>Categories</h2>
+        <h2 class="mb-3">Categories</h2>
         <div class="categories">
           <Category
             v-for="(c, index) in categories.categories"
@@ -10,8 +10,8 @@
             :id="c.id"
             :name="c.name"
             :imageUrl="c.imageUrl"
-            data-aos="flip-down"
-            :data-aos-delay="index * 50"
+            data-aos="flip-downs"
+            :data-aos-delays="index * 10"
           />
         </div>
       </div>
@@ -39,13 +39,10 @@ export default {
 };
 </script>
 
-<style lang="sass">
-.categories
-  display: grid
-  gap: 30px
-  grid-template-columns: repeat(4, 1fr)
-
-  @media(max-width: 768px)
-    gap: 15px
-    grid-template-columns: repeat(2, 1fr)
+<style scoped>
+.categories {
+  display: flex;
+  overflow: auto;
+  padding-bottom: 2rem;
+}
 </style>

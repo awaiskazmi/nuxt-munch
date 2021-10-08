@@ -86,10 +86,12 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-header {
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.5rem 1rem;
-}
+<style lang="sass" scoped>
+header
+  align-items: center
+  justify-content: space-between
+  padding: 0.5rem 1rem
+
+  @media (max-width: 768px)
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1)
 </style>

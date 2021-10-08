@@ -44,21 +44,23 @@ $spacer: 1rem;
 
 $spacers: (
   6: (
-    $spacer * 5,
+    $spacer * 5
   ),
   7: (
-    $spacer * 6,
+    $spacer * 6
   ),
   8: (
-    $spacer * 7,
+    $spacer * 7
   ),
   9: (
-    $spacer * 8,
+    $spacer * 8
   ),
   10: (
-    $spacer * 9,
-  ),
+    $spacer * 9
+  )
 );
+
+// INPUT and BUTTON
 
 $input-padding-x: 1.25rem;
 $input-padding-y: 0.75rem;
@@ -75,12 +77,28 @@ $border-radius: 4px;
 $input-btn-focus-color: #000;
 $input-btn-focus-box-shadow: none;
 
+// BREADCRUMS
+
+$breadcrumb-bg: transparent;
+$breadcrumb-padding-x: 0;
+$breadcrumb-divider: quote(">");
+$breadcrumb-active-color: #757575;
+
 // HELPERS
 
 *::selection {
-  background-color:rgba(255,0,0,0.1)
+  background-color: rgba(255, 0, 0, 0.1);
 }
 
+.pointer,
 .cursor-pointer {
   cursor: pointer;
+}
+
+.up {
+  text-transform: uppercase;
+}
+
+.cap {
+  text-transform: capitalize;
 }

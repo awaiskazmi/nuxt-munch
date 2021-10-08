@@ -2,21 +2,14 @@ export default ({ app }, inject) => {
   // GLOBAL METHODS
 
   // TEST METHOD
-  inject('mLogin', (userObject) => {
-    console.log('...GLOBAL METHOD...', userObject);
-  })
+  inject("mLogin", (userObject) => {
+    console.log("...GLOBAL METHOD...", userObject);
+  });
   // SET LOCATION
-  inject('setLocation', (location) => {
+  inject("setLocation", (location) => {
     localStorage.setItem("m_location_name", location);
     app.store.commit("setUserLocation", location);
-  })
-
-
-
-
-
-
-
+  });
 
   // get logged in user data
   if (process.client) {
@@ -40,6 +33,16 @@ export default ({ app }, inject) => {
     const localStorageLatLng = localStorage.getItem("m_latlng");
     if (localStorageLatLng) {
       app.store.commit("serUserLatLng", JSON.parse(localStorageLatLng));
+    }
+    // set loggin in user service area
+    const localStorageServiceArea = localStorage.getItem("m_serviceArea");
+    if (localStorageServiceArea) {
+      app.store.commit("setServiceArea", localStorageServiceArea);
+    }
+    // set shopping cart if present
+    const localStorageShoppingCart = localStorage.getItem("m_shoppingCart");
+    if (localStorageShoppingCart) {
+      app.store.commit("setShoppingCart", JSON.parse(localStorageShoppingCart));
     }
   }
 

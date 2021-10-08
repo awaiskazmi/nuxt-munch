@@ -1,8 +1,11 @@
 export default {
   // .ENV VARIABLES
+  // PUBLIC
   publicRuntimeConfig: {
     googleSheetKey: "${GOOGLE_SHEET_KEY}",
+    placeholderImage: "${PLACEHOLDER_IMAGE}",
   },
+  // PRIVATE
   privateRuntimeConfig: {
     googlePlacesAPI: "${GOOGLE_PLACES_API}",
     googleSheetID: "${GOOGLE_SHEET_ID}",

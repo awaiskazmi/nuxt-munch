@@ -1,15 +1,18 @@
 <template>
-  <nuxt-link :to="'/category/' + id" class="category">
+  <nuxt-link
+    :to="'/orders/' + name.replace(/ +/g, '-').toLowerCase()"
+    class="category"
+  >
     <div class="img-wrapper img">
       <img
         :src="
           'https://munchies-qa.impact.venturedive.com/v2/public/resources/' +
-            imageUrl
+          imageUrl
         "
         :alt="name"
       />
     </div>
-    <h3>{{ name }}</h3>
+    <h5>{{ name }}</h5>
   </nuxt-link>
 </template>
 
@@ -19,34 +22,38 @@ export default {
 };
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
 .category
-  display: block
-  background-color: #fff
-  padding: 16px
-  border-radius: 4px
-  border: 1px solid #ddd
-  text-align: center
-  color: #111
-  transition: transform 0.2s cubic-bezier(1,0,0,1)
+  margin-right: 1rem
 
   &:hover
     text-decoration: none
-    transform: scale(1.05)
+    img
+      transform: scale(1.05)
 
   .img-wrapper
-    height: 72px
-    width: 72px
-    margin: 0 auto
-    padding: 10px
-    border-radius: 100px
-    background-color: rgba(255,0,0,0.1)
+    display: flex
+    align-items: center
+    justify-content: center
+    border-radius: 8px
+    height: 120px
+    width: 120px
+    padding: 18px
+    background-color: #E3F5FB
 
   img
+    transition: transform 0.2s cubic-bezier(1,0,0,1)
     max-width: 100%
 
-  h3
-    font-size: 18px
+  h5
+    font-size: 1rem
     margin-bottom: 0
     margin-top: 1rem
+    color: #000000
+
+  @media(max-width: 768px)
+    .img-wrapper
+      height: 72px
+      width: 72px
+      padding: 11px
 </style>

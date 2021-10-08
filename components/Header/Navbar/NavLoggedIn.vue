@@ -5,7 +5,7 @@
       <li><HeaderToggleSearch /></li>
       <li>
         <BaseButton url="/orders" rounded type="link" icon="local_offer"
-          >Promos</BaseButton
+          >Orders</BaseButton
         >
       </li>
       <li><HeaderToggleProfile /></li>
@@ -25,7 +25,7 @@
           rounded
           icon="shopping_cart"
           type="cart"
-          >Cart . {{ this.$store.state.cart }} items</BaseButton
+          >Cart . {{ this.$store.state.shoppingCart.length }} items</BaseButton
         >
       </li>
     </ul>

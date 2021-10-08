@@ -14,10 +14,10 @@ export const getters = {
 };
 
 export const actions = {
-  // async nuxtServerInit({ rootState, commit }, { req }) {
-  //   const res = await this.$axios.get('/qa/v2/public/hub-product-category/all');
-  //   commit('setCategories', res.data.data)
-  // },
+  async nuxtServerInit({ rootState, commit }, { req }) {
+    const res = await this.$axios.get("/qa/v2/public/hub-product-category/all");
+    commit("setCategories", res.data.data);
+  },
   fetchCategories(state) {},
 };
 

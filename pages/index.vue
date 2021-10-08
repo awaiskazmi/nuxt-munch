@@ -27,7 +27,7 @@
         </div>
       </div>
     </section>
-    <div class="container py-5">
+    <div class="container py-5 d-none">
       <h2>User Data</h2>
       <pre>{{ user }}</pre>
     </div>

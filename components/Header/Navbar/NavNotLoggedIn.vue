@@ -11,7 +11,7 @@
       <li><HeaderToggleSearch /></li>
       <li>
         <BaseButton url="/orders" rounded type="link" icon="local_offer"
-          >Promos</BaseButton
+          >Orders</BaseButton
         >
       </li>
       <li>
@@ -25,7 +25,7 @@
           rounded
           icon="shopping_cart"
           type="cart"
-          >Cart . {{ this.$store.state.cart }} items</BaseButton
+          >Cart . {{ cartCount }} items</BaseButton
         >
       </li>
     </ul>
@@ -49,7 +49,7 @@
         icon="local_offer"
         >Promos</BaseButton
       >
-      <BaseButton class="mt-5 mb-2" type="primary"
+      <BaseButton url="/signup" class="mt-5 mb-2" type="primary"
         >Create account or sign in</BaseButton
       >
     </div>
@@ -57,9 +57,19 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   data() {
     return {};
+  },
+  computed: {
+    ...mapState({
+      products: (state) => state.products.products,
+    }),
+    cartCount() {
+      return this.products.filter((p) => p.quantity > 0).length;
+    },
   },
 };
 </script>
