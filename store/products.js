@@ -10,11 +10,14 @@ export const getters = {
     return state.products.find((product) => product.id === id).quantity;
   },
   getAllProducts: (state) => () => {
-    return state.categories;
+    return state.products;
   },
   getProductById: (state) => (id) => {
     return state.products.find((product) => product.id === id);
   },
+  // getAddedProducts: (state) => {
+  //   return state.products.find((product) => product.quantity > 0).length;
+  // }
 };
 
 export const actions = {
