@@ -13,7 +13,7 @@
       </b-breadcrumb>
     </div>
     <h1>Checkout</h1>
-    <div class="row align-items-center mt-5">
+    <div class="row mt-5">
       <div class="col-12 col-md-6">
         <!-- address details -->
         <div class="row">
@@ -58,7 +58,9 @@
             <h4>Order details</h4>
           </div>
           <div class="col-auto ml-auto">
-            <BaseButton type="link" variant="sm">View details</BaseButton>
+            <BaseButton type="outline-secondary" variant="sm"
+              >View details</BaseButton
+            >
           </div>
         </div>
         <div class="row">
@@ -80,7 +82,9 @@
             <h4>Promo code</h4>
           </div>
           <div class="col-auto ml-auto">
-            <BaseButton type="link" variant="sm">View details</BaseButton>
+            <BaseButton type="outline-secondary" variant="sm"
+              >View details</BaseButton
+            >
           </div>
         </div>
         <div class="row">
@@ -96,25 +100,166 @@
           </div>
         </div>
         <hr />
+        <!-- when -->
+        <div class="row">
+          <div class="col-auto">
+            <h4>When</h4>
+          </div>
+          <div class="col-auto ml-auto">
+            <BaseButton type="outline-secondary" variant="sm"
+              >View details</BaseButton
+            >
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="row no-gutters align-items-center suggestion">
+              <div class="col-auto mr-3">
+                <img src="~/assets/images/icon-location.svg" height="24" />
+              </div>
+              <div class="col">
+                <h6 class="text-muted">Add promo code</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <!-- payment method -->
+        <div class="row">
+          <div class="col-auto">
+            <h4>Payment Method</h4>
+          </div>
+          <div class="col-auto ml-auto">
+            <BaseButton type="outline-secondary" variant="sm"
+              >View details</BaseButton
+            >
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="row no-gutters align-items-center suggestion">
+              <div class="col-auto mr-3">
+                <img src="~/assets/images/icon-location.svg" height="24" />
+              </div>
+              <div class="col">
+                <h6 class="text-muted">Add promo code</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <!-- payment method -->
+        <div class="row">
+          <div class="col-auto">
+            <h4>Order for someone else</h4>
+          </div>
+          <div class="col-auto ml-auto">
+            <BaseButton type="outline-secondary" variant="sm"
+              >View details</BaseButton
+            >
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="row no-gutters align-items-center suggestion">
+              <div class="col-auto mr-3">
+                <img src="~/assets/images/icon-location.svg" height="24" />
+              </div>
+              <div class="col">
+                <h6 class="text-muted">Add promo code</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <!-- payment method -->
+        <div class="row">
+          <div class="col-auto">
+            <h4>Delivery Notes</h4>
+          </div>
+          <div class="col-auto ml-auto">
+            <span class="text-muted">Optional</span>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col">
+            <textarea
+              rows="5"
+              placeholder="e.g. please don't ring the bell"
+              class="form-control"
+            ></textarea>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col">
+            <BaseButton type="primary" full>Place Order - Rs. 460</BaseButton>
+          </div>
+        </div>
       </div>
       <div class="col-12 col-md-6">
-        <div class="bg-light p-5">Google map here</div>
+        <div
+          class="bg-light p-5 d-flex align-items-center justify-content-center h-100"
+        >
+          Google map here
+        </div>
       </div>
     </div>
     <!-- Address sidebar -->
-    <b-sidebar id="sidebar-address" title="Sidebar" right shadow>
-      <div class="px-3 py-2">
-        <p>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-          consectetur ac, vestibulum at eros.
-        </p>
-        <b-img
-          src="https://picsum.photos/500/500/?image=54"
-          fluid
-          thumbnail
-        ></b-img>
-      </div>
+    <b-sidebar
+      width="460px"
+      id="sidebar-address"
+      title="Sidebar"
+      right
+      backdrop
+      shadow
+      bg-variant="white"
+      no-header
+    >
+      <template #default="{ hide }">
+        <BaseButton isButton type="m-btn-action m-sidebar-close" @click="hide">
+          <span class="material-icons">close</span>
+        </BaseButton>
+        <div class="d-flex flex-column justify-content-between h-100">
+          <div class="py-6 px-4">
+            <p class="my-4 h2 font-weight-bold">Add address details</p>
+            <p>Please enter location details and label them</p>
+            <p class="mt-3">
+              <small><strong>Location details</strong></small>
+            </p>
+            <BaseInput
+              placeholder="House no. / Flat no. / Floor / Building name"
+              variant="md"
+            />
+            <p class="mt-3">
+              <small><strong>Label</strong></small>
+            </p>
+            <div class="labels">
+              <BaseButton
+                type="outline-secondary"
+                variant="sm"
+                rounded
+                icon="home"
+                >Home</BaseButton
+              >
+              <BaseButton
+                type="outline-secondary"
+                variant="sm"
+                rounded
+                icon="work"
+                >Work</BaseButton
+              >
+              <BaseButton type="outline-secondary" variant="sm" rounded
+                >Other</BaseButton
+              >
+            </div>
+          </div>
+          <div class="px-4 pb-4">
+            <BaseButton isButton type="secondary" full
+              >Save address details</BaseButton
+            >
+          </div>
+        </div>
+      </template>
     </b-sidebar>
   </div>
 </template>
@@ -127,7 +272,7 @@ export default {
   },
   computed: {
     ...mapState({
-      area: (state) => state.location,
+      area: state => state.location
     }),
     ...mapGetters({
       // getAddedProducts: "getAddedProducts",
@@ -135,9 +280,9 @@ export default {
     items: {
       get() {
         // return this.getAddedProducts();
-      },
-    },
-  },
+      }
+    }
+  }
 };
 </script>
 

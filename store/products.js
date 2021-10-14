@@ -1,20 +1,20 @@
 export const namespaced = false;
 
 export const state = () => ({
-  products: [],
+  products: []
 });
 
 export const getters = {
-  getProductQuantityById: (state) => (id) => {
+  getProductQuantityById: state => id => {
     // let productIndex = state.products.findIndex((obj) => obj.id == id);
-    return state.products.find((product) => product.id === id).quantity;
+    return state.products.find(product => product.id === id).quantity;
   },
-  getAllProducts: (state) => () => {
+  getAllProducts: state => () => {
     return state.products;
   },
-  getProductById: (state) => (id) => {
-    return state.products.find((product) => product.id === id);
-  },
+  getProductById: state => id => {
+    return state.products.find(product => product.id === id);
+  }
   // getAddedProducts: (state) => {
   //   return state.products.find((product) => product.quantity > 0).length;
   // }
@@ -44,15 +44,15 @@ export const actions = {
       pF;
 
     // loop through all products
-    pF = pAll.map((product) => {
+    pF = pAll.map(product => {
       // set initial quantity to 0
       product.quantity = 0;
       // set hot damn tag identifier
-      if (pHd.some((e) => e.id == product.id)) {
+      if (pHd.some(e => e.id == product.id)) {
         product.tag = "HOT_DAMN";
       }
       // set exclusive tag identifier
-      if (pX.some((e) => e.id == product.id)) {
+      if (pX.some(e => e.id == product.id)) {
         product.tag = "EXCLUSIVE";
       }
       return product;
@@ -62,7 +62,7 @@ export const actions = {
   },
   async setProductQuantityAction({ commit }, payload) {
     commit("setProductQuantity", payload);
-  },
+  }
 };
 
 export const mutations = {
@@ -70,7 +70,7 @@ export const mutations = {
     state.products = products;
   },
   setProductQuantity(state, product) {
-    let productIndex = state.products.findIndex((obj) => obj.id == product.id);
+    let productIndex = state.products.findIndex(obj => obj.id == product.id);
     state.products[productIndex].quantity = product.quantity;
-  },
+  }
 };

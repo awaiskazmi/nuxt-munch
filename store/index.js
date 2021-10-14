@@ -1,22 +1,22 @@
 export const state = () => ({
   auth: false,
   token: "",
-  cart: 3,
+  cart: 0,
   location: "",
   latLng: {},
   serviceArea: -1,
   globalSearchQuery: "",
   recentSearches: [],
-  shoppingCart: [],
+  shoppingCart: []
 });
 
 export const getters = {
-  getglobalSearchQuery: (state) => {
+  getglobalSearchQuery: state => {
     return state.globalSearchQuery;
   },
-  getRecentSearches: (state) => {
+  getRecentSearches: state => {
     return state.recentSearches;
-  },
+  }
 };
 
 export const actions = {
@@ -35,15 +35,15 @@ export const actions = {
       url: "/api/check-customer-location",
       data: formData,
       headers: {
-        "Content-Type": "multipart/form-data",
-      },
+        "Content-Type": "multipart/form-data"
+      }
     });
 
     console.log(res.data[0]);
 
     localStorage.setItem("m_serviceArea", res.data[0].id);
     commit("setServiceArea", res.data[0].id);
-  },
+  }
 };
 
 export const mutations = {
@@ -70,7 +70,7 @@ export const mutations = {
   },
   addProductToCart(state, product) {
     // check if product already added
-    const isPresent = (e) => e.id === product.id;
+    const isPresent = e => e.id === product.id;
     const index = state.shoppingCart.findIndex(isPresent);
     if (index >= 0) {
       state.shoppingCart[index].quantity = product.quantity;
@@ -85,5 +85,5 @@ export const mutations = {
       }),
       1
     );
-  },
+  }
 };

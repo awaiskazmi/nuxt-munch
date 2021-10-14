@@ -2,15 +2,33 @@
   <div class="container px-0 py-5">
     <div class="row">
       <div class="col" v-if="serviceArea >= 0">
-        <div class="d-flex align-items-center justify-content-between">
-          <h2 class="d-inline-block mb-3">{{ title }} 🔥</h2>
-          <span
-            class="material-icons"
-            v-b-tooltip.hover.left="'Hold Shift and scroll to scroll sideways!'"
-            >info</span
-          >
+        <h2 class="mb-4">{{ title }} 🔥</h2>
+        <div class="swiper">
+          <div class="swiper-button-prev" slot="button-prev">
+            <span class="material-icons">navigate_before</span>
+          </div>
+          <div class="swiper-button-next" slot="button-next">
+            <span class="material-icons">navigate_next</span>
+          </div>
+          <div v-swiper:mySwiper="options">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide mb-3" v-for="p in products" :key="p.id">
+                <ProductItem
+                  :id="p.id"
+                  :name="p.name"
+                  :weight="p.weight"
+                  :originalPrice="p.price"
+                  :thumb="p.imageUrl"
+                  :product="p.name.replace(/ +/g, '-').toLowerCase()"
+                  :category="p.category.name.replace(/ +/g, '-').toLowerCase()"
+                  :quantity="p.quantity"
+                  freeDelivery
+                />
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="products">
+        <!-- <div class="products">
           <div class="mt-4 row flex-nowrap">
             <div class="col-5 col-md-3 mb-3" v-for="p in products" :key="p.id">
               <ProductItem
@@ -26,7 +44,7 @@
               />
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="col" v-else>
         <p>Please select a location first.</p>
@@ -42,19 +60,33 @@ export default {
   props: ["title"],
   data() {
     return {
-      // products: [],
+      options: {
+        slidesPerView: 4,
+        slidesPerGroup: 4,
+        loop: false,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev"
+        },
+        breakpoints: {
+          769: {
+            slidesPerView: 2,
+            slidesPerGroup: 2
+          }
+        }
+      }
     };
   },
   methods: {},
   computed: {
     ...mapState({
       // products: (state) => state.products.products.filter((e) => e.tag == ""),
-      products: (state) => state.products.products,
+      products: state => state.products.products
     }),
     serviceArea() {
       return this.$store.state.serviceArea;
-    },
-  },
+    }
+  }
   // async fetch() {
   //   const res = await this.$axios.get(
   //     `/qa/v2/public/hub-product/hot-damn?serviceAreaId=${this.serviceArea}&statuses=IN_STOCK`
