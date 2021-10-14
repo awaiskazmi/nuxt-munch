@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 
 export default {
   data() {
@@ -65,12 +65,16 @@ export default {
   },
   computed: {
     ...mapState({
-      products: (state) => state.products.products,
+      products: state => state.products.products
+    }),
+    ...mapGetters({
+      added: "getAddedProducts"
     }),
     cartCount() {
-      return this.products.filter((p) => p.quantity > 0).length;
-    },
-  },
+      let added = this.added.map(p => p.quantity);
+      return added.reduce((prev, next) => prev + next, 0);
+    }
+  }
 };
 </script>
 

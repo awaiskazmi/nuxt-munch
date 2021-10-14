@@ -14,10 +14,10 @@ export const getters = {
   },
   getProductById: state => id => {
     return state.products.find(product => product.id === id);
+  },
+  getAddedProducts: state => {
+    return state.products.filter(product => product.quantity > 0);
   }
-  // getAddedProducts: (state) => {
-  //   return state.products.find((product) => product.quantity > 0).length;
-  // }
 };
 
 export const actions = {

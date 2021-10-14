@@ -123,7 +123,6 @@ export default {
           id: this.id,
           quantity: qty
         };
-        console.log(qty, payload);
         this.$store.commit("setProductQuantity", payload);
         return qty;
       }

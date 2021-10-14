@@ -88,7 +88,7 @@
         type="warning shadow"
         icon="add"
         @click="close"
-        class="fab"
+        class="fab d-none"
         >Suggest Products</BaseButton
       >
     </template>
@@ -102,7 +102,7 @@ export default {
   data() {
     return {
       timer: 0,
-      products: [],
+      products: []
     };
   },
   computed: {
@@ -110,7 +110,7 @@ export default {
       return this.$store.state.serviceArea;
     },
     ...mapGetters({
-      getSearchQuery: "getglobalSearchQuery",
+      getSearchQuery: "getglobalSearchQuery"
     }),
     searchResults() {
       return this.search.length == 0 ? false : true;
@@ -122,8 +122,8 @@ export default {
       set(query) {
         this.$store.commit("setglobalSearchQuery", query);
         return query;
-      },
-    },
+      }
+    }
   },
   mounted() {},
   methods: {
@@ -141,8 +141,8 @@ export default {
         `/qa/v2/public/hub-product/all?hubTypes=INTERNAL&keyword=${this.search}&role=ROLE_CUSTOMER&serviceAreaId=${this.serviceArea}&statuses=IN_STOCK&statuses=OUT_OF_STOCK`
       );
       this.products = res.data.data;
-    },
-  },
+    }
+  }
 };
 </script>
 
