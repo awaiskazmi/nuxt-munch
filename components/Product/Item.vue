@@ -9,7 +9,12 @@
   <NuxtLink
     :to="{
       name: `orders-category-product`,
-      params: { id: id, product: product, category: category },
+      params: {
+        id: id,
+        product: product,
+        category: category,
+        categoryId: categoryId,
+      },
     }"
     class="product pointer"
   >
@@ -46,6 +51,7 @@ export default {
     product: String,
     quantity: Number,
     category: String,
+    categoryId: Number,
     salePrice: String,
     originalPrice: Number,
     freeDelivery: Boolean,

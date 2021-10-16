@@ -27,14 +27,29 @@
         <div class="row">
           <div class="col">
             <p class="h1 font-weight-bold mb-3">Search</p>
-            <pre>{{ serviceArea }}</pre>
+            <!-- <pre>{{ serviceArea }}</pre> -->
+            <!-- <pre>{{ uCategories }}</pre> -->
             <BaseInput
               prepend="search"
               variant="lg"
               placeholder="I'm craving for"
               v-model="search"
               @keyup="onkeyup"
+              @input="getSearchResults(search)"
             />
+            <div class="categories d-flex flex-wrap mt-3">
+              <BaseRadio
+                v-for="c in uCategories"
+                :key="c.id"
+                :data-category="c.id"
+                :id="c.id"
+                :label="c.name"
+                :value="c.id"
+                v-model="filterId"
+                name="filterId"
+                @change="filterProducts(c.id)"
+              />
+            </div>
           </div>
         </div>
         <!-- SEARCH RESULTS -->
@@ -44,7 +59,7 @@
             <div class="mt-4 row">
               <div
                 class="col-6 col-md-3 mb-3"
-                v-for="p in products"
+                v-for="p in filteredProducts"
                 :key="p.id"
               >
                 <ProductItem
@@ -52,6 +67,7 @@
                   :weight="p.weight"
                   :originalPrice="p.price"
                   :thumb="p.imageUrl"
+                  :data-filter="p.category.id"
                   freeDelivery
                 />
               </div>
@@ -70,9 +86,12 @@
             <div class="col-12">
               <h4 class="font-weight-bold">Recent Searches</h4>
               <div class="mt-4 d-flex flex-wrap">
-                <ProductRecent label="cornetto classic" />
-                <ProductRecent label="feast" />
-                <ProductRecent label="lays masala" />
+                <ProductRecent
+                  @click="recentSearch(r)"
+                  v-for="r in recent"
+                  :key="r"
+                  :label="r"
+                />
               </div>
             </div>
           </div>
@@ -96,21 +115,45 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {
   data() {
     return {
       timer: 0,
-      products: []
+      products: [],
+      categories: [],
+      filterId: null,
     };
   },
+  watch: {
+    $route(to, from) {
+      this.$bvModal.hide("modal-search");
+    },
+  },
   computed: {
+    filteredProducts() {
+      if (this.filterId == null) {
+        return this.products;
+      } else {
+        return this.products.filter(
+          (product) => product.category.id == this.filterId
+        );
+      }
+    },
+    uCategories() {
+      return [
+        ...new Map(this.categories.map((item) => [item["id"], item])).values(),
+      ];
+    },
     serviceArea() {
       return this.$store.state.serviceArea;
     },
+    ...mapState({
+      recent: (state) => state.recentSearches,
+    }),
     ...mapGetters({
-      getSearchQuery: "getglobalSearchQuery"
+      getSearchQuery: "getglobalSearchQuery",
     }),
     searchResults() {
       return this.search.length == 0 ? false : true;
@@ -120,36 +163,57 @@ export default {
         return this.getSearchQuery;
       },
       set(query) {
-        this.$store.commit("setglobalSearchQuery", query);
-        return query;
-      }
-    }
+        this.$store.commit("setglobalSearchQuery", query.trim());
+        return query.trim();
+      },
+    },
   },
   mounted() {},
   methods: {
+    ...mapActions(["setRecentSearches"]),
+    filterProducts(id) {
+      this.filterId = id;
+    },
+    recentSearch(query) {
+      this.search = query;
+    },
     onkeyup() {
       if (this.search.length < 3) {
+        this.products = [];
+        this.categories = [];
+        this.filterId = null;
         return;
       }
       clearTimeout(this.timer);
       this.timer = setTimeout(() => {
+        console.log("...searching...");
         this.getSearchResults(this.search);
-      }, 100);
+      }, 350);
     },
     async getSearchResults(query) {
+      this.filterId = null;
       let res = await this.$axios.get(
         `/qa/v2/public/hub-product/all?hubTypes=INTERNAL&keyword=${this.search}&role=ROLE_CUSTOMER&serviceAreaId=${this.serviceArea}&statuses=IN_STOCK&statuses=OUT_OF_STOCK`
       );
+      this.categories = res.data.data.map((p) => ({
+        id: p.category.id,
+        name: p.category.name,
+      }));
       this.products = res.data.data;
-    }
-  }
+      this.$store.dispatch("setRecentSearches", this.search);
+    },
+  },
 };
 </script>
 
-<style scoped>
-.fab {
-  position: fixed;
-  bottom: 8px;
-  right: 8px;
-}
+<style lang="sass" scoped>
+.fab
+  position: fixed
+  bottom: 8px
+  right: 8px
+
+.category
+  margin-right: 8px
+  padding-left: 16px
+  padding-right: 16px
 </style>

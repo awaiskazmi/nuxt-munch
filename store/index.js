@@ -7,7 +7,8 @@ export const state = () => ({
   serviceArea: -1,
   globalSearchQuery: "",
   recentSearches: [],
-  shoppingCart: []
+  shoppingCart: [],
+  recentSearches: [],
 });
 
 export const getters = {
@@ -43,6 +44,10 @@ export const actions = {
 
     localStorage.setItem("m_serviceArea", res.data[0].id);
     commit("setServiceArea", res.data[0].id);
+  },
+  async setRecentSearches({ commit }, query) {
+    commit("setRecentSearch", query);
+    localStorage.setItem("m_recentSearches", JSON.stringify(this.state.recentSearches));
   }
 };
 
@@ -80,10 +85,17 @@ export const mutations = {
   },
   removeProductFromCart(state, id) {
     state.shoppingCart.splice(
-      state.shoppingCart.findIndex(function(i) {
+      state.shoppingCart.findIndex(function (i) {
         return i.id === id;
       }),
       1
     );
-  }
+  },
+  setRecentSearch(state, query) {
+    let check = state.recentSearches.indexOf(query);
+    state.recentSearches.indexOf(query) < 0 ? state.recentSearches.push(query) : (null);
+  },
+  setRecentSearches(state, payload) {
+    state.recentSearches = payload;
+  },
 };

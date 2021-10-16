@@ -14,12 +14,14 @@ export default {
   // SERVER CONFIG
   server: {
     port: 3000, // default: 3000
-    host: "0.0.0.0", // default: localhost,
+    // host: "0.0.0.0", // default: localhost,
+    host: "localhost", // default: localhost,
     timing: false
   },
 
   // Target: https://go.nuxtjs.dev/config-target
   target: "server",
+  // target: "static",
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -59,7 +61,8 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    // '@nuxtjs/google-fonts'
+    // '@nuxtjs/google-fonts',
+    '~/modules/sitemapRouteGenerator.js',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -70,7 +73,9 @@ export default {
     "@nuxtjs/style-resources",
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
-    "@nuxtjs/proxy"
+    "@nuxtjs/proxy",
+    "@nuxtjs/sitemap",
+    "@nuxtjs/robots",
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -101,6 +106,15 @@ export default {
       target: `https://615205d94a5f22001701d5d3.mockapi.io/api/v1`,
       pathRewrite: { "^/mock/": "" }
     }
+  },
+
+  sitemap: {
+    hostname: 'https://munchieshome.com',
+  },
+
+  robots: {
+    UserAgent: '*',
+    Disallow: '/'
   },
 
   // googleFonts: {

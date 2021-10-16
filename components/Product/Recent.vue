@@ -1,16 +1,16 @@
 <template>
-	<button>
-		<span>{{ label }}</span>
-		<span class="material-icons">close</span>
-	</button>
+  <button @click="$emit('click')">
+    <span>{{ label }}</span>
+    <span class="material-icons">close</span>
+  </button>
 </template>
 
 <script>
 export default {
-	props: ["label"],
-	data() {
-		return {};
-	},
+  props: ["label"],
+  data() {
+    return {};
+  },
 };
 </script>
 

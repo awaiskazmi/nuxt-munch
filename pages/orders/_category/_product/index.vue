@@ -11,16 +11,23 @@
         <b-breadcrumb-item to="/orders">Orders</b-breadcrumb-item>
         <b-breadcrumb-item
           class="cap"
-          @click="
+          @clicker="
             $router.push({
               name: `orders-category`,
               params: {
                 id: $route.params.id,
-                category: $route.params.category
-              }
+                category: $route.params.category,
+              },
             })
           "
-          href="javascript:void(0)"
+          :to="{
+            name: `orders-category`,
+            params: {
+              id: $route.params.id,
+              category: $route.params.category,
+              categoryId: $route.params.categoryId,
+            },
+          }"
           >{{
             this.$route.params.category.replace(/-+/g, " ")
           }}</b-breadcrumb-item
@@ -103,16 +110,16 @@ export default {
   },
   computed: {
     ...mapState({
-      products: state => state.products.products
+      products: (state) => state.products.products,
     }),
     ...mapGetters({
-      getQuantity: "getProductQuantityById"
+      getQuantity: "getProductQuantityById",
     }),
     id() {
       return this.$route.params.id;
     },
     product() {
-      return this.products.find(e => e.id === this.id);
+      return this.products.find((e) => e.id === this.id);
     },
     quantity: {
       get() {
@@ -121,11 +128,11 @@ export default {
       set(qty) {
         let payload = {
           id: this.id,
-          quantity: qty
+          quantity: qty,
         };
         this.$store.commit("setProductQuantity", payload);
         return qty;
-      }
+      },
     },
     src() {
       return (
@@ -136,7 +143,7 @@ export default {
       //   ? "https://munchies-qa.impact.venturedive.com/v2/public/resources/" +
       //       this.imgSrc
       //   : "https://wpamelia.com/wp-content/uploads/2018/11/ezgif-2-6d0b072c3d3f.gif";
-    }
+    },
   },
   // async fetch() {
   //   let res = await this.$axios.get(
@@ -151,7 +158,7 @@ export default {
       operator == "add" ? (this.quantity += 1) : (this.quantity -= 1);
       let payload = {
         id: this.id,
-        quantity: this.quantity
+        quantity: this.quantity,
       };
       this.$store.dispatch("setProductQuantityAction", payload);
       return;
@@ -162,8 +169,8 @@ export default {
       //   let payload = { ...this.product, quantity: this.quantity };
       //   this.$store.commit("addProductToCart", payload);
       // }
-    }
-  }
+    },
+  },
 };
 </script>
 

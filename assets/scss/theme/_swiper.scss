@@ -9,25 +9,51 @@
   height: 40px;
   border-radius: 100%;
   background-image: none;
-  background-color: #fff;
-  border: 1px solid $secondary;
-  top: calc(-40px - 1.25rem);
-  margin-top: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: $secondary;
+}
 
-  &:hover {
-    color: #fff;
-    background-color: $secondary;
+// WITH BLUE NAV BUTTONS
+.swiper-products {
+  .swiper-button-prev,
+  .swiper-button-next {
+    margin-top: 0;
+    background-color: #fff;
+    border: 1px solid $secondary;
+    top: calc(-40px - 1.25rem);
+    color: $secondary;
+
+    &:hover {
+      color: #fff;
+      background-color: $secondary;
+    }
+  }
+
+  .swiper-button-prev {
+    left: unset;
+    right: calc(40px + 1rem);
+  }
+  .swiper-button-next {
+    right: 0;
   }
 }
 
-.swiper-button-prev {
-  left: unset;
-  right: calc(40px + 1rem);
-}
-.swiper-button-next {
-  right: 0;
+// WITH RED NAV BUTTONS
+.swiper-yummies {
+  .swiper-button-prev,
+  .swiper-button-next {
+    margin-top: -20px;
+    background-color: $primary;
+    color: $white;
+  }
+
+  .swiper-button-prev {
+    left: 0;
+    margin-left: -20px;
+  }
+  .swiper-button-next {
+    right: 0;
+    margin-right: -20px;
+  }
 }

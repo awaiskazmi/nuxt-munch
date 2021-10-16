@@ -1,13 +1,19 @@
 <template>
   <nuxt-link
-    :to="'/orders/' + name.replace(/ +/g, '-').toLowerCase()"
+    :to="{
+      name: `orders-category`,
+      params: {
+        category: name,
+        categoryId: id,
+      },
+    }"
     class="category"
   >
     <div class="img-wrapper img">
       <img
         :src="
           'https://munchies-qa.impact.venturedive.com/v2/public/resources/' +
-          imageUrl
+            imageUrl
         "
         :alt="name"
       />

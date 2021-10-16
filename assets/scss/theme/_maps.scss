@@ -1,0 +1,12 @@
+.marker {
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 50px;
+  margin-top: -25px;
+  background: center/contain no-repeat;
+  z-index: 1;
+}

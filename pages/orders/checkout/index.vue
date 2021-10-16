@@ -12,292 +12,299 @@
         <b-breadcrumb-item to="/checkout" active>Checkout</b-breadcrumb-item>
       </b-breadcrumb>
     </div>
-    <h1>Checkout</h1>
-    <div class="row mt-5">
-      <div class="col-12 col-md-6">
+    <h1 class="my-3 my-md-0">Checkout</h1>
+    <div class="row mt-md-5">
+      <div class="col-12 col-md-6 order-1 order-md-0">
         <!-- address details -->
-        <div class="row">
-          <div class="col-auto">
-            <h4>Deliver to</h4>
+        <div>
+          <div class="row">
+            <div class="col-auto">
+              <h4>Deliver to</h4>
+            </div>
+            <div class="col-auto ml-auto">
+              <BaseButton type="outline-secondary" variant="sm"
+                >Change address</BaseButton
+              >
+            </div>
           </div>
-          <div class="col-auto ml-auto">
-            <BaseButton type="outline-secondary" variant="sm"
-              >Change address</BaseButton
-            >
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <div class="row no-gutters align-items-center suggestion">
-              <div class="col-auto mr-3">
-                <img src="~/assets/images/icon-location.svg" height="24" />
-              </div>
-              <div class="col">
-                <h6 class="font-weight-bold">
-                  {{ area }}
-                </h6>
-                <p class="text-muted m-0">
-                  <small>Click on plus to add address details</small>
-                </p>
-              </div>
-              <div class="col-auto">
-                <button
-                  v-b-toggle.sidebar-address
-                  class="btn btn-outline-secondary btn-sm"
-                >
-                  +
-                </button>
+          <div class="row">
+            <div class="col address-details">
+              <div class="row no-gutters align-items-center suggestion">
+                <div class="col-auto mr-3">
+                  <img src="~/assets/images/icon-location.svg" height="24" />
+                </div>
+                <div class="col">
+                  <h6 class="font-weight-bold">
+                    {{ area }}
+                  </h6>
+                  <p class="text-muted m-0">
+                    <small v-if="address.details">{{ address.details }}</small>
+                    <small v-else>Click on plus to add address details</small>
+                  </p>
+                </div>
+                <div class="col-auto">
+                  <button
+                    v-b-toggle.sidebar-address
+                    class="btn btn-outline-secondary btn-sm"
+                  >
+                    +
+                  </button>
+                </div>
               </div>
             </div>
           </div>
+          <hr />
         </div>
-        <hr />
         <!-- order details -->
-        <div class="row">
-          <div class="col-auto">
-            <h4>Order details</h4>
+        <div>
+          <div class="row">
+            <div class="col-auto">
+              <h4>Order details</h4>
+            </div>
+            <div class="col-auto ml-auto">
+              <BaseButton type="outline-secondary" variant="sm"
+                >View details</BaseButton
+              >
+            </div>
           </div>
-          <div class="col-auto ml-auto">
-            <BaseButton type="outline-secondary" variant="sm"
-              >View details</BaseButton
-            >
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <div class="row no-gutters align-items-center suggestion">
-              <div class="col-auto mr-3">
-                <img src="~/assets/images/icon-location.svg" height="24" />
-              </div>
-              <div class="col">
-                <h6 class="font-weight-bold">{{ items }} items</h6>
+          <div class="row">
+            <div class="col">
+              <div class="row no-gutters align-items-center suggestion">
+                <div class="col-auto mr-3">
+                  <img src="~/assets/images/icon-location.svg" height="24" />
+                </div>
+                <div class="col">
+                  <h6 class="font-weight-bold">
+                    {{ itemsCount }} items - Rs. {{ total }}
+                  </h6>
+                </div>
               </div>
             </div>
           </div>
+          <hr />
         </div>
-        <hr />
         <!-- promo code -->
-        <div class="row">
-          <div class="col-auto">
-            <h4>Promo code</h4>
+        <div>
+          <div class="row">
+            <div class="col-auto">
+              <h4>Promo code</h4>
+              <pre>{{ center }}</pre>
+            </div>
+            <div class="col-auto ml-auto">
+              <BaseButton type="outline-secondary" variant="sm"
+                >View details</BaseButton
+              >
+            </div>
           </div>
-          <div class="col-auto ml-auto">
-            <BaseButton type="outline-secondary" variant="sm"
-              >View details</BaseButton
-            >
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <div class="row no-gutters align-items-center suggestion">
-              <div class="col-auto mr-3">
-                <img src="~/assets/images/icon-location.svg" height="24" />
-              </div>
-              <div class="col">
-                <h6 class="text-muted">Add promo code</h6>
+          <div class="row">
+            <div class="col">
+              <div class="row no-gutters align-items-center suggestion">
+                <div class="col-auto mr-3">
+                  <img src="~/assets/images/icon-location.svg" height="24" />
+                </div>
+                <div class="col">
+                  <h6 class="text-muted">Add promo code</h6>
+                </div>
               </div>
             </div>
           </div>
+          <hr />
         </div>
-        <hr />
         <!-- when -->
-        <div class="row">
-          <div class="col-auto">
-            <h4>When</h4>
+        <div>
+          <div class="row">
+            <div class="col-auto">
+              <h4>When</h4>
+            </div>
+            <div class="col-auto ml-auto">
+              <BaseButton type="outline-secondary" variant="sm"
+                >View details</BaseButton
+              >
+            </div>
           </div>
-          <div class="col-auto ml-auto">
-            <BaseButton type="outline-secondary" variant="sm"
-              >View details</BaseButton
-            >
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <div class="row no-gutters align-items-center suggestion">
-              <div class="col-auto mr-3">
-                <img src="~/assets/images/icon-location.svg" height="24" />
-              </div>
-              <div class="col">
-                <h6 class="text-muted">Add promo code</h6>
+          <div class="row">
+            <div class="col">
+              <div class="row no-gutters align-items-center suggestion">
+                <div class="col-auto mr-3">
+                  <img src="~/assets/images/icon-location.svg" height="24" />
+                </div>
+                <div class="col">
+                  <h6 class="text-muted">Add promo code</h6>
+                </div>
               </div>
             </div>
           </div>
+          <hr />
         </div>
-        <hr />
         <!-- payment method -->
-        <div class="row">
-          <div class="col-auto">
-            <h4>Payment Method</h4>
+        <div>
+          <div class="row">
+            <div class="col-auto">
+              <h4>Payment Method</h4>
+            </div>
+            <div class="col-auto ml-auto">
+              <BaseButton type="outline-secondary" variant="sm"
+                >View details</BaseButton
+              >
+            </div>
           </div>
-          <div class="col-auto ml-auto">
-            <BaseButton type="outline-secondary" variant="sm"
-              >View details</BaseButton
-            >
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <div class="row no-gutters align-items-center suggestion">
-              <div class="col-auto mr-3">
-                <img src="~/assets/images/icon-location.svg" height="24" />
-              </div>
-              <div class="col">
-                <h6 class="text-muted">Add promo code</h6>
+          <div class="row">
+            <div class="col">
+              <div class="row no-gutters align-items-center suggestion">
+                <div class="col-auto mr-3">
+                  <img src="~/assets/images/icon-location.svg" height="24" />
+                </div>
+                <div class="col">
+                  <h6 class="text-muted">Add promo code</h6>
+                </div>
               </div>
             </div>
           </div>
+          <hr />
         </div>
-        <hr />
         <!-- payment method -->
-        <div class="row">
-          <div class="col-auto">
-            <h4>Order for someone else</h4>
+        <div>
+          <div class="row">
+            <div class="col-auto">
+              <h4>Order for someone else</h4>
+            </div>
+            <div class="col-auto ml-auto">
+              <BaseButton type="outline-secondary" variant="sm"
+                >View details</BaseButton
+              >
+            </div>
           </div>
-          <div class="col-auto ml-auto">
-            <BaseButton type="outline-secondary" variant="sm"
-              >View details</BaseButton
-            >
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <div class="row no-gutters align-items-center suggestion">
-              <div class="col-auto mr-3">
-                <img src="~/assets/images/icon-location.svg" height="24" />
-              </div>
-              <div class="col">
-                <h6 class="text-muted">Add promo code</h6>
+          <div class="row">
+            <div class="col">
+              <div class="row no-gutters align-items-center suggestion">
+                <div class="col-auto mr-3">
+                  <img src="~/assets/images/icon-location.svg" height="24" />
+                </div>
+                <div class="col">
+                  <h6 class="text-muted">Add promo code</h6>
+                </div>
               </div>
             </div>
           </div>
+          <hr />
         </div>
-        <hr />
-        <!-- payment method -->
-        <div class="row">
-          <div class="col-auto">
-            <h4>Delivery Notes</h4>
+        <!-- notes -->
+        <div>
+          <div class="row">
+            <div class="col-auto">
+              <h4>Delivery Notes</h4>
+            </div>
+            <div class="col-auto ml-auto">
+              <span class="text-muted">Optional</span>
+            </div>
           </div>
-          <div class="col-auto ml-auto">
-            <span class="text-muted">Optional</span>
+          <div class="row mt-2">
+            <div class="col">
+              <textarea
+                rows="5"
+                placeholder="e.g. please don't ring the bell"
+                class="form-control"
+              ></textarea>
+            </div>
           </div>
         </div>
-        <div class="row mt-2">
-          <div class="col">
-            <textarea
-              rows="5"
-              placeholder="e.g. please don't ring the bell"
-              class="form-control"
-            ></textarea>
-          </div>
-        </div>
-        <div class="row mt-4">
-          <div class="col">
-            <BaseButton type="primary" full>Place Order - Rs. 460</BaseButton>
+        <!-- place order -->
+        <div>
+          <div class="row mt-4">
+            <div class="col">
+              <BaseButton type="primary" full
+                >Place Order - Rs. {{ total }}</BaseButton
+              >
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-12 col-md-6">
-        <div
-          class="bg-light p-5 d-flex align-items-center justify-content-center h-100"
-        >
-          Google map here
-        </div>
+      <div class="col-12 col-md-6 order-0 order-md-1 p-0" id="map-wrapper">
+        <CheckoutMap @update="onMapUpdate" />
       </div>
     </div>
     <!-- Address sidebar -->
-    <b-sidebar
-      width="460px"
-      id="sidebar-address"
-      title="Sidebar"
-      right
-      backdrop
-      shadow
-      bg-variant="white"
-      no-header
-    >
-      <template #default="{ hide }">
-        <BaseButton isButton type="m-btn-action m-sidebar-close" @click="hide">
-          <span class="material-icons">close</span>
-        </BaseButton>
-        <div class="d-flex flex-column justify-content-between h-100">
-          <div class="py-6 px-4">
-            <p class="my-4 h2 font-weight-bold">Add address details</p>
-            <p>Please enter location details and label them</p>
-            <p class="mt-3">
-              <small><strong>Location details</strong></small>
-            </p>
-            <BaseInput
-              placeholder="House no. / Flat no. / Floor / Building name"
-              variant="md"
-            />
-            <p class="mt-3">
-              <small><strong>Label</strong></small>
-            </p>
-            <div class="labels">
-              <BaseButton
-                type="outline-secondary"
-                variant="sm"
-                rounded
-                icon="home"
-                >Home</BaseButton
-              >
-              <BaseButton
-                type="outline-secondary"
-                variant="sm"
-                rounded
-                icon="work"
-                >Work</BaseButton
-              >
-              <BaseButton type="outline-secondary" variant="sm" rounded
-                >Other</BaseButton
-              >
-            </div>
-          </div>
-          <div class="px-4 pb-4">
-            <BaseButton isButton type="secondary" full
-              >Save address details</BaseButton
-            >
-          </div>
-        </div>
-      </template>
-    </b-sidebar>
+    <CheckoutAddressSidebar @update="onAddressUpdate" />
   </div>
 </template>
 
 <script>
 import { mapState, mapGetters } from "vuex";
+
 export default {
   data() {
-    return {};
+    return {
+      center: {},
+      address: {},
+      promo: {},
+      schedule: {},
+      payment: {},
+      someoneElse: {},
+      notes: {},
+    };
   },
   computed: {
     ...mapState({
-      area: state => state.location
+      area: (state) => state.location,
     }),
     ...mapGetters({
-      // getAddedProducts: "getAddedProducts",
+      getAddedProducts: "getAddedProducts",
     }),
     items: {
       get() {
-        // return this.getAddedProducts();
-      }
-    }
-  }
+        return this.getAddedProducts;
+      },
+    },
+    itemsCount() {
+      return this.items
+        .map((obj) => obj.quantity)
+        .reduce((prev, next) => prev + next, 0);
+    },
+    total() {
+      let total = 0;
+      this.items.forEach((p) => {
+        total = total + parseInt(p.quantity) * parseInt(p.price);
+      });
+      return total;
+    },
+  },
+  mounted() {},
+  methods: {
+    onMapUpdate(center) {
+      this.center = center;
+    },
+    onAddressUpdate(address) {
+      this.address = address;
+    },
+  },
 };
 </script>
 
 <style scoped lang="sass">
-h6
-	margin: 0
-.suggestion
-	padding: 1rem
-	border-radius: 8px
+#map-wrapper
+  height: calc(100vh)
+  width: 45%
+  position: fixed
+  top: 0
+  right: 0
+  bottom: 0
 
-	&:not(:last-child)::after
-		content: ''
-		display: none
-		height: 1px
-		width: 100%
-		margin: 1rem 0
-		background-color: #E0E0E0
+  @media(max-width: 768px)
+    position: relative
+    width: 100%
+    height: 320px
+    margin-bottom: 1.5rem
+h6
+  margin: 0
+.suggestion
+  padding: 1rem 0
+  border-radius: 8px
+
+  &:not(:last-child)::after
+    content: ''
+    display: none
+    height: 1px
+    width: 100%
+    margin: 1rem 0
+    background-color: #E0E0E0
 </style>

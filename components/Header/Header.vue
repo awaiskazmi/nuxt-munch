@@ -1,6 +1,6 @@
 <template>
-  <div class="container p-0">
-    <header class="d-block d-md-flex">
+  <header class="bg-white">
+    <div class="header container d-block d-md-flex">
       <div class="d-flex align-items-center overflow-hidden">
         <NuxtLink class="navbar-brand" to="/">
           <img src="~/assets/images/logo.png" alt="" height="40"
@@ -26,16 +26,16 @@
           </div>
         </div>
       </client-only>
-    </header>
+    </div>
     <client-only>
-      <HeaderModalSuggestion />
+      <!-- <HeaderModalSuggestion /> -->
       <HeaderModalLocation />
       <HeaderModalSearch />
       <div v-if="auth">
         <HeaderModalProfile />
       </div>
     </client-only>
-  </div>
+  </header>
 </template>
 
 <script>
@@ -88,6 +88,9 @@ export default {
 
 <style lang="sass" scoped>
 header
+  position: relative
+  z-index: 1
+.header
   align-items: center
   justify-content: space-between
   padding: 0.5rem 1rem

@@ -157,3 +157,32 @@
 .is-invalid input {
 	border: 1px solid $danger;
 }
+
+.m-radio {
+	input[type="radio"] {
+		display: none;
+	}
+	label {
+		user-select: none;
+		transition: all 0.1s ease;
+		cursor: pointer;
+		padding: 4px 16px;
+		border-radius: 100px;
+		border: 1px solid $info;
+		font-weight: normal;
+		margin-right: 8px;
+		margin-bottom: 8px;
+		display: inline-flex;
+		align-items: center;
+
+		.material-icons {
+			font-size: 1em;
+			margin-right: 4px;
+		}
+	}
+	label:hover,
+	input[type="radio"]:checked ~ label {
+		background-color: $info;
+		color: $white;
+	}
+}

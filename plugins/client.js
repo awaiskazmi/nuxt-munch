@@ -44,22 +44,27 @@ export default ({ app }, inject) => {
     if (localStorageShoppingCart) {
       app.store.commit("setShoppingCart", JSON.parse(localStorageShoppingCart));
     }
+    // set recent searches if present
+    const localStorageSearches = localStorage.getItem("m_recentSearches");
+    if (localStorageSearches) {
+      app.store.commit("setRecentSearches", JSON.parse(localStorageSearches));
+    }
   }
 
   // users
-  app.$axios.get("https://jsonplaceholder.typicode.com/users/").then((res) => {
-    app.store.commit("setUsers", res.data);
-  });
+  // app.$axios.get("https://jsonplaceholder.typicode.com/users/").then((res) => {
+  //   app.store.commit("setUsers", res.data);
+  // });
 
   // posts
-  app
-    .$axios({
-      method: "get",
-      url: "/test/posts/",
-    })
-    .then((res) => {
-      app.store.commit("setPosts", res.data);
-    });
+  // app
+  //   .$axios({
+  //     method: "get",
+  //     url: "/test/posts/",
+  //   })
+  //   .then((res) => {
+  //     app.store.commit("setPosts", res.data);
+  //   });
 
   // categories
   // app.$axios({
