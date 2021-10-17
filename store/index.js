@@ -2,9 +2,10 @@ export const state = () => ({
   auth: false,
   token: "",
   cart: 0,
+  locationObj: {},
   location: "",
   latLng: {},
-  serviceArea: -1,
+  serviceArea: 16,
   globalSearchQuery: "",
   recentSearches: [],
   shoppingCart: [],
@@ -12,19 +13,24 @@ export const state = () => ({
 });
 
 export const getters = {
-  getglobalSearchQuery: state => {
+  getglobalSearchQuery: (state) => {
     return state.globalSearchQuery;
   },
-  getRecentSearches: state => {
+  getRecentSearches: (state) => {
     return state.recentSearches;
-  }
+  },
+  getLatLng: (state) => {
+    return {
+      lat: state.locationObj.lat,
+      lng: state.locationObj.lng,
+    };
+  },
 };
 
 export const actions = {
-  async getServiceArea({ commit }, payload) {
-    console.log(payload);
-
+  async getServiceArea({ commit, state }, payload) {
     let formData = new FormData();
+    let currentServiceArea = state.serviceArea;
 
     formData.append("coordinates[lat]", payload.lat);
     formData.append("coordinates[lng]", payload.lng);
@@ -36,19 +42,29 @@ export const actions = {
       url: "/api/check-customer-location",
       data: formData,
       headers: {
-        "Content-Type": "multipart/form-data"
-      }
+        "Content-Type": "multipart/form-data",
+      },
     });
 
-    console.log(res.data[0]);
+    console.log("SERVICE AREA", res.data[0]);
 
-    localStorage.setItem("m_serviceArea", res.data[0].id);
+    localStorage.setItem(
+      "m_location",
+      JSON.stringify({ ...payload, service_area: res.data[0].id })
+    );
+    commit("setUserLocationObject", {
+      ...payload,
+      service_area: res.data[0].id,
+    });
     commit("setServiceArea", res.data[0].id);
   },
   async setRecentSearches({ commit }, query) {
     commit("setRecentSearch", query);
-    localStorage.setItem("m_recentSearches", JSON.stringify(this.state.recentSearches));
-  }
+    localStorage.setItem(
+      "m_recentSearches",
+      JSON.stringify(this.state.recentSearches)
+    );
+  },
 };
 
 export const mutations = {
@@ -61,8 +77,13 @@ export const mutations = {
   setUserLocation(state, location) {
     state.location = location;
   },
+  setUserLocationObject(state, locationObj) {
+    state.locationObj = locationObj;
+  },
   serUserLatLng(state, latlng) {
     state.latLng = latlng;
+    state.locationObj.lat = latlng.lat;
+    state.locationObj.lng = latlng.lng;
   },
   setServiceArea(state, id) {
     state.serviceArea = id;
@@ -73,9 +94,19 @@ export const mutations = {
   setShoppingCart(state, cart) {
     state.shoppingCart = cart;
   },
+  removeRecentSearch(state, query) {
+    state.recentSearches.splice(
+      state.recentSearches.findIndex((s) => s == query),
+      1
+    );
+    localStorage.setItem(
+      "m_recentSearches",
+      JSON.stringify(this.state.recentSearches)
+    );
+  },
   addProductToCart(state, product) {
     // check if product already added
-    const isPresent = e => e.id === product.id;
+    const isPresent = (e) => e.id === product.id;
     const index = state.shoppingCart.findIndex(isPresent);
     if (index >= 0) {
       state.shoppingCart[index].quantity = product.quantity;
@@ -83,17 +114,11 @@ export const mutations = {
       state.shoppingCart.push(product);
     }
   },
-  removeProductFromCart(state, id) {
-    state.shoppingCart.splice(
-      state.shoppingCart.findIndex(function (i) {
-        return i.id === id;
-      }),
-      1
-    );
-  },
   setRecentSearch(state, query) {
     let check = state.recentSearches.indexOf(query);
-    state.recentSearches.indexOf(query) < 0 ? state.recentSearches.push(query) : (null);
+    state.recentSearches.indexOf(query) < 0
+      ? state.recentSearches.push(query)
+      : null;
   },
   setRecentSearches(state, payload) {
     state.recentSearches = payload;

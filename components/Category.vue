@@ -13,7 +13,7 @@
       <img
         :src="
           'https://munchies-qa.impact.venturedive.com/v2/public/resources/' +
-            imageUrl
+          imageUrl
         "
         :alt="name"
       />
@@ -38,7 +38,7 @@ export default {
       transform: scale(1.05)
 
   .img-wrapper
-    display: flex
+    display: inline-flex
     align-items: center
     justify-content: center
     border-radius: 8px

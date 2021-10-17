@@ -3,14 +3,14 @@
     <div class="m-input prepend">
       <span class="m-btn-icon m-btn-icon-prepend material-icons">search</span>
       <!-- <input
-				@click="onclick"
-				@keyup="onkeypress"
-				v-model="location"
-				type="text"
-				placeholder="Search location"
-				class="m-input-field form-control lg"
-				ref="autocomplete"
-			/> -->
+        @click="onclick"
+        @keyup="onkeypress"
+        v-model="location"
+        type="text"
+        placeholder="Search location"
+        class="m-input-field form-control lg"
+        ref="autocomplete"
+      /> -->
       <BaseInput
         @click="onclick"
         @keyup="onkeypress"
@@ -22,10 +22,10 @@
       />
     </div>
     <!-- <div v-show="showPredictions" class="m-dropdown-suggestions">
-			<HeaderAutocompleteSuggestion @select="onselect" v-for="p of predictions"
-				:key="p.place_id" :id="p.place_id" :label="p.description" />
-			</div>
-		</div> -->
+      <HeaderAutocompleteSuggestion @select="onselect" v-for="p of predictions"
+        :key="p.place_id" :id="p.place_id" :label="p.description" />
+      </div>
+    </div> -->
     <div v-show="showPredictions" class="mt-4 suggestions">
       <!-- <pre>{{ predictions }}</pre> -->
       <h4 class="font-weight-bold mb-4">Suggestions</h4>
@@ -74,13 +74,11 @@ export default {
       }
     },
     onselect(label) {
-      console.log(label);
-      this.location = label;
+      this.location = "";
       this.showPredictions = false;
-      this.$store.commit("setUserLocation", label);
-      this.getLatLng(this.location);
-      this.$setLocation(label);
       this.predictions = [];
+      this.getLatLng(label);
+      this.$setLocation(label);
       this.$emit("onselect");
     },
     onkeypress() {
@@ -123,7 +121,7 @@ export default {
             localStorage.setItem("m_latlng", JSON.stringify(latLng));
             this.$store.commit("serUserLatLng", latLng);
 
-            // get service area payload
+            // set service area payload
             let payload = {
               lat: latLng.lat,
               lng: latLng.lng,
@@ -138,13 +136,13 @@ export default {
   mounted() {
     // console.log(this.$refs);
     // var defaultBounds = new google.maps.LatLngBounds(
-    // 	new google.maps.LatLng(-33.8902, 151.1759),
-    // 	new google.maps.LatLng(-33.8474, 151.2631)
+    //  new google.maps.LatLng(-33.8902, 151.1759),
+    //  new google.maps.LatLng(-33.8474, 151.2631)
     // );
     // var input = this.$refs.autocomplete;
     // var options = {
-    // 	bounds: defaultBounds,
-    // 	types: ["establishment"],
+    //  bounds: defaultBounds,
+    //  types: ["establishment"],
     // };
     // this.autocomplete = new google.maps.places.Autocomplete(input, options);
   },

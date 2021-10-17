@@ -3,12 +3,12 @@ export default {
   // PUBLIC
   publicRuntimeConfig: {
     googleSheetKey: "${GOOGLE_SHEET_KEY}",
-    placeholderImage: "${PLACEHOLDER_IMAGE}"
+    placeholderImage: "${PLACEHOLDER_IMAGE}",
   },
   // PRIVATE
   privateRuntimeConfig: {
     googlePlacesAPI: "${GOOGLE_PLACES_API}",
-    googleSheetID: "${GOOGLE_SHEET_ID}"
+    googleSheetID: "${GOOGLE_SHEET_ID}",
   },
 
   // SERVER CONFIG
@@ -16,7 +16,7 @@ export default {
     port: 3000, // default: 3000
     // host: "0.0.0.0", // default: localhost,
     host: "localhost", // default: localhost,
-    timing: false
+    timing: false,
   },
 
   // Target: https://go.nuxtjs.dev/config-target
@@ -27,20 +27,20 @@ export default {
   head: {
     title: "Munchies App",
     htmlAttrs: {
-      lang: "en"
+      lang: "en",
     },
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { hid: "description", name: "description", content: "" },
-      { name: "format-detection", content: "telephone=no" }
+      { name: "format-detection", content: "telephone=no" },
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
     script: [
       {
-        src: `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_PLACES_API}&libraries=places`
-      }
-    ]
+        src: `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_PLACES_API}&libraries=places`,
+      },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -52,7 +52,7 @@ export default {
     // client side only
     { src: "~/plugins/userLogin.client.js" },
     { src: "~/plugins/aos.client" },
-    { src: "~/plugins/vue-awesome-swiper.js", ssr: false }
+    { src: "~/plugins/vue-awesome-swiper.js", ssr: false },
     // { src: "~/plugins/test.server" },
   ],
 
@@ -62,7 +62,7 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // '@nuxtjs/google-fonts',
-    '~/modules/sitemapRouteGenerator.js',
+    "~/modules/sitemapRouteGenerator.js",
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -74,13 +74,20 @@ export default {
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
     "@nuxtjs/proxy",
+    // [
+    //   "nuxt-gmaps",
+    //   {
+    //     key: `${process.env.GOOGLE_PLACES_API}`,
+    //     libraries: ["places"],
+    //   },
+    // ],
     "@nuxtjs/sitemap",
     "@nuxtjs/robots",
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    proxy: true
+    proxy: true,
     // baseURL: "https://munchies-qa.impact.venturedive.com",
     // baseURL: "http://test.munchieshome.com",
   },
@@ -88,33 +95,33 @@ export default {
   proxy: {
     "/api/": {
       target: "https://test.munchieshome.com",
-      pathRewrite: { "^/api/": "" }
+      pathRewrite: { "^/api/": "" },
     },
     "/qa/": {
       target: "https://munchies-qa.impact.venturedive.com",
-      pathRewrite: { "^/qa/": "" }
+      pathRewrite: { "^/qa/": "" },
     },
     "/test/": {
       target: "https://awais-users.000webhostapp.com/api",
-      pathRewrite: { "^/test/": "" }
+      pathRewrite: { "^/test/": "" },
     },
     "/sheet/": {
       target: `https://sheets.googleapis.com/v4/spreadsheets/${process.env.GOOGLE_SHEET_ID}`,
-      pathRewrite: { "^/sheet/": "" }
+      pathRewrite: { "^/sheet/": "" },
     },
     "/mock/": {
       target: `https://615205d94a5f22001701d5d3.mockapi.io/api/v1`,
-      pathRewrite: { "^/mock/": "" }
-    }
+      pathRewrite: { "^/mock/": "" },
+    },
   },
 
   sitemap: {
-    hostname: 'https://munchieshome.com',
+    hostname: "https://munchieshome.com",
   },
 
   robots: {
-    UserAgent: '*',
-    Disallow: '/'
+    UserAgent: "*",
+    Disallow: "/",
   },
 
   // googleFonts: {
@@ -125,13 +132,13 @@ export default {
 
   bootstrapVue: {
     bootstrapCSS: false,
-    bootstrapVueCSS: false
+    bootstrapVueCSS: false,
   },
 
   styleResources: {
-    scss: "@/assets/scss/_variables.scss"
+    scss: "@/assets/scss/_variables.scss",
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {}
+  build: {},
 };

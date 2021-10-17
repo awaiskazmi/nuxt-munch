@@ -43,34 +43,36 @@
             <!-- product row: end -->
           </div>
           <div class="col-12 col-md-4">
-            <div class="bg-light mb-3">
-              <div class="p-3 border-bottom">
-                <h3>Order summary</h3>
-              </div>
-              <div class="px-3">
-                <div class="row py-2">
-                  <div class="col">Sub total</div>
-                  <div class="col-auto">Rs. {{ total }}</div>
+            <nuxtjs-sticky-sidebar>
+              <div class="bg-light mb-3">
+                <div class="p-3 border-bottom">
+                  <h3>Order summary</h3>
                 </div>
-                <div class="row py-2">
-                  <div class="col">Dicsount</div>
-                  <div class="col-auto">Rs. {{ discount }}</div>
-                </div>
-                <div class="row py-2">
-                  <div class="col">Delivery charges</div>
-                  <div class="col-auto">
-                    <small class="text-secondary">FREE</small>
+                <div class="px-3">
+                  <div class="row py-2">
+                    <div class="col">Sub total</div>
+                    <div class="col-auto">Rs. {{ total }}</div>
+                  </div>
+                  <div class="row py-2">
+                    <div class="col">Dicsount</div>
+                    <div class="col-auto">Rs. {{ discount }}</div>
+                  </div>
+                  <div class="row py-2">
+                    <div class="col">Delivery charges</div>
+                    <div class="col-auto">
+                      <small class="text-secondary">FREE</small>
+                    </div>
+                  </div>
+                  <div class="row py-3 border-top">
+                    <div class="col h5">Total</div>
+                    <div class="col-auto h5">Rs. {{ total }}</div>
                   </div>
                 </div>
-                <div class="row py-3 border-top">
-                  <div class="col h5">Total</div>
-                  <div class="col-auto h5">Rs. {{ total }}</div>
-                </div>
               </div>
-            </div>
-            <BaseButton full type="primary" url="/orders/checkout"
-              >Checkout - Rs. {{ total }}</BaseButton
-            >
+              <BaseButton full type="primary" url="/orders/checkout"
+                >Checkout - Rs. {{ total }}</BaseButton
+              >
+            </nuxtjs-sticky-sidebar>
           </div>
         </div>
       </div>
@@ -79,7 +81,12 @@
 </template>
 
 <script>
+import nuxtjsStickySidebar from "nuxtjs-sticky-sidebar";
+
 export default {
+  components: {
+    "nuxtjs-sticky-sidebar": nuxtjsStickySidebar,
+  },
   computed: {
     products() {
       return this.$store.state.products.products.filter(

@@ -27,10 +27,10 @@ export default {
     full: Boolean,
     url: {
       type: String,
-      default: "#"
+      default: "#",
     },
     isButton: Boolean,
-    variant: String
+    variant: String,
   },
   computed: {
     classes() {
@@ -39,13 +39,13 @@ export default {
       if (this.rounded) classArr.push("rounded-pill");
       if (this.full) classArr.push("btn-block");
       if (this.type == "cart") {
-        if (this.$store.state.products.products.some(p => p.quantity > 0))
+        if (this.$store.state.products.products.some((p) => p.quantity > 0))
           classArr.push("btn-primary");
         else classArr.push("btn-link");
       }
       return classArr.join(" ");
-    }
-  }
+    },
+  },
 };
 </script>
 

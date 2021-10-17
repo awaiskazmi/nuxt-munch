@@ -18,6 +18,7 @@
       :minlength="minLength"
       @input="$emit('input', $event.target.value)"
       @focus="$emit('focus')"
+      @change="$emit('change')"
       @keyup="$emit('keyup')"
       @keydown="$emit('keydown')"
       @krypress="$emit('krypress')"

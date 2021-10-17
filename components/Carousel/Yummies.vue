@@ -1,12 +1,12 @@
 <template>
 	<div class="swiper swiper-yummies">
-		<div class="swiper-button-prev" slot="button-prev">
+		<div id="swiper-yummies-prev" class="swiper-button-prev" slot="button-prev">
 			<span class="material-icons">navigate_before</span>
 		</div>
-		<div class="swiper-button-next" slot="button-next">
+		<div id="swiper-yummies-next" class="swiper-button-next" slot="button-next">
 			<span class="material-icons">navigate_next</span>
 		</div>
-		<div v-swiper:mySwiper="options">
+		<div v-swiper:swiperYummies="options">
 			<div class="swiper-wrapper">
 				<div v-for="s in slides" class="swiper-slide yummy">
 					<h5 class="font-weight-bold">Pie in the Sky</h5>
@@ -28,8 +28,8 @@ export default {
 				slidesPerGroup: 3,
 				loop: false,
 				navigation: {
-					nextEl: ".swiper-button-next",
-					prevEl: ".swiper-button-prev",
+					nextEl: "#swiper-yummies-next",
+					prevEl: "#swiper-yummies-prev",
 				},
 				breakpoints: {
 					769: {

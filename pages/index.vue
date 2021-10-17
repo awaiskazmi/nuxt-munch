@@ -4,9 +4,13 @@
       <div class="container">
         <div class="row">
           <div class="col">
-            <h1 data-aos="flip-up">{{ title }}</h1>
-            <!-- <h3>{{ query }}</h3> -->
-            <p>{{ subtitle }}</p>
+            <h1 data-aos="flip-up">Feeling peckish? Snack time!</h1>
+            <!-- code output study -->
+            <div class="d-none">
+              <pre>{{ location }}</pre>
+              <pre>{{ cart }}</pre>
+            </div>
+            <p>We will deliver your snacks within minutes</p>
           </div>
         </div>
         <div class="row">
@@ -17,6 +21,7 @@
                 class="form-control"
                 placeholder="Search for a product"
                 :value="query"
+                v-b-modal.modal-search
               />
               <div class="input-group-append">
                 <button class="btn btn-primary" type="button">Let's Go</button>
@@ -49,13 +54,10 @@ export default {
   computed: {
     ...mapState({
       user: (state) => state.currentUser.user,
+      query: (state) => state.globalSearchQuery,
+      location: (state) => state.locationObj,
+      cart: (state) => state.products.products,
     }),
-    // user() {
-    //   return this.$store.state.currentUser.user;
-    // },
-    query() {
-      return this.$store.state.globalSearchQuery;
-    },
   },
   async fetch() {
     // GOOGLE SHEETS

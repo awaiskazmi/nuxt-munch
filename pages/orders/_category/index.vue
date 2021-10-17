@@ -28,8 +28,23 @@
     </div>
     <CarouselYummies />
     <div class="row mt-5">
-      <div class="col-3 d-none d-md-flex">
-        <h6>Categories</h6>
+      <div class="col-3 d-none d-md-block">
+        <nuxtjs-sticky-sidebar :topSpacing="30">
+          <h6>Categories</h6>
+          <div v-for="c in categories" :key="c.id">
+            <NuxtLink
+              :to="{
+                name: `orders-category`,
+                params: {
+                  category: c.name,
+                  categoryId: c.id,
+                },
+              }"
+            >
+              {{ c.name }}
+            </NuxtLink>
+          </div>
+        </nuxtjs-sticky-sidebar>
       </div>
       <div class="col">
         <h2 class="cap">{{ category }}</h2>
@@ -55,7 +70,13 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import nuxtjsStickySidebar from "nuxtjs-sticky-sidebar";
+
 export default {
+  components: {
+    "nuxtjs-sticky-sidebar": nuxtjsStickySidebar,
+  },
   data() {
     return {
       category: this.$route.params.category,
@@ -63,12 +84,16 @@ export default {
       products: [],
     };
   },
+  computed: {
+    ...mapState({
+      categories: (state) => state.categories.categories,
+    }),
+  },
   async fetch() {
     const res = await this.$axios.get(
       `https://munchies-qa.impact.venturedive.com/v2/public/hub-product/all?hubProductCategoryIds=${this.categoryId}`
     );
-    this.products = res.data.data;
-    console.log(res.data.data);
+    this.products = this.$syncProductsWithCart(res.data.data);
   },
 };
 </script>

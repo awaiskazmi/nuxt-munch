@@ -10,16 +10,24 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
 	data() {
 		return {};
 	},
 	methods: {
+		...mapActions(["getServiceArea"]),
 		getGeoLocation() {
 			navigator.geolocation.getCurrentPosition(
 				(position) => {
-					console.log(position.coords.latitude);
-					console.log(position.coords.longitude);
+					let latLng = {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude,
+					};
+					localStorage.setItem("m_latlng", JSON.stringify(latLng));
+					this.$reverseGeoCode(latLng);
+					this.$root.$emit("bv::toggle::collapse", "sidebar-location");
 				},
 				(error) => {
 					console.log(error.message);

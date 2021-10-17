@@ -87,9 +87,6 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-header
-  position: relative
-  z-index: 1
 .header
   align-items: center
   justify-content: space-between

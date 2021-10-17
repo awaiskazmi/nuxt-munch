@@ -44,7 +44,12 @@
         </div>
       </div>
       <div class="col-12 col-md">
-        <div class="px-md-5">
+        <div class="px-md-5" v-if="$fetchState.pending">
+          <p class="text-center">
+            <b-spinner variant="primary" label="Spinning"></b-spinner>
+          </p>
+        </div>
+        <div class="px-md-5" v-else>
           <h1 class="name">{{ product.name }}</h1>
           <!-- <h3>{{ $route.params.id }}</h3> -->
           <p class="weight">{{ product.weight }}</p>
@@ -55,7 +60,7 @@
             </div>
             <div class="col-auto col-md-12 mt-md-5">
               <button
-                v-if="quantity == 0"
+                v-if="product.quantity == 0"
                 @click="updateCart('add')"
                 class="btn rounded-pill btn-outline-primary px-5"
               >
@@ -68,7 +73,7 @@
                 >
                   -
                 </button>
-                <span class="h4 my-0 mx-3">{{ quantity }}</span>
+                <span class="h4 my-0 mx-3">{{ product.quantity }}</span>
                 <button
                   class="btn btn-outline-primary btn-icon"
                   @click="updateCart('add')"
@@ -98,77 +103,39 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
-
 export default {
   data() {
     return {
-      // product: {},
-      // imgSrc: "",
-      // quantity: 0,
+      product: {},
     };
   },
+  async fetch() {
+    const res = await this.$axios.get(`/qa/v2/public/hub-product/${this.id}`);
+    this.product = this.$syncProductWithCart(res.data);
+  },
   computed: {
-    ...mapState({
-      products: (state) => state.products.products,
-    }),
-    ...mapGetters({
-      getQuantity: "getProductQuantityById",
-    }),
     id() {
       return this.$route.params.id;
     },
-    product() {
-      return this.products.find((e) => e.id === this.id);
-    },
-    quantity: {
-      get() {
-        return this.getQuantity(this.id);
-      },
-      set(qty) {
-        let payload = {
-          id: this.id,
-          quantity: qty,
-        };
-        this.$store.commit("setProductQuantity", payload);
-        return qty;
-      },
-    },
     src() {
-      return (
-        "https://munchies-qa.impact.venturedive.com/v2/public/resources/" +
-        this.product.imageUrl
-      );
-      // return this.imgSrc.length > 0
-      //   ? "https://munchies-qa.impact.venturedive.com/v2/public/resources/" +
-      //       this.imgSrc
-      //   : "https://wpamelia.com/wp-content/uploads/2018/11/ezgif-2-6d0b072c3d3f.gif";
+      return this.product.imageUrl && this.product.imageUrl.length > 0
+        ? "https://munchies-qa.impact.venturedive.com/v2/public/resources/" +
+            this.product.imageUrl
+        : "https://wpamelia.com/wp-content/uploads/2018/11/ezgif-2-6d0b072c3d3f.gif";
     },
   },
-  // async fetch() {
-  //   let res = await this.$axios.get(
-  //     `/qa/v2/public/hub-product/${this.$route.params.id}`
-  //   );
-  //   let { data: product } = res; // reads: get data as product (alias)
-  //   this.product = product;
-  //   this.imgSrc = product.imageUrl;
-  // },
   methods: {
     updateCart(operator) {
-      operator == "add" ? (this.quantity += 1) : (this.quantity -= 1);
-      let payload = {
-        id: this.id,
-        quantity: this.quantity,
-      };
-      this.$store.dispatch("setProductQuantityAction", payload);
-      return;
+      operator == "add"
+        ? (this.product.quantity += 1)
+        : (this.product.quantity -= 1);
       // removed from cart
-      // if (this.quantity == 0) {
-      //   this.$store.commit("removeProductFromCart", this.$route.params.id);
-      // } else {
-      //   let payload = { ...this.product, quantity: this.quantity };
-      //   this.$store.commit("addProductToCart", payload);
-      // }
+      if (this.product.quantity == 0) {
+        this.$store.commit("removeProductFromCart", this.id);
+      } else {
+        this.$store.commit("setProductQuantity", { ...this.product }); // {...} SPREAD OPERATOR VERY IMPORTANT!
+      }
+      this.$cartLocalStorage();
     },
   },
 };

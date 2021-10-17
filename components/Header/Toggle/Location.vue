@@ -5,6 +5,7 @@
     rounded
     type="location"
     icon="place"
+    :title="locationLabel"
     >{{ locationLabel }}</BaseButton
   >
 </template>

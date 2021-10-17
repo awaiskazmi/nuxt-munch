@@ -158,8 +158,6 @@ export default {
 
 <style scoped lang="sass">
 footer
-  position: relative
-  z-index: 1
   background: #fff url('~/assets/images/footer-bg.svg') top right/contain no-repeat
 
   @media (max-width: 768px)

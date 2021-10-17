@@ -10,6 +10,50 @@ export default ({ app }, inject) => {
     localStorage.setItem("m_location_name", location);
     app.store.commit("setUserLocation", location);
   });
+  // MATCH PRODUCTS WITH CART AND UPDATE QUANTITY
+  inject("syncProductsWithCart", (products) => {
+    let cart = app.store.state.products.products;
+    products = products.map((p) => {
+      let foundIndex = cart.findIndex((element) => element.id === p.id);
+      if (foundIndex > -1) {
+        return { ...p, quantity: cart[foundIndex].quantity };
+      } else {
+        return p;
+      }
+    });
+    return products;
+  });
+  // MATCH SINGLE PRODUCT WITH CART AND UPDATE QUANTITY
+  inject("syncProductWithCart", (product) => {
+    let cart = app.store.state.products.products;
+    let foundIndex = cart.findIndex((element) => element.id === product.id);
+    if (foundIndex > -1) {
+      return { ...product, quantity: cart[foundIndex].quantity };
+    } else {
+      return product;
+    }
+  });
+  // REVERSE GEOCODE LAT LNG TO GET LOCATION NAME AND SERVICE AREA
+  inject("reverseGeoCode", (latLng) => {
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ location: latLng }).then((res) => {
+      let locationObject = {
+        ...latLng,
+        address: res.results[0].formatted_address,
+      };
+      // Update location label globally
+      app.$setLocation(res.results[0].formatted_address);
+      // Get new service area
+      app.store.dispatch("getServiceArea", locationObject);
+    });
+  });
+  // UPDATE CART IN LOCAL STORAGE
+  inject("cartLocalStorage", () => {
+    localStorage.setItem(
+      "m_cart",
+      JSON.stringify(app.store.state.products.products)
+    );
+  });
 
   // get logged in user data
   if (process.client) {
@@ -25,9 +69,17 @@ export default ({ app }, inject) => {
       app.store.commit("setAuthToken", localStorageToken);
     }
     // set logged in user location
-    const localStorageLocation = localStorage.getItem("m_location_name");
+    const localStorageLocation = localStorage.getItem("m_location");
     if (localStorageLocation) {
-      app.store.commit("setUserLocation", localStorageLocation);
+      app.store.commit(
+        "setUserLocationObject",
+        JSON.parse(localStorageLocation)
+      );
+    }
+    // set logged in user locationname
+    const localStorageLocationName = localStorage.getItem("m_location_name");
+    if (localStorageLocationName) {
+      app.store.commit("setUserLocation", localStorageLocationName);
     }
     // set logged in user location coordinates
     const localStorageLatLng = localStorage.getItem("m_latlng");
@@ -49,28 +101,27 @@ export default ({ app }, inject) => {
     if (localStorageSearches) {
       app.store.commit("setRecentSearches", JSON.parse(localStorageSearches));
     }
+    // set cart if present
+    const localStorageCart = localStorage.getItem("m_cart");
+    if (localStorageCart) {
+      app.store.commit("setProducts", JSON.parse(localStorageCart));
+    }
   }
 
-  // users
-  // app.$axios.get("https://jsonplaceholder.typicode.com/users/").then((res) => {
-  //   app.store.commit("setUsers", res.data);
+  // get all products 1st time no location (3 pages)
+  // app.$axios.get("/qa/v2/public/hub-product/all?pageNumber=1").then((res) => {
+  //   app.store.commit(
+  //     "setProducts",
+  //     res.data.data.map((p) => {
+  //       return { ...p, qty: 0 };
+  //     })
+  //   );
   // });
 
-  // posts
-  // app
-  //   .$axios({
-  //     method: "get",
-  //     url: "/test/posts/",
-  //   })
-  //   .then((res) => {
-  //     app.store.commit("setPosts", res.data);
-  //   });
-
-  // categories
-  // app.$axios({
-  //   method: "get",
-  //   url: `/qa/v2/public/hub-product-category/all`,
-  // }).then((res) => {
-  //   app.store.commit("setCategories", res.data.data);
-  // });
+  // get all categories
+  if (process.client) {
+    app.$axios.get("/qa/v2/public/hub-product-category/all").then((res) => {
+      app.store.commit("setCategories", res.data.data);
+    });
+  }
 };

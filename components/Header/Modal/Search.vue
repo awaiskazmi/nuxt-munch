@@ -35,7 +35,6 @@
               placeholder="I'm craving for"
               v-model="search"
               @keyup="onkeyup"
-              @input="getSearchResults(search)"
             />
             <div class="categories d-flex flex-wrap mt-3">
               <BaseRadio
@@ -53,6 +52,9 @@
           </div>
         </div>
         <!-- SEARCH RESULTS -->
+        <p v-if="searching" class="text-center py-5">
+          <b-spinner variant="primary" label="Spinning"></b-spinner>
+        </p>
         <div class="row mt-5" v-if="products.length > 0">
           <div class="col-12">
             <h4 class="font-weight-bold">Search Results</h4>
@@ -68,6 +70,7 @@
                   :originalPrice="p.price"
                   :thumb="p.imageUrl"
                   :data-filter="p.category.id"
+                  :quantity="p.quantity"
                   freeDelivery
                 />
               </div>
@@ -75,24 +78,28 @@
           </div>
         </div>
         <!-- IF NO SERACH RESULTS -->
-        <div v-else>
+        <div
+          v-else-if="
+            search.length >= 3 && searching == false && products.length == 0
+          "
+        >
           <div class="row mt-5">
             <div class="col">
-              <p class="h5" v-if="searchResults">No results found</p>
+              <p class="h5">No results found</p>
             </div>
           </div>
-          <!-- RECENT SEARCHES -->
-          <div class="row mt-5">
-            <div class="col-12">
-              <h4 class="font-weight-bold">Recent Searches</h4>
-              <div class="mt-4 d-flex flex-wrap">
-                <ProductRecent
-                  @click="recentSearch(r)"
-                  v-for="r in recent"
-                  :key="r"
-                  :label="r"
-                />
-              </div>
+        </div>
+        <!-- RECENT SEARCHES -->
+        <div class="row mt-5" v-if="recent.length > 0">
+          <div class="col-12">
+            <h4 class="font-weight-bold">Recent Searches</h4>
+            <div class="mt-4 d-flex flex-wrap">
+              <ProductRecent
+                @click="recentSearch(r)"
+                v-for="r in recent"
+                :key="r"
+                :label="r"
+              />
             </div>
           </div>
         </div>
@@ -124,6 +131,7 @@ export default {
       products: [],
       categories: [],
       filterId: null,
+      searching: false,
     };
   },
   watch: {
@@ -147,7 +155,7 @@ export default {
       ];
     },
     serviceArea() {
-      return this.$store.state.serviceArea;
+      return this.$store.state.locationObj.service_area;
     },
     ...mapState({
       recent: (state) => state.recentSearches,
@@ -155,9 +163,6 @@ export default {
     ...mapGetters({
       getSearchQuery: "getglobalSearchQuery",
     }),
-    searchResults() {
-      return this.search.length == 0 ? false : true;
-    },
     search: {
       get() {
         return this.getSearchQuery;
@@ -176,6 +181,8 @@ export default {
     },
     recentSearch(query) {
       this.search = query;
+      this.searching = true;
+      this.getSearchResults(this.search);
     },
     onkeyup() {
       if (this.search.length < 3) {
@@ -186,7 +193,7 @@ export default {
       }
       clearTimeout(this.timer);
       this.timer = setTimeout(() => {
-        console.log("...searching...");
+        this.searching = true;
         this.getSearchResults(this.search);
       }, 350);
     },
@@ -199,8 +206,9 @@ export default {
         id: p.category.id,
         name: p.category.name,
       }));
-      this.products = res.data.data;
+      this.products = this.$syncProductsWithCart(res.data.data);
       this.$store.dispatch("setRecentSearches", this.search);
+      this.searching = false;
     },
   },
 };
