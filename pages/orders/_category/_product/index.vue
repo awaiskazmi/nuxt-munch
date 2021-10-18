@@ -59,28 +59,7 @@
               <p class="price m-0">Rs. {{ product.price }}</p>
             </div>
             <div class="col-auto col-md-12 mt-md-5">
-              <button
-                v-if="product.quantity == 0"
-                @click="updateCart('add')"
-                class="btn rounded-pill btn-outline-primary px-5"
-              >
-                Add
-              </button>
-              <div class="d-flex align-items-center" v-else>
-                <button
-                  class="btn btn-outline-primary btn-icon"
-                  @click="updateCart('sub')"
-                >
-                  -
-                </button>
-                <span class="h4 my-0 mx-3">{{ product.quantity }}</span>
-                <button
-                  class="btn btn-outline-primary btn-icon"
-                  @click="updateCart('add')"
-                >
-                  +
-                </button>
-              </div>
+              <ProductControls label="Add" :product="product" />
             </div>
           </div>
         </div>
@@ -124,20 +103,7 @@ export default {
         : "https://wpamelia.com/wp-content/uploads/2018/11/ezgif-2-6d0b072c3d3f.gif";
     },
   },
-  methods: {
-    updateCart(operator) {
-      operator == "add"
-        ? (this.product.quantity += 1)
-        : (this.product.quantity -= 1);
-      // removed from cart
-      if (this.product.quantity == 0) {
-        this.$store.commit("removeProductFromCart", this.id);
-      } else {
-        this.$store.commit("setProductQuantity", { ...this.product }); // {...} SPREAD OPERATOR VERY IMPORTANT!
-      }
-      this.$cartLocalStorage();
-    },
-  },
+  methods: {},
 };
 </script>
 

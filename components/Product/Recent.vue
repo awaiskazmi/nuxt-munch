@@ -1,28 +1,28 @@
 <template>
-	<button>
-		<span @click="$emit('click')">{{ label }}</span>
-		<span @click="removeRecentSearch" class="material-icons">close</span>
-	</button>
+  <button>
+    <span @click="$emit('click')">{{ label }}</span>
+    <span @click="removeRecentSearch" class="material-icons">close</span>
+  </button>
 </template>
 
 <script>
 import { mapState } from "vuex";
 
 export default {
-	props: ["label"],
-	data() {
-		return {};
-	},
-	computed: {
-		...mapState({
-			recentSearches: (state) => state.recentSearches,
-		}),
-	},
-	methods: {
-		removeRecentSearch() {
-			this.$store.commit("removeRecentSearch", this.label);
-		},
-	},
+  props: ["label"],
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapState({
+      recentSearches: (state) => state.recentSearches,
+    }),
+  },
+  methods: {
+    removeRecentSearch() {
+      this.$store.commit("removeRecentSearch", this.label);
+    },
+  },
 };
 </script>
 
@@ -49,7 +49,6 @@ button
 	font-size: 18px
 	margin-left: 8px
 	margin-top: 2px
-	transition: transform 0.2s ease
 	&:hover
 		transform: scale(1.2)
 </style>

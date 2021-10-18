@@ -6,9 +6,9 @@
           <div class="col">
             <h1 data-aos="flip-up">Feeling peckish? Snack time!</h1>
             <!-- code output study -->
-            <div class="d-none">
-              <pre>{{ location }}</pre>
-              <pre>{{ cart }}</pre>
+            <div class="d-nones">
+              <!-- <pre>{{ location }}</pre> -->
+              <!-- <pre>{{ cart }}</pre> -->
             </div>
             <p>We will deliver your snacks within minutes</p>
           </div>

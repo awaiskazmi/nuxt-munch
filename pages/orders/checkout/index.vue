@@ -244,6 +244,11 @@ import { mapState, mapGetters } from "vuex";
 import nuxtjsStickySidebar from "nuxtjs-sticky-sidebar";
 
 export default {
+  middleware({ store, redirect }) {
+    if (!store.state.auth) {
+      return redirect("/");
+    }
+  },
   components: {
     "nuxtjs-sticky-sidebar": nuxtjsStickySidebar,
   },
@@ -289,6 +294,7 @@ export default {
       this.center = center;
     },
     onAddressUpdate(address) {
+      this.$store.commit("setUserLocation", address.label.detail);
       this.address = address;
     },
     onPromoCodeSelect(promo) {

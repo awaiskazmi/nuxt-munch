@@ -6,54 +6,66 @@
         params: { id: id, product: product, category: category },
       })
     " -->
-  <NuxtLink
-    :to="{
-      name: `orders-category-product`,
-      params: {
-        id: id,
-        product: product,
-        category: category,
-        categoryId: categoryId,
-      },
-    }"
-    class="product pointer"
-  >
+  <div class="product">
     <div class="product-wrapper">
-      <span v-if="off" class="off">{{ off }} off</span>
+      <!-- <span v-if="off" class="off">off</span> -->
       <span v-if="freeDelivery" class="free-delivery">Free Delivery</span>
-      <div class="qty">
-        {{ quantity }}
+      <div class="controls d-none">
+        <!-- if quantity == 0 -->
+        <button
+          @click="updateQuantity('add')"
+          v-if="product.quantity == 0"
+          class="btn-add"
+        >
+          <span class="material-icons">add</span>
+        </button>
+        <!-- if quantity > 0 -->
+        <div v-else class="btns">
+          <button @click="updateQuantity('sub')">
+            <span class="material-icons">delete</span>
+          </button>
+          <span>{{ product.quantity }}</span>
+          <button @click="updateQuantity('add')">
+            <span class="material-icons">add</span>
+          </button>
+        </div>
       </div>
+      <ProductControls :product="product" />
+      <!-- <div class="qty">
+        {{ quantity }}
+      </div> -->
       <img class="thumb" :src="productImage" />
     </div>
-    <div class="price" v-if="salePrice">
+    <!-- <div class="price" v-if="salePrice">
       <span class="sale">Rs. {{ salePrice }}</span>
       <span
-        ><s>Rs. {{ originalPrice }}</s></span
+        ><s>Rs. {{ product.price }}</s></span
       >
+    </div> -->
+    <div class="price">
+      <span class="sale">Rs. {{ product.price }}</span>
     </div>
-    <div class="price" v-else>
-      <span class="sale">Rs. {{ originalPrice }}</span>
-    </div>
-    <p class="m-0 name">{{ name }}</p>
-    <p class="m-0 weight">{{ weight }}</p>
-  </NuxtLink>
+    <p class="m-0 name">{{ product.name }}</p>
+    <p class="m-0 weight">{{ product.weight }}</p>
+    <NuxtLink
+      class="product-link"
+      :to="{
+        name: `orders-category-product`,
+        params: {
+          id: product.id,
+          product: product.name,
+          category: product.category.name,
+          categoryId: product.category.id,
+        },
+      }"
+    />
+  </div>
 </template>
 
 <script>
 export default {
   props: {
-    id: Number,
-    off: String,
-    name: String,
-    thumb: String,
-    weight: String,
-    product: String,
-    quantity: Number,
-    category: String,
-    categoryId: Number,
-    salePrice: String,
-    originalPrice: Number,
+    product: Object,
     freeDelivery: Boolean,
   },
   data() {
@@ -61,12 +73,13 @@ export default {
   },
   computed: {
     productImage() {
-      return this.thumb
+      return this.product.imageUrl
         ? "https://munchies-qa.impact.venturedive.com/v2/public/resources/" +
-            this.thumb
+            this.product.imageUrl
         : "https://media2.giphy.com/media/3oEjI6SIIHBdRxXI40/200.gif";
     },
   },
+  methods: {},
 };
 </script>
 
@@ -78,6 +91,12 @@ export default {
   position: relative
   height: 0
   padding-bottom: 75%
+.product-link
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
 
 .off, .free-delivery, .controls, .thumb
   position: absolute
@@ -134,4 +153,10 @@ export default {
   border: 1px solid #ddd
   border-radius: 8px
   z-index: 2
+
+.controls
+  position: absolute
+  top: 4px
+  right: 4px
+  z-index: 3
 </style>

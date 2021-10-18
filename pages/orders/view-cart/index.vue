@@ -15,16 +15,14 @@
     <div class="row">
       <div class="col">
         <h1>My cart</h1>
-        <div class="row mt-4 mt-md-5">
+        <div v-if="products.length > 0" class="row mt-4 mt-md-5">
           <div class="col-12 col-md-8">
             <!-- product row: start -->
             <div class="row product" v-for="p in products" :key="p.id">
               <div class="col-3 pr-0">
                 <div class="image-wrapper">
                   <img
-                    :src="
-                      `https://munchies-qa.impact.venturedive.com/v2/public/resources/${p.imageUrl}`
-                    "
+                    :src="`https://munchies-qa.impact.venturedive.com/v2/public/resources/${p.imageUrl}`"
                     alt=""
                   />
                 </div>
@@ -35,9 +33,7 @@
                 <h5>Rs. {{ p.price }}</h5>
               </div>
               <div class="col-auto align-self-start d-flex align-items-center">
-                <button class="btn btn-sm btn-outline-primary">-</button>
-                <span class="h5 my-0 mx-3">{{ p.quantity }}</span>
-                <button class="btn btn-sm btn-outline-primary">+</button>
+                <ProductControls :product="{ ...p }" />
               </div>
             </div>
             <!-- product row: end -->
@@ -69,10 +65,29 @@
                   </div>
                 </div>
               </div>
-              <BaseButton full type="primary" url="/orders/checkout"
+              <BaseButton v-if="!auth" full type="primary" url="/login"
+                >Checkout - Rs. {{ total }}</BaseButton
+              >
+              <BaseButton v-else full type="primary" url="/orders/checkout"
                 >Checkout - Rs. {{ total }}</BaseButton
               >
             </nuxtjs-sticky-sidebar>
+          </div>
+        </div>
+        <div v-else class="row">
+          <div class="col-12 col-md-4 mx-auto text-center">
+            <lottie
+              :height="300"
+              :options="lottieOptions"
+              v-on:animCreated="handleAnimation"
+            />
+            <h4 class="font-weight-bold">Ah.. Empty cart?!</h4>
+            <p class="text-muted">
+              Fill your cart and heart with some snack-love now! <3
+            </p>
+            <BaseButton full type="primary" url="/orders"
+              >Continue shopping</BaseButton
+            >
           </div>
         </div>
       </div>
@@ -81,20 +96,36 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import nuxtjsStickySidebar from "nuxtjs-sticky-sidebar";
+import lottie from "vue-lottie/src/lottie.vue";
+import * as animData from "~/static/lottie/empty-cart.json";
 
 export default {
   components: {
     "nuxtjs-sticky-sidebar": nuxtjsStickySidebar,
+    lottie: lottie,
+  },
+  data() {
+    return {
+      anim: null,
+      lottieOptions: {
+        animationData: animData.default,
+      },
+    };
+  },
+  methods: {
+    handleAnimation(anim) {
+      this.anim = anim;
+    },
   },
   computed: {
-    products() {
-      return this.$store.state.products.products.filter(
-        (obj) => obj.quantity > 0
-      );
-    },
+    ...mapState({
+      auth: (state) => state.auth,
+      products: (state) => state.products.products,
+    }),
     discount() {
-      return 40;
+      return 0;
     },
     total() {
       let total = 0;
@@ -109,12 +140,12 @@ export default {
 
 <style scoped lang="sass">
 .product::after
-    content: ''
-    display: block
-    width: 100%
-    height: 1px
-    margin: 1rem 0
-    background-color: #ddd
+  content: ''
+  display: block
+  width: 100%
+  height: 1px
+  margin: 1rem 0
+  background-color: #ddd
 .h5
   margin: 0
 

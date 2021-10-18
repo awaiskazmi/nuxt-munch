@@ -118,6 +118,8 @@ export default ({ app }, inject) => {
   //   );
   // });
 
+  // ?hubTypes=INTERNAL&role=ROLE_CUSTOMER&sortProperties=productCategory.sequenceNumber&status=ACTIVE
+
   // get all categories
   if (process.client) {
     app.$axios.get("/qa/v2/public/hub-product-category/all").then((res) => {

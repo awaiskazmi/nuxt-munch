@@ -1,6 +1,7 @@
 <template>
   <button
     v-if="isButton"
+    :disabled="disabled"
     :class="'m-btn btn btn-' + classes"
     @click="$emit('click')"
   >
@@ -30,6 +31,7 @@ export default {
       default: "#",
     },
     isButton: Boolean,
+    disabled: Boolean,
     variant: String,
   },
   computed: {

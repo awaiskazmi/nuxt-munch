@@ -50,18 +50,7 @@
         <h2 class="cap">{{ category }}</h2>
         <div class="row">
           <div class="col-6 col-md-4 mb-3" v-for="p in products" :key="p.id">
-            <ProductItem
-              :id="p.id"
-              :name="p.name"
-              :weight="p.weight"
-              :originalPrice="p.price"
-              :thumb="p.imageUrl"
-              :product="p.name.replace(/ +/g, '-').toLowerCase()"
-              :category="p.category.name.replace(/ +/g, '-').toLowerCase()"
-              :categoryId="p.category.id"
-              :quantity="p.quantity"
-              freeDelivery
-            />
+            <ProductItem :product="p" freeDelivery />
           </div>
         </div>
       </div>

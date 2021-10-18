@@ -16,3 +16,27 @@
 		border: none;
 	}
 }
+
+.modal-backdrop {
+	opacity: 0.7;
+}
+
+.modal.fade .modal-dialog.modal-prompt {
+	transform: translate(0, 50px);
+}
+
+.modal.fade.show .modal-dialog.modal-prompt {
+	transform: none;
+}
+
+.modal-prompt {
+	position: absolute;
+	bottom: 0;
+	margin: 0;
+	max-width: unset;
+	width: 100%;
+
+	.modal-content {
+		border-radius: 8px 8px 0 0;
+	}
+}

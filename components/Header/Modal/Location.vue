@@ -24,7 +24,7 @@
             <small><strong>Or you can also</strong></small>
           </p>
           <HeaderGeolocation />
-          <p class="h3 font-weight-bold mt-4">Popular Locations</p>
+          <!-- <p class="h3 font-weight-bold mt-4">Popular Locations</p> -->
         </div>
       </template>
     </b-sidebar>

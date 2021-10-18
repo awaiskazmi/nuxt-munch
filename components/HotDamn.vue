@@ -24,28 +24,15 @@
                 <span class="material-icons">navigate_next</span>
               </div>
               <div v-swiper:swiperHotDamn="options">
-                <div class="swiper-wrapper align-items-center">
+                <div class="swiper-wrapper">
                   <div
                     class="swiper-slide mb-3"
                     v-for="p in products"
                     :key="p.id"
                   >
-                    <ProductItem
-                      :id="p.id"
-                      :name="p.name"
-                      :weight="p.weight"
-                      :originalPrice="p.price"
-                      :thumb="p.imageUrl"
-                      :product="p.name.replace(/ +/g, '-').toLowerCase()"
-                      :category="
-                        p.category.name.replace(/ +/g, '-').toLowerCase()
-                      "
-                      :categoryId="p.category.id"
-                      :quantity="p.quantity"
-                      freeDelivery
-                    />
+                    <ProductItem :product="p" freeDelivery />
                   </div>
-                  <div class="swiper-slide text-center">
+                  <div class="swiper-slide align-self-center text-center">
                     <BaseButton
                       url="/trending/"
                       icon="navigate_next"

@@ -64,15 +64,7 @@
                 v-for="p in filteredProducts"
                 :key="p.id"
               >
-                <ProductItem
-                  :name="p.name"
-                  :weight="p.weight"
-                  :originalPrice="p.price"
-                  :thumb="p.imageUrl"
-                  :data-filter="p.category.id"
-                  :quantity="p.quantity"
-                  freeDelivery
-                />
+                <ProductItem :product="p" freeDelivery />
               </div>
             </div>
           </div>

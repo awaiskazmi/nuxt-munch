@@ -18,7 +18,7 @@
         :alt="name"
       />
     </div>
-    <h5>{{ name }}</h5>
+    <h5>{{ name }} &mdash; {{ id }}</h5>
   </nuxt-link>
 </template>
 
@@ -45,7 +45,8 @@ export default {
     height: 120px
     width: 120px
     padding: 18px
-    background-color: #E3F5FB
+    // background-color: #E3F5FB
+    background-color: #eee
 
   img
     transition: transform 0.2s cubic-bezier(1,0,0,1)

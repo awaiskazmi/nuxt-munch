@@ -31,6 +31,7 @@ export const actions = {
   async getServiceArea({ commit, state }, payload) {
     let formData = new FormData();
     let currentServiceArea = state.serviceArea;
+    let newServiceArea = null;
 
     formData.append("coordinates[lat]", payload.lat);
     formData.append("coordinates[lng]", payload.lng);
@@ -46,7 +47,16 @@ export const actions = {
       },
     });
 
-    console.log("SERVICE AREA", res.data[0]);
+    newServiceArea = res.data[0].id;
+
+    // SERVICE AREA CHANGED
+    if (newServiceArea != currentServiceArea) {
+      console.log('...HERE...');
+      // reset cart in app
+      commit('resetCart');
+      // empty local storage cart
+      localStorage.removeItem("m_cart");
+    }
 
     localStorage.setItem(
       "m_location",
@@ -76,6 +86,7 @@ export const mutations = {
   },
   setUserLocation(state, location) {
     state.location = location;
+    state.locationObj.address = location;
   },
   setUserLocationObject(state, locationObj) {
     state.locationObj = locationObj;

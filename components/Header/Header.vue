@@ -28,12 +28,15 @@
       </client-only>
     </div>
     <client-only>
+      <!-- modals -->
       <!-- <HeaderModalSuggestion /> -->
       <HeaderModalLocation />
       <HeaderModalSearch />
       <div v-if="auth">
         <HeaderModalProfile />
       </div>
+      <!-- prompts -->
+      <HeaderPromptLocation />
     </client-only>
   </header>
 </template>

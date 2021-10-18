@@ -1,5 +1,6 @@
 <template>
   <div
+    :key="key"
     id="google-map"
     class="bg-light p-5 d-flex align-items-center justify-content-center"
   ></div>
@@ -11,11 +12,13 @@ import mapStyles from "~/static/mapstyles.json";
 import markerOrder from "~/assets/images/marker-order.svg";
 
 let apiKey = process.env.GOOGLE_PLACES_API;
-let map;
+let map, marker;
 
 export default {
   data() {
-    return {};
+    return {
+      key: 0,
+    };
   },
   computed: {
     ...mapState({
@@ -28,6 +31,12 @@ export default {
       };
     },
   },
+  watch: {
+    center(value) {
+      map.setCenter(value);
+      marker.setPosition(value);
+    },
+  },
   mounted() {
     // if (!process.server) {
     if (typeof google === "undefined") {
@@ -38,48 +47,31 @@ export default {
       key=${apiKey}&libraries=places`;
       document.head.appendChild(script);
     } else {
-      this.onScriptLoaded();
+      this.generateMap();
     }
     // }
   },
   methods: {
-    onScriptLoaded(event = null) {
-      const uluru = this.center;
-      // The map, centered at Uluru
-      this.map = new google.maps.Map(document.getElementById("google-map"), {
+    generateMap(event = null) {
+      // The map, centered at user location
+      map = new google.maps.Map(document.getElementById("google-map"), {
         zoom: 16,
-        center: uluru,
+        center: this.center,
         styles: mapStyles,
         mapTypeControl: false,
         disableDefaultUI: true,
         streetViewControl: false,
       });
-      const mapDiv = this.map.getDiv();
-      const markerDiv = document.createElement("div");
-      markerDiv.className = "marker";
-      mapDiv.prepend(markerDiv);
-      // MAP EVENTS
-      google.maps.event.addListener(this.map, "dragend", this.onMapUpdate);
-      google.maps.event.addListener(this.map, "zoom_changed", this.onMapUpdate);
-      // let latLng = {
-      //   lat: this.map.getCenter().lat(),
-      //   lng: this.map.getCenter().lng(),
-      // };
-      // this.$store.commit("serUserLatLng", latLng);
-      // this.$reverseGeoCode(latLng);
-      // this.$emit("update", this.location);
-      // });
-      // The marker, positioned at Uluru
-      // const marker = new google.maps.Marker({
-      //   position: uluru,
-      //   icon: markerOrder,
-      //   map: map,
-      // });
+      marker = new google.maps.Marker({
+        position: this.center,
+        icon: markerOrder,
+        map: map,
+      });
     },
     onMapUpdate() {
       let latLng = {
-        lat: this.map.getCenter().lat(),
-        lng: this.map.getCenter().lng(),
+        lat: map.getCenter().lat(),
+        lng: map.getCenter().lng(),
       };
       this.$store.commit("serUserLatLng", latLng);
       this.$reverseGeoCode(latLng);

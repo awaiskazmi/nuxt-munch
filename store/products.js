@@ -72,17 +72,19 @@ export const mutations = {
   removeProductFromCart(state, id) {
     console.log("REMOVING", id);
     state.products.splice(
-      state.products.findIndex(function(i) {
+      state.products.findIndex(function (i) {
         return i.id === id;
       }),
       1
     );
   },
   setProductQuantity(state, product) {
+    // see if already added
     let productIndex = state.products.findIndex((obj) => obj.id == product.id);
+    // if already added, updated quantity
     if (productIndex > -1) {
       state.products[productIndex].quantity = product.quantity;
-    } else {
+    } else { // otherwise add to cart
       state.products.push(product);
     }
   },
