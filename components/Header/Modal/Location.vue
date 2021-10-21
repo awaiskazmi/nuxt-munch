@@ -15,7 +15,7 @@
           <BaseButton
             isButton
             type="m-btn-action m-sidebar-close"
-            @click="Object.keys(location).length === 0 ? hide : ''"
+            @click="Object.keys(location).length === 0 ? '' : hide()"
           >
             <span class="material-icons">close</span>
           </BaseButton>

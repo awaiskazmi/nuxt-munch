@@ -188,30 +188,13 @@ export default {
 
           // SUCCESS
           if (autoLoginToken) {
-            this.sendOTP();
-            this.$store.commit("setVerificationData", this.prePhone);
-            this.$router.push("/signup/verify");
+            this.$sendOTP(this.prePhone, "signup");
+            // this.$store.commit("setVerificationData", this.prePhone);
+            this.$router.push("/signup/verify?ref=signup");
             // this.$loginUser(this.userObject);
           }
         })
         .catch((err) => console.log(err));
-    },
-    async sendOTP() {
-      const config = {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      };
-      const res = await this.$axios.post(
-        "/qa/v1/public/verificationCode/VERIFICATION_TYPE_SIGNUP",
-        {
-          phoneNumber: this.prePhone,
-          roleConstant: "ROLE_CUSTOMER",
-        },
-        config
-      );
-      console.log(res);
     },
   },
 };

@@ -121,6 +121,15 @@
             icon="local_offer"
             >My Orders</BaseButton
           >
+          <BaseButton
+            v-if="!user.phoneVerified"
+            full
+            type="link"
+            url="/signup/verify?ref=verify"
+            class="m-btn-align-left mt-2"
+            icon="phone"
+            >Verify Phone</BaseButton
+          >
           <HeaderNavLogout />
         </div>
       </div>
@@ -129,8 +138,12 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   computed: {
+    ...mapState({
+      user: (state) => state.user,
+    }),
     username() {
       return this.$store.state.user.name;
     },

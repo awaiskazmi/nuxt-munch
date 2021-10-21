@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 25.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 360 486" style="enable-background:new 0 0 360 486;" xml:space="preserve">
+<style type="text/css">
+	.st0{clip-path:url(#SVGID_2_);}
+	.st1{fill:#FFFFFF;}
+	.st2{fill:#BEF3FF;}
+	.st3{fill:#FF6D6D;}
+	.st4{fill:#61BAFF;}
+</style>
+<g>
+	<defs>
+		<rect id="SVGID_1_" width="360" height="486"/>
+	</defs>
+	<clipPath id="SVGID_2_">
+		<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+	</clipPath>
+	<g class="st0">
+		<rect class="st1" width="360" height="486"/>
+		<rect class="st2" width="360" height="486"/>
+		<path class="st3" d="M158.2,423.1C69,430.8-29.8,538.5-54,593.2L399.3,630c26.6-12.2,43.3-94.6-29.5-125.2
+			C278.6,466.5,269.8,413.6,158.2,423.1z"/>
+		<path class="st4" d="M275,266c-121.3,0-200-70-384,73L-87,0h582C520.3,18.7,423,266,275,266z"/>
+	</g>
+</g>
+</svg>

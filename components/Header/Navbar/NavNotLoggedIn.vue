@@ -45,11 +45,11 @@
       <BaseButton
         type="link"
         url="/login"
-        class="m-btn-align-left mt-2"
+        class="m-btn-align-left mt-2 d-none"
         icon="local_offer"
         >Promos</BaseButton
       >
-      <BaseButton url="/signup" class="mt-5 mb-2" type="primary"
+      <BaseButton url="/signup" full class="mt-5 mb-2" type="primary"
         >Create account or sign in</BaseButton
       >
     </div>
@@ -65,16 +65,16 @@ export default {
   },
   computed: {
     ...mapState({
-      products: state => state.products.products
+      products: (state) => state.products.products,
     }),
     ...mapGetters({
-      added: "getAddedProducts"
+      added: "getAddedProducts",
     }),
     cartCount() {
-      let added = this.added.map(p => p.quantity);
+      let added = this.added.map((p) => p.quantity);
       return added.reduce((prev, next) => prev + next, 0);
-    }
-  }
+    },
+  },
 };
 </script>
 

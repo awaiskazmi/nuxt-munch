@@ -10,12 +10,9 @@
         </b-breadcrumb-item>
         <b-breadcrumb-item to="/orders">Orders</b-breadcrumb-item>
         <!-- <b-breadcrumb-item to="/categories">Categories</b-breadcrumb-item> -->
-        <b-breadcrumb-item
-          class="cap"
-          active
-          :to="`/orders/${this.$route.params.category}`"
-          >{{ category }}</b-breadcrumb-item
-        >
+        <b-breadcrumb-item class="cap" active to="">{{
+          category.name
+        }}</b-breadcrumb-item>
       </b-breadcrumb>
     </div>
     <CarouselYummies />
@@ -23,24 +20,15 @@
       <div class="col-3 d-none d-md-block">
         <nuxtjs-sticky-sidebar :topSpacing="30">
           <h6>Categories</h6>
-          {{ category }}
           <div v-for="c in categories" :key="c.id">
-            <NuxtLink
-              :to="{
-                name: `orders-category`,
-                params: {
-                  category: c.name,
-                  categoryId: c.id,
-                },
-              }"
-            >
+            <NuxtLink :to="`/orders/${c.id}`">
               {{ c.name }}
             </NuxtLink>
           </div>
         </nuxtjs-sticky-sidebar>
       </div>
       <div class="col">
-        <!-- <h2 class="cap">{{ category.name }}</h2> -->
+        <h2 class="cap">{{ category.name }}</h2>
         <p v-if="$fetchState.pending" class="text-center">
           <b-spinner variant="primary" label="Spinning"></b-spinner>
         </p>
@@ -68,6 +56,7 @@ export default {
   },
   data() {
     return {
+      category: {},
       categoryId: this.$route.params.category,
       products: [],
     };
@@ -75,18 +64,20 @@ export default {
   computed: {
     ...mapState({
       categories: (state) => state.categories.categories,
+      serviceArea: (state) => state.locationObj.service_area,
     }),
-    category() {
-      return this.categories.find((c) => {
-        console.log(c.id == this.categoryId);
-      });
-    },
   },
   async fetch() {
+    // fetch products by category
     const products = await this.$axios.get(
-      `/qa/v2/public/hub-product/all?productCategoryIds=${this.categoryId}`
+      `/qa/v2/public/hub-product/all?hubProductCategoryIds=${this.categoryId}&descending=false&hubTypes=INTERNAL&productDiscountStatus=BOTH&serviceAreaId=${this.serviceArea}&sortProperties=products.sequenceNumber&role=ROLE_CUSTOMER&hubProductCategoryStatus=ACTIVE&statuses=IN_STOCK&statuses=OUT_OF_STOCK`
     );
     this.products = this.$syncProductsWithCart(products.data.data);
+    // fetch category
+    const category = await this.$axios.get(
+      `/qa/v2/public/hub-product-category/${this.categoryId}`
+    );
+    this.category = category.data;
   },
   fetchOnServer: false,
 };

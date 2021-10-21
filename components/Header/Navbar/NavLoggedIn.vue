@@ -37,10 +37,12 @@
           <p class="h1 my-0">
             {{ this.$store.state.user.name }}
           </p>
-          <NuxtLink class="text-secondary" to="/profile">View profile</NuxtLink>
+          <NuxtLink class="text-secondary d-none" to="/profile"
+            >View profile</NuxtLink
+          >
         </div>
       </div>
-      <div class="p-3 mt-3 bg-light">
+      <div class="p-3 mt-3 bg-light d-none">
         <p>Your referral code</p>
         <div
           class="
@@ -62,54 +64,66 @@
           <NuxtLink to="/" class="text-secondary">Share</NuxtLink>
         </div>
       </div>
+      <div class="d-none">
+        <BaseButton
+          type="link"
+          url="/login"
+          class="m-btn-align-left mt-2"
+          icon="local_offer"
+          >Refer & earn</BaseButton
+        >
+
+        <BaseButton
+          type="link"
+          url="/login"
+          class="m-btn-align-left mt-2"
+          icon="local_offer"
+          >Favorites</BaseButton
+        >
+        <BaseButton
+          type="link"
+          url="/login"
+          class="m-btn-align-left mt-2"
+          icon="local_offer"
+          >Promos</BaseButton
+        >
+        <BaseButton
+          type="link"
+          url="/login"
+          class="m-btn-align-left mt-2"
+          icon="local_offer"
+          >Saved places</BaseButton
+        >
+        <BaseButton
+          type="link"
+          url="/login"
+          class="m-btn-align-left mt-2"
+          icon="local_offer"
+          >Payment</BaseButton
+        >
+        <BaseButton
+          type="link"
+          url="/login"
+          class="m-btn-align-left mt-2"
+          icon="local_offer"
+          >Feedback</BaseButton
+        >
+      </div>
       <BaseButton
+        full
         type="link"
-        url="/login"
-        class="m-btn-align-left mt-2"
-        icon="local_offer"
-        >Refer & earn</BaseButton
-      >
-      <BaseButton
-        type="link"
-        url="/login"
+        url="/orders"
         class="m-btn-align-left mt-2"
         icon="local_offer"
         >Orders</BaseButton
       >
       <BaseButton
+        full
         type="link"
-        url="/login"
+        url="/orders/view-cart"
         class="m-btn-align-left mt-2"
-        icon="local_offer"
-        >Favorites</BaseButton
-      >
-      <BaseButton
-        type="link"
-        url="/login"
-        class="m-btn-align-left mt-2"
-        icon="local_offer"
-        >Promos</BaseButton
-      >
-      <BaseButton
-        type="link"
-        url="/login"
-        class="m-btn-align-left mt-2"
-        icon="local_offer"
-        >Saved places</BaseButton
-      >
-      <BaseButton
-        type="link"
-        url="/login"
-        class="m-btn-align-left mt-2"
-        icon="local_offer"
-        >Payment</BaseButton
-      >
-      <BaseButton
-        type="link"
-        url="/login"
-        class="m-btn-align-left mt-2"
-        icon="local_offer"
-        >Feedback</BaseButton
+        icon="shopping_cart"
+        >Cart</BaseButton
       >
       <HeaderNavLogout />
     </div>

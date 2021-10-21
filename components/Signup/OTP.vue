@@ -11,8 +11,12 @@
 <script>
 export default {
   props: ["otp", "phone"],
+  methods: {
+    otpVerified() {
+      console.log("...wow...");
+    },
+  },
 };
 </script>
 
-<style>
-</style>
+<style></style>

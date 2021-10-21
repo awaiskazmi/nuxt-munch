@@ -129,9 +129,14 @@ export default ({ app }, inject) => {
   if (process.client) {
     let locationObj = app.store.state.locationObj;
     if (Object.keys(locationObj).length != 0) {
-      app.$axios.get(`/qa/v2/public/hub-product-category/all?hubTypes=INTERNAL&role=ROLE_CUSTOMER&serviceAreaId=${locationObj.service_area}&sortProperties=productCategory.sequenceNumber&status=ACTIVE`).then((res) => {
-        app.store.commit("setCategories", res.data.data);
-      });
+      app.$axios
+        .get(
+          `/qa/v2/public/hub-product-category/all?hubTypes=INTERNAL&role=ROLE_CUSTOMER&serviceAreaId=${locationObj.service_area}&sortProperties=productCategory.sequenceNumber&status=ACTIVE`
+          // `/qa/v1/public/categories?serviceAreaId=${locationObj.service_area}&activeStatus=ACTIVE`
+        )
+        .then((res) => {
+          app.store.commit("setCategories", res.data.data);
+        });
     }
   }
 };

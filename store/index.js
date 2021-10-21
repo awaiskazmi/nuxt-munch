@@ -29,6 +29,33 @@ export const getters = {
 };
 
 export const actions = {
+  // SEND OTP GLOBAL ACTION
+  async sendOTP({ commit, state }, payload) {
+    // payload = {phone, verificationType}
+    console.log("...GLOBAL OTP METHOD...", payload);
+    const verificationTypes = {
+      forgot: "VERIFICATION_TYPE_FORGOT",
+      signup: "VERIFICATION_TYPE_SIGNUP",
+    };
+    const headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    };
+    const res = await this.$axios({
+      mode: "cors",
+      method: "post",
+      url: `/qa/v1/public/verificationCode/${
+        verificationTypes[payload.verificationType]
+      }`,
+      data: {
+        phoneNumber: payload.phone,
+        roleConstant: "ROLE_CUSTOMER",
+      },
+      headers: headers,
+    });
+    console.log(res);
+  },
+  // GLOBAL GET SERVICE AREA ACTION
   async getServiceArea({ commit, state }, payload) {
     console.log("...FETCHING SERVICE AREA...");
     let formData = new FormData();
@@ -51,7 +78,7 @@ export const actions = {
     });
 
     newServiceArea = res.data[0].id;
-    console.log('...SERVICE AREA DETAILS...', res.data[0]);
+    console.log("...SERVICE AREA DETAILS...", res.data);
 
     // update service area in store
     commit("setServiceArea", newServiceArea);
