@@ -25,7 +25,7 @@
           rounded
           icon="shopping_cart"
           type="cart"
-          >Cart . {{ this.$store.state.shoppingCart.length }} items</BaseButton
+          >Cart . {{ cartCount }} items</BaseButton
         >
       </li>
     </ul>
@@ -117,9 +117,23 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from "vuex";
+
 export default {
   data() {
     return {};
+  },
+  computed: {
+    ...mapState({
+      products: (state) => state.products.products,
+    }),
+    ...mapGetters({
+      added: "getAddedProducts",
+    }),
+    cartCount() {
+      let added = this.added.map((p) => p.quantity);
+      return added.reduce((prev, next) => prev + next, 0);
+    },
   },
 };
 </script>

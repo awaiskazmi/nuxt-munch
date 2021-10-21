@@ -7,13 +7,14 @@
       no-header
       backdrop
       shadow
+      :no-close-on-backdrop="Object.keys(location).length === 0"
     >
       <template #default="{ hide }">
         <div class="py-6 px-4">
           <BaseButton
             isButton
             type="m-btn-action m-sidebar-close"
-            @click="hide"
+            @click="Object.keys(location).length === 0 ? hide : ''"
           >
             <span class="material-icons">close</span>
           </BaseButton>
@@ -32,7 +33,14 @@
 </template>
 
 <script>
-export default {};
+import { mapState } from "vuex";
+export default {
+  computed: {
+    ...mapState({
+      location: (state) => state.locationObj,
+    }),
+  },
+};
 </script>
 
 <style></style>

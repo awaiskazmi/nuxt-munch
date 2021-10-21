@@ -9,20 +9,12 @@
           </span>
         </b-breadcrumb-item>
         <b-breadcrumb-item to="/orders">Orders</b-breadcrumb-item>
-        <b-breadcrumb-item to="/categories">Categories</b-breadcrumb-item>
+        <!-- <b-breadcrumb-item to="/categories">Categories</b-breadcrumb-item> -->
         <b-breadcrumb-item
           class="cap"
           active
-          :to="{
-            name: `orders-category`,
-            params: {
-              id: $route.params.id,
-              category: $route.params.category,
-            },
-          }"
-          >{{
-            this.$route.params.category.replace(/-+/g, " ")
-          }}</b-breadcrumb-item
+          :to="`/orders/${this.$route.params.category}`"
+          >{{ category }}</b-breadcrumb-item
         >
       </b-breadcrumb>
     </div>
@@ -31,6 +23,7 @@
       <div class="col-3 d-none d-md-block">
         <nuxtjs-sticky-sidebar :topSpacing="30">
           <h6>Categories</h6>
+          {{ category }}
           <div v-for="c in categories" :key="c.id">
             <NuxtLink
               :to="{
@@ -47,10 +40,17 @@
         </nuxtjs-sticky-sidebar>
       </div>
       <div class="col">
-        <h2 class="cap">{{ category }}</h2>
+        <!-- <h2 class="cap">{{ category.name }}</h2> -->
+        <p v-if="$fetchState.pending" class="text-center">
+          <b-spinner variant="primary" label="Spinning"></b-spinner>
+        </p>
         <div class="row">
-          <div class="col-6 col-md-4 mb-3" v-for="p in products" :key="p.id">
-            <ProductItem :product="p" freeDelivery />
+          <div
+            class="col-6 col-md-4 mb-3"
+            v-for="(p, index) in products"
+            :key="p.id"
+          >
+            <ProductItem :product="p" :animationDelay="index * 50" />
           </div>
         </div>
       </div>
@@ -68,8 +68,7 @@ export default {
   },
   data() {
     return {
-      category: this.$route.params.category,
-      categoryId: this.$route.params.categoryId,
+      categoryId: this.$route.params.category,
       products: [],
     };
   },
@@ -77,13 +76,19 @@ export default {
     ...mapState({
       categories: (state) => state.categories.categories,
     }),
+    category() {
+      return this.categories.find((c) => {
+        console.log(c.id == this.categoryId);
+      });
+    },
   },
   async fetch() {
-    const res = await this.$axios.get(
-      `https://munchies-qa.impact.venturedive.com/v2/public/hub-product/all?hubProductCategoryIds=${this.categoryId}`
+    const products = await this.$axios.get(
+      `/qa/v2/public/hub-product/all?productCategoryIds=${this.categoryId}`
     );
-    this.products = this.$syncProductsWithCart(res.data.data);
+    this.products = this.$syncProductsWithCart(products.data.data);
   },
+  fetchOnServer: false,
 };
 </script>
 

@@ -6,7 +6,7 @@
         params: { id: id, product: product, category: category },
       })
     " -->
-  <div class="product">
+  <div class="product" data-aos="zoom-in" :data-aos-delay="animationDelay">
     <div class="product-wrapper">
       <!-- <span v-if="off" class="off">off</span> -->
       <span v-if="freeDelivery" class="free-delivery">Free Delivery</span>
@@ -49,15 +49,7 @@
     <p class="m-0 weight">{{ product.weight }}</p>
     <NuxtLink
       class="product-link"
-      :to="{
-        name: `orders-category-product`,
-        params: {
-          id: product.id,
-          product: product.name,
-          category: product.category.name,
-          categoryId: product.category.id,
-        },
-      }"
+      :to="`/orders/${product.category.id}/${product.id}`"
     />
   </div>
 </template>
@@ -67,6 +59,7 @@ export default {
   props: {
     product: Object,
     freeDelivery: Boolean,
+    animationDelay: Number,
   },
   data() {
     return {};

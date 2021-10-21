@@ -65,7 +65,12 @@
                   </div>
                 </div>
               </div>
-              <BaseButton v-if="!auth" full type="primary" url="/login"
+              <BaseButton
+                title="You need to sign in to place an order"
+                v-if="!auth"
+                full
+                type="primary"
+                url="/login?ref=orders-view-cart"
                 >Checkout - Rs. {{ total }}</BaseButton
               >
               <BaseButton v-else full type="primary" url="/orders/checkout"

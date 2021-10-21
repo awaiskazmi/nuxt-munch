@@ -40,7 +40,7 @@
       <div class="form-group text-center">
         <p>
           Don't have an account?
-          <NuxtLink to="/signup">Sign up</NuxtLink>
+          <NuxtLink :to="`/signup${refUrlSting}`">Sign up</NuxtLink>
         </p>
       </div>
     </form>
@@ -66,7 +66,14 @@ export default {
       return {
         email: this.email,
         password: this.password,
+        ref: this.refUrl,
       };
+    },
+    refUrl() {
+      return this.$route.query.ref;
+    },
+    refUrlSting() {
+      return this.refUrl ? `?ref=${this.refUrl}` : "";
     },
   },
   methods: {

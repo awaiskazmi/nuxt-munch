@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-modal
-      id="prompt-location"
+      id="prompt-no-location"
       size="prompt"
       body-class="prompt"
       no-close-on-backdrop
@@ -12,10 +12,12 @@
         <div class="container py-4">
           <div class="row align-items-center">
             <div class="col">
-              <h5 class="font-weight-bold">New address, new stash!</h5>
+              <h5 class="font-weight-bold">
+                Add your delivery address to proceed
+              </h5>
               <p class="text-muted mb-0">
-                Your new address may have some other delicious munchies. Make
-                your stash again!
+                Well to display assortments better, we need your delivery
+                location.
               </p>
             </div>
             <div class="col-12 col-md-3 mt-3 mt-md-0">
@@ -24,7 +26,7 @@
                 @click="onClick"
                 full
                 type="outline-secondary"
-                >OKAY</BaseButton
+                >SET DELIVERY LOCATION</BaseButton
               >
             </div>
           </div>
@@ -44,22 +46,25 @@ export default {
   },
   watch: {
     $route(to, from) {
-      this.$bvModal.hide("prompt-location");
+      this.$bvModal.hide("prompt-no-location");
     },
-    location(value) {
-      this.$bvModal.show("prompt-location");
-    },
+  },
+  mounted() {
+    if (Object.keys(this.location).length === 0) {
+      this.$bvModal.show("prompt-no-location");
+    }
   },
   methods: {
     onClick() {
-      window.location.replace("/");
+      this.$bvModal.hide("prompt-no-location");
+      this.$root.$emit("bv::toggle::collapse", "sidebar-location");
     },
   },
 };
 </script>
 
 <style lang="css">
-#prompt-location {
+#prompt-no-location {
   padding: 0 !important;
   overflow: hidden;
 }

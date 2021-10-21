@@ -96,7 +96,7 @@
     <div class="form-group text-center">
       <p>
         Already have an account?
-        <NuxtLink to="/login">Sign in</NuxtLink>
+        <NuxtLink :to="`/login${refUrlSting}`">Sign in</NuxtLink>
       </p>
     </div>
   </div>
@@ -136,6 +136,12 @@ export default {
       formData.append("phone", this.phone);
       formData.append("username", this.name);
       return formData;
+    },
+    refUrl() {
+      return this.$route.query.ref;
+    },
+    refUrlSting() {
+      return this.refUrl ? `?ref=${this.refUrl}` : "";
     },
   },
   methods: {

@@ -36,7 +36,8 @@
         <HeaderModalProfile />
       </div>
       <!-- prompts -->
-      <HeaderPromptLocation />
+      <HeaderPromptChangeLocation />
+      <HeaderPromptNoLocation />
     </client-only>
   </header>
 </template>

@@ -68,6 +68,7 @@ export const mutations = {
   },
   resetCart(state) {
     state.products = [];
+    localStorage.removeItem("m_cart");
   },
   removeProductFromCart(state, id) {
     console.log("REMOVING", id);

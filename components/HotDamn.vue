@@ -27,10 +27,10 @@
                 <div class="swiper-wrapper">
                   <div
                     class="swiper-slide mb-3"
-                    v-for="p in products"
+                    v-for="(p, index) in products"
                     :key="p.id"
                   >
-                    <ProductItem :product="p" freeDelivery />
+                    <ProductItem :product="p" :animationDelay="index * 50" />
                   </div>
                   <div class="swiper-slide align-self-center text-center">
                     <BaseButton
@@ -107,6 +107,7 @@ export default {
     );
     this.products = this.$syncProductsWithCart(res.data.data);
   },
+  fetchOnServer: false,
 };
 </script>
 

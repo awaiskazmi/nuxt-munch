@@ -3,7 +3,7 @@
     isButton
     full
     class="m-btn-align-left mt-2"
-    icon="local_offer"
+    icon="exit_to_app"
     @click="onClick"
     type="link"
     >Sign out</BaseButton

@@ -7,7 +7,7 @@
             <h1 data-aos="flip-up">Feeling peckish? Snack time!</h1>
             <!-- code output study -->
             <div class="d-nones">
-              <!-- <pre>{{ location }}</pre> -->
+              <pre>{{ location }}</pre>
               <!-- <pre>{{ cart }}</pre> -->
             </div>
             <p>We will deliver your snacks within minutes</p>
@@ -61,17 +61,15 @@ export default {
   },
   async fetch() {
     // GOOGLE SHEETS
-    const sheetData = await this.$axios.$get(
-      `/sheet/values/B1:B2?key=${this.$config.googleSheetKey}`
-    );
-    this.title = sheetData.values[0][0];
-    this.subtitle = sheetData.values[1][0];
-
+    // const sheetData = await this.$axios.$get(
+    //   `/sheet/values/B1:B2?key=${this.$config.googleSheetKey}`
+    // );
+    // this.title = sheetData.values[0][0];
+    // this.subtitle = sheetData.values[1][0];
     // MOCKAPI
     // const mockData = await this.$axios.$get("/mock/HomePage");
     // this.title = mockData[0].title;
     // this.subtitle = mockData[0].subtitle;
-
     // STORKBLOK
     // https://api.storyblok.com/v2/cdn/stories/landing-page?version=draft&token=P8nNGIoRuwsHVDbGhLcwGwtt&cv=1632767213
     // const story = await fetch(

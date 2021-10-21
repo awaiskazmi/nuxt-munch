@@ -1,14 +1,5 @@
 <template>
-  <nuxt-link
-    :to="{
-      name: `orders-category`,
-      params: {
-        category: name,
-        categoryId: id,
-      },
-    }"
-    class="category"
-  >
+  <nuxt-link :to="`/orders/${id}`" :id="id" class="category">
     <div class="img-wrapper img">
       <img
         :src="
@@ -18,7 +9,7 @@
         :alt="name"
       />
     </div>
-    <h5>{{ name }} &mdash; {{ id }}</h5>
+    <h5>{{ name }}</h5>
   </nuxt-link>
 </template>
 

@@ -5,7 +5,7 @@ export const state = () => ({
   locationObj: {},
   location: "",
   latLng: {},
-  serviceArea: 16,
+  serviceArea: -1,
   globalSearchQuery: "",
   recentSearches: [],
   shoppingCart: [],
@@ -29,8 +29,10 @@ export const getters = {
 
 export const actions = {
   async getServiceArea({ commit, state }, payload) {
+    console.log("...FETCHING SERVICE AREA...");
     let formData = new FormData();
     let currentServiceArea = state.serviceArea;
+    let cartCount = state.products.products.length;
     let newServiceArea = null;
 
     formData.append("coordinates[lat]", payload.lat);
@@ -48,25 +50,20 @@ export const actions = {
     });
 
     newServiceArea = res.data[0].id;
+    console.log(newServiceArea);
 
-    // SERVICE AREA CHANGED
-    if (newServiceArea != currentServiceArea) {
-      console.log('...HERE...');
-      // reset cart in app
-      commit('resetCart');
-      // empty local storage cart
-      localStorage.removeItem("m_cart");
-    }
-
+    // update service area in store
+    commit("setServiceArea", newServiceArea);
+    // update service area in localstorage
     localStorage.setItem(
       "m_location",
-      JSON.stringify({ ...payload, service_area: res.data[0].id })
+      JSON.stringify({ ...payload, service_area: newServiceArea })
     );
+    // update location in store
     commit("setUserLocationObject", {
       ...payload,
-      service_area: res.data[0].id,
+      service_area: newServiceArea,
     });
-    commit("setServiceArea", res.data[0].id);
   },
   async setRecentSearches({ commit }, query) {
     commit("setRecentSearch", query);
@@ -98,6 +95,7 @@ export const mutations = {
   },
   setServiceArea(state, id) {
     state.serviceArea = id;
+    localStorage.setItem("m_serviceArea", id);
   },
   setglobalSearchQuery(state, query) {
     state.globalSearchQuery = query;

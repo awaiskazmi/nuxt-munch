@@ -122,8 +122,11 @@ export default ({ app }, inject) => {
 
   // get all categories
   if (process.client) {
-    app.$axios.get("/qa/v2/public/hub-product-category/all").then((res) => {
-      app.store.commit("setCategories", res.data.data);
-    });
+    let locationObj = app.store.state.locationObj;
+    if (Object.keys(locationObj).length != 0) {
+      app.$axios.get(`/qa/v2/public/hub-product-category/all?hubTypes=INTERNAL&role=ROLE_CUSTOMER&serviceAreaId=${locationObj.service_area}&sortProperties=productCategory.sequenceNumber&status=ACTIVE`).then((res) => {
+        app.store.commit("setCategories", res.data.data);
+      });
+    }
   }
 };

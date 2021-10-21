@@ -1,6 +1,6 @@
 export default ({ app }, inject) => {
   // LOGIN USER
-  inject('loginUser', ({ email, password }) => {
+  inject('loginUser', ({ email, password, ref }) => {
     // prepare payload
     let payload = new FormData();
     payload.append("email", email);
@@ -23,7 +23,12 @@ export default ({ app }, inject) => {
         app.store.commit("setCurrentUser", data);
         app.store.commit("setAuth", true);
         app.store.commit("setAuthToken", data.access_token);
-        window.location.replace("/");
+        if (ref) {
+          app.router.push({ name: ref })
+        } else {
+          // window.location.replace("/");
+          app.router.push('/');
+        }
       }
     }).catch(err => console.log(err));
   })

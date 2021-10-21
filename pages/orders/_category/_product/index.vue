@@ -1,82 +1,59 @@
 <template>
   <div class="container py-3 py-md-5">
-    <div class="d-none d-md-block">
-      <b-breadcrumb>
-        <b-breadcrumb-item to="/">
-          <span class="d-flex align-items-center">
-            <small class="material-icons icon-home mr-1">home</small>
-            Home
-          </span>
-        </b-breadcrumb-item>
-        <b-breadcrumb-item to="/orders">Orders</b-breadcrumb-item>
-        <b-breadcrumb-item
-          class="cap"
-          @clicker="
-            $router.push({
-              name: `orders-category`,
-              params: {
-                id: $route.params.id,
-                category: $route.params.category,
-              },
-            })
-          "
-          :to="{
-            name: `orders-category`,
-            params: {
-              id: $route.params.id,
-              category: $route.params.category,
-              categoryId: $route.params.categoryId,
-            },
-          }"
-          >{{
-            this.$route.params.category.replace(/-+/g, " ")
-          }}</b-breadcrumb-item
-        >
-        <b-breadcrumb-item class="cap" active>{{
-          this.$route.params.product.replace(/-+/g, " ")
-        }}</b-breadcrumb-item>
-      </b-breadcrumb>
+    <div class="px-md-5" v-if="$fetchState.pending">
+      <p class="text-center">
+        <b-spinner variant="primary" label="Spinning"></b-spinner>
+      </p>
     </div>
-    <div class="row no-gutters align-items-center">
-      <div class="col-12 col-md">
-        <div class="img-wrapper mb-3 mb-md-0">
-          <img :src="src" :alt="product.name" />
-        </div>
+    <div v-else>
+      <div class="d-none d-md-block">
+        <b-breadcrumb>
+          <b-breadcrumb-item to="/">
+            <span class="d-flex align-items-center">
+              <small class="material-icons icon-home mr-1">home</small>
+              Home
+            </span>
+          </b-breadcrumb-item>
+          <b-breadcrumb-item to="/orders">Orders</b-breadcrumb-item>
+          <b-breadcrumb-item class="cap">{{
+            product.category.name
+          }}</b-breadcrumb-item>
+          <b-breadcrumb-item class="cap" active>{{
+            product.name
+          }}</b-breadcrumb-item>
+        </b-breadcrumb>
       </div>
-      <div class="col-12 col-md">
-        <div class="px-md-5" v-if="$fetchState.pending">
-          <p class="text-center">
-            <b-spinner variant="primary" label="Spinning"></b-spinner>
-          </p>
+      <div class="row no-gutters align-items-center">
+        <div class="col-12 col-md">
+          <div class="img-wrapper mb-3 mb-md-0">
+            <img :src="src" alt="product.name" />
+          </div>
         </div>
-        <div class="px-md-5" v-else>
-          <h1 class="name">{{ product.name }}</h1>
-          <!-- <h3>{{ $route.params.id }}</h3> -->
-          <p class="weight">{{ product.weight }}</p>
-          <p class="desc">{{ product.productDescription }}</p>
-          <div class="row align-items-center justify-content-between">
-            <div class="col-auto col-md-12">
-              <p class="price m-0">Rs. {{ product.price }}</p>
-            </div>
-            <div class="col-auto col-md-12 mt-md-5">
-              <ProductControls label="Add" :product="product" />
+        <div class="col-12 col-md">
+          <div class="px-md-5">
+            <h1 class="name">{{ product.name }}</h1>
+            <p class="weight">{{ product.weight }}</p>
+            <p class="desc">{{ product.productDescription }}</p>
+            <div class="row align-items-center justify-content-between">
+              <div class="col-auto col-md-12">
+                <p class="price m-0">Rs. {{ product.price }}</p>
+              </div>
+              <div class="col-auto col-md-12 mt-md-5">
+                <ProductControls label="Add" :product="product" />
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col"></div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <TopCategories />
+      <div class="d-none">
+        <h1>Hello, params {{ this.$route.params }}</h1>
+        <pre>{{ product }}</pre>
       </div>
-    </div>
-    <div class="d-none">
-      <h1>Hello, product {{ this.$route.params.product }}</h1>
-      <h1>Hello, category {{ this.$route.params.category }}</h1>
-      <pre>{{ product }}</pre>
+      <div class="row">
+        <div class="col">
+          <TopCategories />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -88,20 +65,19 @@ export default {
       product: {},
     };
   },
-  async fetch() {
-    const res = await this.$axios.get(`/qa/v2/public/hub-product/${this.id}`);
-    this.product = this.$syncProductWithCart(res.data);
-  },
   computed: {
-    id() {
-      return this.$route.params.id;
-    },
     src() {
       return this.product.imageUrl && this.product.imageUrl.length > 0
         ? "https://munchies-qa.impact.venturedive.com/v2/public/resources/" +
             this.product.imageUrl
         : "https://wpamelia.com/wp-content/uploads/2018/11/ezgif-2-6d0b072c3d3f.gif";
     },
+  },
+  async fetch() {
+    const res = await this.$axios.get(
+      `/qa/v2/public/hub-product/${this.$route.params.product}`
+    );
+    this.product = this.$syncProductWithCart(res.data);
   },
   methods: {},
 };

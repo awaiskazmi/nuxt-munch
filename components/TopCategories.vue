@@ -22,7 +22,7 @@
             <span class="material-icons">navigate_next</span>
           </div>
           <div v-swiper:swiperCategories="options">
-            <div class="swiper-wrapper align-items-center">
+            <div class="swiper-wrapper">
               <div
                 class="swiper-slide mb-3"
                 v-for="(c, index) in categories"
@@ -46,6 +46,7 @@
 
 <script>
 import { mapState } from "vuex";
+
 export default {
   data() {
     return {
@@ -71,12 +72,16 @@ export default {
   computed: {
     ...mapState({
       categories: (state) => state.categories.categories,
+      location: (state) => state.locationObj,
     }),
   },
   // async fetch() {
-  //   const res = await this.$axios.get("/qa/v2/public/hub-product-category/all");
+  //   const res = await this.$axios.get(
+  //     `/qa/v2/public/hub-product-category/all?hubTypes=INTERNAL&role=ROLE_CUSTOMER&serviceAreaId=${this.location.service_area}&sortProperties=productCategory.sequenceNumber&status=ACTIVE`
+  //   );
   //   this.categories = res.data.data;
   // },
+  // fetchOnServer: false,
 };
 </script>
 
