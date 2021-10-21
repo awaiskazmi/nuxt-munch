@@ -1,6 +1,8 @@
 <template>
   <div class="container py-5">
-    <CarouselYummies />
+    <div class="px-3">
+      <CarouselYummies />
+    </div>
     <TopCategories />
     <!-- <h2>Exclusive 🌟</h2> -->
     <!-- <pre>{{ exclusive }}</pre> -->

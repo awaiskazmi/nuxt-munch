@@ -49,11 +49,11 @@
                     <div class="col">Sub total</div>
                     <div class="col-auto">Rs. {{ total }}</div>
                   </div>
-                  <div class="row py-2">
+                  <div class="row py-2 d-none">
                     <div class="col">Dicsount</div>
                     <div class="col-auto">Rs. {{ discount }}</div>
                   </div>
-                  <div class="row py-2">
+                  <div class="row py-2 d-none">
                     <div class="col">Delivery charges</div>
                     <div class="col-auto">
                       <small class="text-secondary">FREE</small>

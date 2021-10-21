@@ -58,7 +58,7 @@ export default {
   },
   computed: {
     ...mapState(["auth"]),
-    ...mapState(["currentUser"]),
+    ...mapState(["user"]),
     ...mapGetters({
       getSearchQuery: "getglobalSearchQuery",
     }),
@@ -74,12 +74,6 @@ export default {
     navMenu() {
       return this.isNavActive ? "active" : "";
     },
-    // auth() {
-    //   return this.$store.state.auth;
-    // },
-    // user() {
-    //   return this.$store.state.currentUser.user;
-    // }
   },
   methods: {
     onNavToggle() {

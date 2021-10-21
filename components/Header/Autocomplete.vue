@@ -126,6 +126,7 @@ export default {
               lat: latLng.lat,
               lng: latLng.lng,
               address: address,
+              label: address,
             };
             this.$store.dispatch("getServiceArea", payload);
           }

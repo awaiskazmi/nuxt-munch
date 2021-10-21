@@ -1,6 +1,7 @@
 export const state = () => ({
   auth: false,
   token: "",
+  user: {},
   cart: 0,
   locationObj: {},
   location: "",
@@ -50,7 +51,7 @@ export const actions = {
     });
 
     newServiceArea = res.data[0].id;
-    console.log(newServiceArea);
+    console.log('...SERVICE AREA DETAILS...', res.data[0]);
 
     // update service area in store
     commit("setServiceArea", newServiceArea);
@@ -81,9 +82,18 @@ export const mutations = {
   setAuthToken(state, token) {
     state.token = token;
   },
+  setUserLabelOption(state, option) {
+    state.locationObj.labelOption = option;
+  },
   setUserLocation(state, location) {
     state.location = location;
     state.locationObj.address = location;
+  },
+  setUserLocationAddress(state, address) {
+    state.locationObj.details = address.details;
+    state.locationObj.label = address.label;
+    localStorage.setItem("m_location", JSON.stringify(state.locationObj));
+    localStorage.setItem("m_location_name", state.locationObj.address);
   },
   setUserLocationObject(state, locationObj) {
     state.locationObj = locationObj;
@@ -102,6 +112,9 @@ export const mutations = {
   },
   setShoppingCart(state, cart) {
     state.shoppingCart = cart;
+  },
+  setUserObject(state, user) {
+    state.user = user;
   },
   removeRecentSearch(state, query) {
     state.recentSearches.splice(

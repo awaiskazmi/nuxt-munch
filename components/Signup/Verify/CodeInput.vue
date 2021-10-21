@@ -66,7 +66,7 @@
       <div class="col">
         <button class="btn btn-link">
           Resend code in
-          <span class="text-dark">00:54</span>
+          <span class="text-dark">00:30</span>
         </button>
       </div>
     </div>

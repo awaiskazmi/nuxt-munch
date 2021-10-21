@@ -2,7 +2,12 @@
   <div class="container p-0">
     <header class="d-block d-md-flex">
       <div
-        class="d-flex align-items-center justify-content-between overflow-hidden"
+        class="
+          d-flex
+          align-items-center
+          justify-content-between
+          overflow-hidden
+        "
       >
         <NuxtLink class="navbar-brand" to="/">
           <img src="~/assets/images/logo.png" alt="" height="40"
@@ -36,16 +41,10 @@ export default {
   },
   computed: {
     ...mapState(["auth"]),
-    ...mapState(["currentUser"]),
+    ...mapState(["user"]),
     navMenu() {
       return this.isNavActive ? "active" : "";
     },
-    // auth() {
-    //   return this.$store.state.auth;
-    // },
-    // user() {
-    //   return this.$store.state.currentUser.user;
-    // }
   },
   methods: {
     onNavToggle() {

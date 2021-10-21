@@ -62,8 +62,8 @@ export default {
         },
         breakpoints: {
           769: {
-            // slidesPerView: 'auto',
-            // slidesPerGroup: 2,
+            slidesPerView: 3,
+            slidesPerGroup: 3,
           },
         },
       },

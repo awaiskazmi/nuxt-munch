@@ -25,33 +25,32 @@ export default {
 
   &:hover
     text-decoration: none
-    img
-      transform: scale(1.05)
 
   .img-wrapper
-    display: inline-flex
+    display: flex
     align-items: center
     justify-content: center
     border-radius: 8px
-    height: 120px
-    width: 120px
-    padding: 18px
-    // background-color: #E3F5FB
+    height: 0
+    width: 100%
+    padding-bottom: 100%
     background-color: #eee
+    position: relative
 
-  img
-    transition: transform 0.2s cubic-bezier(1,0,0,1)
-    max-width: 100%
+    img
+      transition: transform 0.2s cubic-bezier(1,0,0,1)
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+      height: 75%
+      width: 75%
+      object-fit: contain
+      object-position: center
 
   h5
     font-size: 1rem
     margin-bottom: 0
     margin-top: 1rem
     color: #000000
-
-  @media(max-width: 768px)
-    .img-wrapper
-      height: 72px
-      width: 72px
-      padding: 11px
 </style>

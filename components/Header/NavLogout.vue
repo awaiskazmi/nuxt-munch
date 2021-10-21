@@ -17,7 +17,7 @@ export default {
       console.log("...logging out...", event);
       localStorage.removeItem("m_token");
       localStorage.removeItem("m_user");
-      this.$store.commit("setCurrentUser", {});
+      this.$store.commit("setUserObject", {});
       window.location.replace("/");
     },
   },

@@ -20,7 +20,7 @@ export default ({ app }, inject) => {
       if (data.access_token) {
         localStorage.setItem("m_token", data.access_token);
         localStorage.setItem("m_user", JSON.stringify(data));
-        app.store.commit("setCurrentUser", data);
+        app.store.commit("setUserObject", data);
         app.store.commit("setAuth", true);
         app.store.commit("setAuthToken", data.access_token);
         if (ref) {

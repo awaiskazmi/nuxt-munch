@@ -60,7 +60,7 @@ export default ({ app }, inject) => {
     // set logged in userdata
     const localStorageUser = localStorage.getItem("m_user");
     if (localStorageUser) {
-      app.store.commit("setCurrentUser", JSON.parse(localStorageUser));
+      app.store.commit("setUserObject", JSON.parse(localStorageUser));
       app.store.commit("setAuth", true);
     }
     // set logged in user token
@@ -105,6 +105,11 @@ export default ({ app }, inject) => {
     const localStorageCart = localStorage.getItem("m_cart");
     if (localStorageCart) {
       app.store.commit("setProducts", JSON.parse(localStorageCart));
+    }
+    // set verification phone if present
+    const localStorageVPhone = localStorage.getItem("m_verificationPhone");
+    if (localStorageVPhone) {
+      app.store.commit("setVerificationPhone", localStorageVPhone);
     }
   }
 

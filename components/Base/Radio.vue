@@ -2,12 +2,13 @@
   <div class="m-radio">
     <input
       type="radio"
-      :id="id"
+      :id="`${name}-${id}`"
       :name="name"
       :value="value"
+      :checked="checked"
       @change="$emit('change', value)"
     />
-    <label :for="id">
+    <label :for="`${name}-${id}`">
       <span v-if="icon" class="material-icons">{{ icon }}</span
       >{{ label }}</label
     >
@@ -16,7 +17,7 @@
 
 <script>
 export default {
-  props: ["label", "value", "name", "id", "icon"],
+  props: ["label", "value", "name", "id", "icon", "checked"],
 };
 </script>
 

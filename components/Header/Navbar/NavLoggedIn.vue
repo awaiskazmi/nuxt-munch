@@ -35,7 +35,7 @@
         <span class="icon-user material-icons"> account_circle </span>
         <div class="ml-2">
           <p class="h1 my-0">
-            {{ this.$store.state.currentUser.user.name }}
+            {{ this.$store.state.user.name }}
           </p>
           <NuxtLink class="text-secondary" to="/profile">View profile</NuxtLink>
         </div>

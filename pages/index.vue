@@ -7,7 +7,8 @@
             <h1 data-aos="flip-up">Feeling peckish? Snack time!</h1>
             <!-- code output study -->
             <div class="d-nones">
-              <pre>{{ location }}</pre>
+              <!-- <pre>{{ location }}</pre> -->
+              <!-- <pre>{{ user }}</pre> -->
               <!-- <pre>{{ cart }}</pre> -->
             </div>
             <p>We will deliver your snacks within minutes</p>
@@ -23,11 +24,11 @@
                 :value="query"
                 v-b-modal.modal-search
               />
-              <div class="input-group-append">
+              <!-- <div class="input-group-append">
                 <button class="btn btn-primary" type="button">Let's Go</button>
-              </div>
+              </div> -->
             </div>
-            <p>Checkout where we currently deliver</p>
+            <!-- <p>Checkout where we currently deliver</p> -->
           </div>
         </div>
       </div>
@@ -53,11 +54,16 @@ export default {
   },
   computed: {
     ...mapState({
-      user: (state) => state.currentUser.user,
+      user: (state) => state.user,
       query: (state) => state.globalSearchQuery,
       location: (state) => state.locationObj,
       cart: (state) => state.products.products,
     }),
+  },
+  mounted() {
+    console.log("USER", this.user);
+    console.log("LOCATION", this.location);
+    console.log("CART", this.cart);
   },
   async fetch() {
     // GOOGLE SHEETS

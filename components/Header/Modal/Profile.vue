@@ -113,6 +113,14 @@
               >Feedback</BaseButton
             >
           </div>
+          <BaseButton
+            full
+            type="link"
+            url="/orders/tracking"
+            class="m-btn-align-left mt-2"
+            icon="local_offer"
+            >My Orders</BaseButton
+          >
           <HeaderNavLogout />
         </div>
       </div>
@@ -124,7 +132,7 @@
 export default {
   computed: {
     username() {
-      return this.$store.state.currentUser.user.name;
+      return this.$store.state.user.name;
     },
   },
 };

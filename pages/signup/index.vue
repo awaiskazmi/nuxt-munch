@@ -107,11 +107,11 @@ export default {
   layout: "half-form",
   data() {
     return {
-      name: "",
-      phone: "",
-      email: "",
-      password: "",
-      repassword: "",
+      name: "Syed Asif",
+      phone: "3349367227",
+      email: "awais.kazmi+58@gmail.com",
+      password: "Asif.123",
+      repassword: "Asif.123",
       emailError: false,
       phoneError: false,
       passwordError: false,
@@ -167,13 +167,13 @@ export default {
 
           // FAILURE
 
-          // Invalid Phone
+          // Invalid Phone / Already Used
           if (code === 2106) {
             this.errorMsg = message;
             this.formInvalid = true;
             this.phoneError = true;
           }
-          // Invalid Email
+          // Invalid Email / Already Used
           if (code === 2254) {
             this.errorMsg = message;
             this.formInvalid = true;
@@ -188,10 +188,30 @@ export default {
 
           // SUCCESS
           if (autoLoginToken) {
-            this.$loginUser(this.userObject);
+            this.sendOTP();
+            this.$store.commit("setVerificationData", this.prePhone);
+            this.$router.push("/signup/verify");
+            // this.$loginUser(this.userObject);
           }
         })
         .catch((err) => console.log(err));
+    },
+    async sendOTP() {
+      const config = {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      };
+      const res = await this.$axios.post(
+        "/qa/v1/public/verificationCode/VERIFICATION_TYPE_SIGNUP",
+        {
+          phoneNumber: this.prePhone,
+          roleConstant: "ROLE_CUSTOMER",
+        },
+        config
+      );
+      console.log(res);
     },
   },
 };

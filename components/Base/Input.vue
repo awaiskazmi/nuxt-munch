@@ -11,6 +11,7 @@
       :type="type"
       :placeholder="placeholder"
       :class="'m-input-field form-control ' + variant"
+      :disabled="disabled"
       :readonly="readonly"
       :required="required"
       :value="value"
@@ -48,6 +49,7 @@ export default {
       type: String,
       default: "md",
     },
+    disabled: Boolean,
     readonly: Boolean,
     required: Boolean,
     maxLength: String,

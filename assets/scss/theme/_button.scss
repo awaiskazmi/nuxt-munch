@@ -72,3 +72,21 @@
   right: 1rem;
   z-index: 1;
 }
+
+.m-btn-add {
+  transition: all 0.1s ease;
+  padding: 0;
+  height: 32px;
+  width: 32px;
+  border-radius: 100px;
+  background-color: #E3F5FB;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+
+  &:hover {
+    background-color: $info;
+    color: #fff;
+  }
+}

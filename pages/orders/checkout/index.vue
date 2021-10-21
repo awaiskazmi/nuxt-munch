@@ -39,21 +39,20 @@
                 <div class="col-auto mr-3">
                   <img src="~/assets/images/icon-location.svg" height="24" />
                 </div>
-                <div class="col">
+                <div class="col pr-md-4">
                   <h6 class="font-weight-bold">
-                    {{ area }}
+                    {{ address.label }}
                   </h6>
                   <p class="text-muted m-0">
-                    <small v-if="address.details">{{ address.details }}</small>
+                    <small v-if="'details' in address">{{
+                      address.details
+                    }}</small>
                     <small v-else>Click on plus to add address details</small>
                   </p>
                 </div>
                 <div class="col-auto">
-                  <button
-                    v-b-toggle.sidebar-address
-                    class="btn btn-outline-secondary btn-sm"
-                  >
-                    +
+                  <button v-b-toggle.sidebar-address class="btn m-btn-add">
+                    <span class="material-icons">add</span>
                   </button>
                 </div>
               </div>
@@ -110,11 +109,8 @@
                   <p class="mt-1 mb-0" v-if="promo.length > 0">{{ promo }}</p>
                 </div>
                 <div class="col-auto">
-                  <button
-                    v-b-toggle.sidebar-promo-code
-                    class="btn btn-outline-secondary btn-sm"
-                  >
-                    +
+                  <button v-b-toggle.sidebar-promo-code class="btn m-btn-add">
+                    <span class="material-icons">add</span>
                   </button>
                 </div>
               </div>
@@ -136,8 +132,17 @@
             <div class="col">
               <div class="row no-gutters align-items-center suggestion">
                 <div class="col d-flex">
-                  <BaseRadio label="Now" />
-                  <BaseRadio label="Later" />
+                  <BaseRadio
+                    v-for="label in scheduleOptions"
+                    :key="label.id"
+                    :id="label.id"
+                    :label="label.name"
+                    :value="label.name"
+                    :checked="scheduleOptionSelected == label.name"
+                    v-model="scheduleOptionSelected"
+                    name="radioSchedule"
+                    @change="onScheduleOption(label)"
+                  />
                 </div>
               </div>
             </div>
@@ -219,7 +224,7 @@
         <div>
           <div class="row mt-4">
             <div class="col">
-              <BaseButton type="primary" full
+              <BaseButton disabled isButton type="primary" full
                 >Place Order - Rs. {{ total }}</BaseButton
               >
             </div>
@@ -236,11 +241,13 @@
     <CheckoutAddressSidebar @update="onAddressUpdate" />
     <!-- Promo code sidebar -->
     <CheckoutPromoCodeSidebar @select="onPromoCodeSelect" />
+    <!-- Schedule sidebar -->
+    <CheckoutScheduleSidebar @select="onScheduleSelect" />
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 import nuxtjsStickySidebar from "nuxtjs-sticky-sidebar";
 
 export default {
@@ -254,20 +261,29 @@ export default {
   },
   data() {
     return {
+      scheduleOptions: [
+        {
+          id: 1,
+          name: "Now",
+        },
+        {
+          id: 2,
+          name: "Later",
+        },
+      ],
+      address: this.$store.state.locationObj,
+      scheduleOptionSelected: null,
       center: {},
-      address: {},
       promo: {},
       schedule: {},
-      payment: {},
+      paymentMethod: 1, // 1 = cash
       someoneElseSwitch: false,
       someoneElse: {},
       notes: {},
+      invoice: {},
     };
   },
   computed: {
-    ...mapState({
-      area: (state) => state.location,
-    }),
     ...mapGetters({
       getAddedProducts: "getAddedProducts",
     }),
@@ -290,15 +306,26 @@ export default {
     },
   },
   methods: {
+    onScheduleOption(option) {
+      console.log(option);
+      if (option.name == "Later") {
+        this.$root.$emit("bv::toggle::collapse", "sidebar-schedule");
+      }
+    },
     onMapUpdate(center) {
       this.center = center;
     },
     onAddressUpdate(address) {
-      this.$store.commit("setUserLocation", address.label.detail);
+      this.$store.commit("setUserLocation", address.label);
+      this.$store.commit("setUserLocationAddress", address);
       this.address = address;
     },
     onPromoCodeSelect(promo) {
       this.promo = promo;
+    },
+    onScheduleSelect(schedule) {
+      console.log(schedule);
+      return;
     },
   },
 };

@@ -7,6 +7,7 @@
       no-header
       backdrop
       shadow
+      :no-close-on-esc="Object.keys(location).length === 0"
       :no-close-on-backdrop="Object.keys(location).length === 0"
     >
       <template #default="{ hide }">

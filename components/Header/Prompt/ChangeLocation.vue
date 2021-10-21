@@ -54,7 +54,7 @@ export default {
   methods: {
     onClick() {
       this.$store.commit("resetCart");
-      window.location.replace("/orders");
+      window.location.replace("/");
     },
   },
 };

@@ -6,7 +6,7 @@
         params: { id: id, product: product, category: category },
       })
     " -->
-  <div class="product" data-aos="zoom-in" :data-aos-delay="animationDelay">
+  <div class="product" data-aoses="zoom-in" :data-aoses-delay="animationDelay">
     <div class="product-wrapper">
       <!-- <span v-if="off" class="off">off</span> -->
       <span v-if="freeDelivery" class="free-delivery">Free Delivery</span>
