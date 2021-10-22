@@ -160,6 +160,7 @@
             <img
               :src="require(`@/assets/images/partners/logo-${n}.png`)"
               :alt="n"
+              class="img-fluid"
             />
           </div>
         </div>
