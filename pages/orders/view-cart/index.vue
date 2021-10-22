@@ -22,18 +22,20 @@
               <div class="col-3 pr-0">
                 <div class="image-wrapper">
                   <img
-                    :src="`https://munchies-qa.impact.venturedive.com/v2/public/resources/${p.imageUrl}`"
+                    :src="
+                      `https://munchies-qa.impact.venturedive.com/v2/public/resources/${p.imageUrl}`
+                    "
                     alt=""
                   />
                 </div>
               </div>
-              <div class="col">
+              <div class="col-9 col-md">
                 <h4 class="font-weight-bold mb-3">{{ p.name }}</h4>
                 <p class="text-muted">{{ p.weight }}</p>
-                <h5>Rs. {{ p.price }}</h5>
-              </div>
-              <div class="col-auto align-self-start d-flex align-items-center">
-                <ProductControls :product="{ ...p }" />
+                <div class="d-flex align-items-center justify-content-between">
+                  <h5 class="m-0">Rs. {{ p.price }}</h5>
+                  <ProductControls :product="{ ...p }" />
+                </div>
               </div>
             </div>
             <!-- product row: end -->

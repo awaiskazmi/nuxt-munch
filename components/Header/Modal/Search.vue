@@ -64,7 +64,7 @@
                 v-for="p in filteredProducts"
                 :key="p.id"
               >
-                <ProductItem :product="p" freeDelivery />
+                <ProductItem :product="p" />
               </div>
             </div>
           </div>
