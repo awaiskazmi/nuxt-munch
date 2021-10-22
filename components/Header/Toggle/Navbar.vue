@@ -15,8 +15,9 @@ export default {
 };
 </script>
 
-<style scoped>
-button {
+<style lang="sass" scoped>
+button
   margin-left: 10px;
-}
+  @media (max-width: 768px)
+    margin-left: auto
 </style>
