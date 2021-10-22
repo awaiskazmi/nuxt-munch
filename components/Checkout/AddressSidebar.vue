@@ -14,7 +14,7 @@
         <span class="material-icons">close</span>
       </BaseButton>
       <div class="d-flex flex-column justify-content-between h-100">
-        <div class="py-6 px-4">
+        <div class="py-6 px-3 px-md-4">
           <p class="my-4 h2 font-weight-bold">Add address details</p>
           <p>Please enter location details and label them</p>
           <p class="mt-3">
@@ -50,7 +50,7 @@
             />
           </div>
         </div>
-        <div class="px-4 pb-4">
+        <div class="px-3 pb-4">
           <BaseButton @click="saveAddress" isButton type="primary" full
             >Save address details</BaseButton
           >

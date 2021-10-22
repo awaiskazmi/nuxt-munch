@@ -58,3 +58,17 @@
     margin-right: -20px;
   }
 }
+
+.swiper-pagination {
+  position: relative;
+}
+
+.swiper-pagination-bullet {
+  margin-left: 3px;
+  margin-right: 3px;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.swiper-pagination-bullet-active {
+  background: $primary;
+}

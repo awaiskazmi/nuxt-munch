@@ -76,7 +76,7 @@
             </li>
           </ul>
         </div>
-        <div class="px-3 pb-md-4">
+        <div class="px-3 pb-4">
           <BaseButton @click="saveTimeSchedule" isButton type="primary" full
             >Select delivery time</BaseButton
           >
