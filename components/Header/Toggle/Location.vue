@@ -33,4 +33,5 @@ button
 
   @media(max-width: 768px)
     margin-left: 0
+    margin-right: 16px
 </style>
