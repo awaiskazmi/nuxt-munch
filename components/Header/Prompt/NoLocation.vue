@@ -41,17 +41,27 @@ import { mapState } from "vuex";
 export default {
   computed: {
     ...mapState({
-      location: (state) => state.locationObj,
+      serviceArea: (state) => state.locationObj.service_area,
     }),
   },
   watch: {
     $route(to, from) {
-      this.$bvModal.hide("prompt-no-location");
+      if (from.name == "coming-soon") {
+        if (!this.serviceArea) {
+          this.$bvModal.show("prompt-no-location");
+        } else {
+          return;
+        }
+      }
     },
+    // serviceArea(oldValue, newValue) {},
   },
   mounted() {
-    if (Object.keys(this.location).length === 0) {
-      this.$bvModal.show("prompt-no-location");
+    // first ever visit
+    if (this.$route.name != "coming-soon") {
+      if (!this.serviceArea) {
+        this.$bvModal.show("prompt-no-location");
+      }
     }
   },
   methods: {

@@ -125,7 +125,7 @@
             v-if="!user.phoneVerified"
             full
             type="link"
-            url="/signup/verify?ref=verify"
+            url="/auth/verify-phone?ref=verify"
             class="m-btn-align-left mt-2"
             icon="phone"
             >Verify Phone</BaseButton

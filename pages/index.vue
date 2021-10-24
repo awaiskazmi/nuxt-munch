@@ -245,9 +245,7 @@
                 <p class="text-muted my-0">OVERALL RATING</p>
               </div>
               <div class="col-12 col-md mt-4 mt-md-0">
-                <p class="h2 text-primary m-0 m-md-2">
-                  10,000 +
-                </p>
+                <p class="h2 text-primary m-0 m-md-2">10,000 +</p>
                 <p class="text-muted my-0">CUSTOMERS SERVED</p>
               </div>
             </div>
@@ -319,7 +317,15 @@
               class="img-fluid"
             />
             <div
-              class="p-3 bg-secondary text-white rounded-pill d-flex align-items-center justify-content-center"
+              class="
+                p-3
+                bg-secondary
+                text-white
+                rounded-pill
+                d-flex
+                align-items-center
+                justify-content-center
+              "
             >
               <span class="font-weight-bold mr-2">Use Promo:</span>
               <span class="m-0 h4 font-weight-bold text-uppercase"
@@ -382,8 +388,7 @@ export default {
           id: 1,
           imgUrl: "rapid.svg",
           title: "Rapid Delivery",
-          sub:
-            "Munchies delivers your snacks within 30 minutes right to your door!",
+          sub: "Munchies delivers your snacks within 30 minutes right to your door!",
         },
         {
           id: 2,
@@ -418,8 +423,7 @@ export default {
           imgUrl: "asma.png",
           title: "Asma Riaz Malik",
           date: "October 18, 2020",
-          sub:
-            "Munchies is a really nice app. The best part about munchies is that we get 50% off on many snacks. I still want them to add more items though.",
+          sub: "Munchies is a really nice app. The best part about munchies is that we get 50% off on many snacks. I still want them to add more items though.",
           stars: 4,
         },
         {
@@ -427,8 +431,7 @@ export default {
           imgUrl: "ibrahim.png",
           title: "Muhammad Ibrahim Ali",
           date: "October 26, 2020",
-          sub:
-            "The promos are just amazing! They make me order even when I don’t really need to. The riders are professional and humble too.",
+          sub: "The promos are just amazing! They make me order even when I don’t really need to. The riders are professional and humble too.",
           stars: 5,
         },
         {
@@ -436,8 +439,7 @@ export default {
           imgUrl: "maryam.png",
           title: "Maryam Niaz",
           date: "November 02, 2020",
-          sub:
-            "I had a very good experience with munchies. The app is easy to use and delivery time is minimum too. My kids love to use this app.",
+          sub: "I had a very good experience with munchies. The app is easy to use and delivery time is minimum too. My kids love to use this app.",
           stars: 4,
         },
       ],
@@ -517,31 +519,31 @@ export default {
 
 <style lang="sass" scoped>
 #hero
-  padding-top: 4rem;
-  min-height: 360px;
-  background: url("@/assets/images/header-img.png") center/cover no-repeat;
+  padding-top: 4rem
+  min-height: 360px
+  background: url("@/assets/images/header-img.png") center/cover no-repeat
   @media (max-width: 991.5px)
-    min-height: unset;
-    background: none;
+    min-height: unset
+    background: none
 #usps,
 #categories,
 #testimonials,
   background-color: #F6FCFF
 #promo
-  background: #BEF3FF url("@/assets/images/home-promo-bg.svg") center/cover no-repeat;
+  background: #BEF3FF url("@/assets/images/home-promo-bg.svg") center/cover no-repeat
   @media (max-width: 991.5px)
     background-image: url("@/assets/images/home-promo-bg-mobile.svg")
   .promo-box
     background-color: #FF8956
 .partners-grid
   display: grid
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(6, 1fr)
   grid-gap: 24px
   @media (max-width: 991.5px)
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr)
 #download
   background: linear-gradient(to bottom, #F06161 60%, #fff 40%)
-  color: #fff;
+  color: #fff
   @media (max-width: 991.5px)
     background: linear-gradient(to bottom, #F06161 40%, #fff 40%)
     color: #000
@@ -554,7 +556,7 @@ export default {
   object-fit: cover
   object-position: center
 #banner
-  background: #F06161 url("@/assets/images/home-banner-bg.png") center/cover no-repeat;
+  background: #F06161 url("@/assets/images/home-banner-bg.png") center/cover no-repeat
   @media (max-width: 991.5px)
     min-height: 680px
     display: flex

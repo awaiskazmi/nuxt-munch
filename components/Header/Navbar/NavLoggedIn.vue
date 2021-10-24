@@ -125,6 +125,15 @@
         icon="shopping_cart"
         >Cart</BaseButton
       >
+      <BaseButton
+        v-if="!user.phoneVerified"
+        full
+        type="link"
+        url="/auth/verify-phone?ref=verify"
+        class="m-btn-align-left mt-2"
+        icon="phone"
+        >Verify Phone</BaseButton
+      >
       <HeaderNavLogout />
     </div>
   </nav>
@@ -139,6 +148,7 @@ export default {
   },
   computed: {
     ...mapState({
+      user: (state) => state.user,
       products: (state) => state.products.products,
     }),
     ...mapGetters({

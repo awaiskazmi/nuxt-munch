@@ -1,5 +1,5 @@
 <template>
-  <div class="p-2 p-lg-6 flex-grow-1">
+  <div class="p-2 p-lg-6 align-self-center flex-grow-1">
     <h1>Sign in</h1>
     <p>Welcome back! Time to munch on some snacks.</p>
     <form @submit.prevent="handleSubmit" class="mt-5" autocomplete="off">
@@ -23,7 +23,7 @@
         />
       </div>
       <div class="form-group text-right">
-        <NuxtLink class="text-dark" to="/login/forgot-password"
+        <NuxtLink class="text-dark" to="/auth/verify-phone?ref=forgot"
           >Forgot password?</NuxtLink
         >
       </div>

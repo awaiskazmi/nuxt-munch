@@ -52,8 +52,12 @@
     </div>
     <div class="row mt-4">
       <div class="col">
-        <button disabled class="btn btn-outline-primary btn-block">
-          Resend Code
+        <button
+          :disabled="interval > 0"
+          @click="resendOtp"
+          class="btn btn-outline-primary btn-block"
+        >
+          Resend code
         </button>
       </div>
       <div class="col">
@@ -62,12 +66,12 @@
         </button>
       </div>
     </div>
-    <div class="row mt-4">
+    <div class="row mt-3">
       <div class="col">
-        <button class="btn btn-link">
+        <p v-show="interval > 0">
           Resend code in
-          <span class="text-dark">00:30</span>
-        </button>
+          <span class="text-primary">00:{{ intervalString }}</span>
+        </p>
       </div>
     </div>
   </div>
@@ -75,7 +79,7 @@
 
 <script>
 export default {
-  props: ["otp", "phone"],
+  props: ["otp", "phone", "verification"],
   data() {
     return {
       input1: "",
@@ -83,6 +87,8 @@ export default {
       input3: "",
       input4: "",
       otpInvalid: false,
+      enteredOtp: this.otp,
+      interval: 3,
     };
   },
   computed: {
@@ -92,6 +98,14 @@ export default {
     invalid() {
       return this.otpInvalid ? "border-primary" : "";
     },
+    intervalString() {
+      return this.interval >= 10 ? this.interval : "0" + this.interval;
+    },
+  },
+  mounted() {
+    setInterval(() => {
+      this.interval -= 1;
+    }, 1000);
   },
   methods: {
     onfocus() {
@@ -109,8 +123,38 @@ export default {
         return;
       }
     },
+    async resendOtp() {
+      this.interval = 3;
+      const config = {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      };
+      try {
+        const res = await this.$axios.post(
+          `/qa/v1/public/verificationCode/${this.verification}`,
+          {
+            phoneNumber: this.phone,
+            roleConstant: "ROLE_CUSTOMER",
+          },
+          config
+        );
+        if (res.status == 200) {
+          console.log("...code resent...");
+          this.enteredOtp = res.data.data.code;
+        }
+      } catch (err) {
+        console.log(err.response.data);
+        this.$store.dispatch("toast", {
+          title: "Limit exceeded!",
+          message: err.response.data.message,
+          variant: "danger",
+        });
+      }
+    },
     async onverify() {
-      if (this.userInput != this.otp) {
+      if (this.userInput != this.enteredOtp) {
         this.otpInvalid = true;
       } else {
         const config = {
@@ -122,9 +166,9 @@ export default {
         try {
           console.log(this.otp, this.userInput, this.phone);
           const res = await this.$axios.put(
-            "/qa/v1/public/verificationCode/checking-code/VERIFICATION_TYPE_FORGOT",
+            `/qa/v1/public/verificationCode/checking-code/${this.verification}`,
             {
-              code: this.otp,
+              code: this.enteredOtp,
               phoneNumber: this.phone,
               roleConstant: "ROLE_CUSTOMER",
             },

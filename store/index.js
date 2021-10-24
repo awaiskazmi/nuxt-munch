@@ -29,35 +29,10 @@ export const getters = {
 };
 
 export const actions = {
-  // SEND OTP GLOBAL ACTION
-  async sendOTP({ commit, state }, payload) {
-    // payload = {phone, verificationType}
-    console.log("...GLOBAL OTP METHOD...", payload);
-    const verificationTypes = {
-      forgot: "VERIFICATION_TYPE_FORGOT",
-      signup: "VERIFICATION_TYPE_SIGNUP",
-    };
-    const headers = {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    };
-    const res = await this.$axios({
-      mode: "cors",
-      method: "post",
-      url: `/qa/v1/public/verificationCode/${
-        verificationTypes[payload.verificationType]
-      }`,
-      data: {
-        phoneNumber: payload.phone,
-        roleConstant: "ROLE_CUSTOMER",
-      },
-      headers: headers,
-    });
-    console.log(res);
-  },
   // GLOBAL GET SERVICE AREA ACTION
   async getServiceArea({ commit, state }, payload) {
     console.log("...FETCHING SERVICE AREA...");
+
     let formData = new FormData();
     let currentServiceArea = state.serviceArea;
     let cartCount = state.products.products.length;
@@ -77,28 +52,64 @@ export const actions = {
       },
     });
 
-    newServiceArea = res.data[0].id;
-    console.log("...SERVICE AREA DETAILS...", res.data);
+    // service area not found
+    if (res.data.length == 0) {
+      console.log(payload.address);
+      commit("setServiceArea", null);
+      commit("setUserLocation", null);
+      commit("setUserLocationObject", {});
+      localStorage.removeItem('m_latlng');
+      localStorage.removeItem('m_location');
+      localStorage.removeItem('m_serviceArea');
+      localStorage.removeItem('m_location_name');
+      this.$router.push(`/coming-soon?area=${payload.address}`);
+    } else {
+      console.log("...SERVICE AREA DETAILS...", res);
+      newServiceArea = res.data[0].id;
 
-    // update service area in store
-    commit("setServiceArea", newServiceArea);
-    // update service area in localstorage
-    localStorage.setItem(
-      "m_location",
-      JSON.stringify({ ...payload, service_area: newServiceArea })
-    );
-    // update location in store
-    commit("setUserLocationObject", {
-      ...payload,
-      service_area: newServiceArea,
-    });
+      // update service area in store
+      commit("setServiceArea", newServiceArea);
+      // update service area in localstorage
+      localStorage.setItem(
+        "m_location",
+        JSON.stringify({ ...payload, service_area: newServiceArea })
+      );
+      // update location in store
+      commit("setUserLocationObject", {
+        ...payload,
+        service_area: newServiceArea,
+      });
+    }
   },
+
+  // GET CATEGORIES BY SERVICE AREA
+  async gerServiceAreaCategories({ commit }, serviceAreaId) {
+    const res = await this.$axios({
+      mode: "cors",
+      method: "get",
+      url: `/qa/v1/public/categories?serviceAreaId=${serviceAreaId}&activeStatus=ACTIVE`,
+    });
+    console.log('SERVICE AREA CATEGORIES', res);
+  },
+
+  // SET RECENT SEARCHES
   async setRecentSearches({ commit }, query) {
     commit("setRecentSearch", query);
     localStorage.setItem(
       "m_recentSearches",
       JSON.stringify(this.state.recentSearches)
     );
+  },
+
+  // GENERATE TOAST
+  async toast({ commit }, { message, title, variant }) {
+    this._vm.$bvToast.toast(message, {
+      title: title,
+      variant: variant,
+      toaster: 'b-toaster-bottom-center',
+      solid: true,
+      noAutoHide: true
+    });
   },
 };
 
@@ -114,7 +125,7 @@ export const mutations = {
   },
   setUserLocation(state, location) {
     state.location = location;
-    state.locationObj.address = location;
+    // state.locationObj.address = location;
   },
   setUserLocationAddress(state, address) {
     state.locationObj.details = address.details;

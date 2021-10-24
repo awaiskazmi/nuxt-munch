@@ -1,15 +1,39 @@
-export default ({ app }, inject) => {
+export default ({ app, route }, inject) => {
   // GLOBAL METHODS
 
-  // TEST METHOD
-  inject("mLogin", (userObject) => {
-    console.log("...GLOBAL METHOD...", userObject);
-  });
+
+
+
+  // WATCH ROUTER CHANGES AND CHECK SERVICE AREA
+  // app.router.afterEach((to, from) => {
+  //   if (to.name == 'coming-soon') {
+  //   } else {
+  //   }
+  // });
+
+
+
+
+  // GET RANDOM STRING
+  inject('mRandomString', (length) => {
+    return [...Array(length)].map(i => (~~(Math.random() * 36)).toString(36)).join('')
+  })
+
+  // VERIFICATION TYPES
+  const verificationTypes = {
+    forgot: "VERIFICATION_TYPE_FORGOT",
+    signup: "VERIFICATION_TYPE_SIGNUP",
+    verify: "VERIFICATION_TYPE_SIGNUP",
+    checkout: "VERIFICATION_TYPE_SIGNUP",
+  };
+  inject("verificationTypes", verificationTypes);
+
   // SET LOCATION
   inject("setLocation", (location) => {
     localStorage.setItem("m_location_name", location);
     app.store.commit("setUserLocation", location);
   });
+
   // MATCH PRODUCTS WITH CART AND UPDATE QUANTITY
   inject("syncProductsWithCart", (products) => {
     let cart = app.store.state.products.products;
@@ -23,6 +47,7 @@ export default ({ app }, inject) => {
     });
     return products;
   });
+
   // MATCH SINGLE PRODUCT WITH CART AND UPDATE QUANTITY
   inject("syncProductWithCart", (product) => {
     let cart = app.store.state.products.products;
@@ -33,6 +58,7 @@ export default ({ app }, inject) => {
       return product;
     }
   });
+
   // REVERSE GEOCODE LAT LNG TO GET LOCATION NAME AND SERVICE AREA
   inject("reverseGeoCode", (latLng) => {
     const geocoder = new google.maps.Geocoder();
@@ -47,6 +73,7 @@ export default ({ app }, inject) => {
       app.store.dispatch("getServiceArea", locationObject);
     });
   });
+
   // UPDATE CART IN LOCAL STORAGE
   inject("cartLocalStorage", () => {
     localStorage.setItem(
@@ -113,26 +140,19 @@ export default ({ app }, inject) => {
     }
   }
 
-  // get all products 1st time no location (3 pages)
-  // app.$axios.get("/qa/v2/public/hub-product/all?pageNumber=1").then((res) => {
-  //   app.store.commit(
-  //     "setProducts",
-  //     res.data.data.map((p) => {
-  //       return { ...p, qty: 0 };
-  //     })
-  //   );
-  // });
-
   // ?hubTypes=INTERNAL&role=ROLE_CUSTOMER&sortProperties=productCategory.sequenceNumber&status=ACTIVE
 
   // get all categories
   if (process.client) {
     let locationObj = app.store.state.locationObj;
+    console.log('...location already set...', locationObj);
+    app.store.dispatch("gerServiceAreaCategories", locationObj.service_area);
+    return;
     if (Object.keys(locationObj).length != 0) {
       app.$axios
         .get(
-          `/qa/v2/public/hub-product-category/all?hubTypes=INTERNAL&role=ROLE_CUSTOMER&serviceAreaId=${locationObj.service_area}&sortProperties=productCategory.sequenceNumber&status=ACTIVE`
-          // `/qa/v1/public/categories?serviceAreaId=${locationObj.service_area}&activeStatus=ACTIVE`
+          // `/qa/v2/public/hub-product-category/all?hubTypes=INTERNAL&role=ROLE_CUSTOMER&serviceAreaId=${locationObj.service_area}&sortProperties=productCategory.sequenceNumber&status=ACTIVE`
+          `/qa/v1/public/categories?serviceAreaId=${locationObj.service_area}&activeStatus=ACTIVE`
         )
         .then((res) => {
           app.store.commit("setCategories", res.data.data);

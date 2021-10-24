@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="p-2 p-lg-6 text-center align-self-center flex-grow-1">
     <h1>Enter new password</h1>
     <p>Let's setup your new password</p>
     <div class="form-group">
@@ -11,7 +11,8 @@
         variant="lg"
       />
       <small class="form-text text-left text-muted"
-        >Lowercase, uppercase, and special characters e.g. ! @ # ? .</small
+        >Password must contain lowercase, uppercase, and special characters e.g.
+        ! @ # ? .</small
       >
     </div>
     <div class="form-group">
@@ -38,12 +39,12 @@
 <script>
 export default {
   layout: "half-form",
-  props: ["token"],
   data() {
     return {
       password: "",
       repassword: "",
       passwordInvalid: false,
+      query: this.$route.query,
     };
   },
   computed: {
@@ -54,7 +55,6 @@ export default {
   methods: {
     async setPassword() {
       if (this.password != this.repassword) {
-        console.log("working");
         this.passwordInvalid = true;
       }
       const config = {
@@ -68,17 +68,17 @@ export default {
           "/qa/v1/public/users/reset-password",
           {
             password: this.password,
-            token: this.token,
+            token: this.query.token,
           },
           config
         );
         if (res.status == 200) {
-          console.log(res.data);
-          window.location.replace("/login");
+          console.log("...PASSWORD CHANEGD", res.data);
+          this.$router.push("/login");
         }
       } catch (err) {
         this.passwordInvalid = true;
-        console.log(err);
+        console.log(err.response.body);
       }
     },
   },

@@ -11,6 +11,10 @@ export default {
     googleSheetID: "${GOOGLE_SHEET_ID}",
   },
 
+  router: {
+    // middleware: ['location']
+  },
+
   // SERVER CONFIG
   server: {
     port: 3000, // default: 3000

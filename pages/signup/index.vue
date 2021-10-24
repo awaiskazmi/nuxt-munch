@@ -53,8 +53,8 @@
               :class="passwordError ? 'is-invalid' : ''"
             />
             <small class="form-text text-muted"
-              >Lowercase, uppercase, and special characters e.g. ! @ # ?
-              .</small
+              >Password must contain lowercase, uppercase, and special
+              characters e.g. ! @ # ? .</small
             >
           </div>
         </div>
@@ -107,11 +107,11 @@ export default {
   layout: "half-form",
   data() {
     return {
-      name: "Syed Asif",
-      phone: "3349367227",
-      email: "awais.kazmi+58@gmail.com",
-      password: "Asif.123",
-      repassword: "Asif.123",
+      name: "Awais Kazmi",
+      phone: "3214221073",
+      email: "awais.kazmi@munchieshome.com",
+      password: "Awais.123",
+      repassword: "Awais.123",
       emailError: false,
       phoneError: false,
       passwordError: false,
@@ -127,14 +127,18 @@ export default {
       return {
         email: this.email,
         password: this.password,
+        ref: "auth-verify-phone",
+        refQuery: {
+          ref: "verify",
+        },
       };
     },
     tokenPayload() {
       let formData = new FormData();
       formData.append("email", this.email);
+      formData.append("username", this.name);
       formData.append("password", this.password);
       formData.append("phone", this.phone);
-      formData.append("username", this.name);
       return formData;
     },
     refUrl() {
@@ -152,17 +156,30 @@ export default {
       this.passwordError = false;
       this.formInvalid = false;
 
+      let userData = {
+        email: this.email,
+        name: this.name,
+        password: this.password,
+        phone: this.prePhone,
+        localeCode: "en_us",
+        roleConstant: "ROLE_CUSTOMER",
+      };
+
       this.$axios({
         mode: "cors",
         method: "post",
-        url: "/api/proceed-signup",
-        data: this.tokenPayload,
+        url: "/qa/v1/public/users",
+        data: userData,
         headers: {
-          "Content-Type": "multipart/form-data",
+          device_id: this.$mRandomString(25),
+          "Content-Type": "application/json",
         },
       })
         .then(({ data }) => {
-          console.log(data);
+          console.log("SIGNUP SUCCESSFUL", data);
+          this.$loginUser(this.userObject);
+          // this.$router.push("/signup/verify?ref=signup");
+          return;
           let { code, message, autoLoginToken } = data;
 
           // FAILURE
@@ -188,13 +205,12 @@ export default {
 
           // SUCCESS
           if (autoLoginToken) {
-            this.$sendOTP(this.prePhone, "signup");
+            this.$loginUser(this.userObject);
             // this.$store.commit("setVerificationData", this.prePhone);
-            this.$router.push("/signup/verify?ref=signup");
-            // this.$loginUser(this.userObject);
+            // this.$router.push("/signup/verify?ref=signup");
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(userData, err.response.data));
     },
   },
 };
