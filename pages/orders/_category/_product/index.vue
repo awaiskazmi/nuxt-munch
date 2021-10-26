@@ -15,9 +15,11 @@
             </span>
           </b-breadcrumb-item>
           <b-breadcrumb-item to="/orders">Orders</b-breadcrumb-item>
-          <b-breadcrumb-item class="cap">{{
-            product.category.name
-          }}</b-breadcrumb-item>
+          <b-breadcrumb-item
+            :to="`/orders/${product.category.id}`"
+            class="cap"
+            >{{ product.category.name }}</b-breadcrumb-item
+          >
           <b-breadcrumb-item class="cap" active>{{
             product.name
           }}</b-breadcrumb-item>

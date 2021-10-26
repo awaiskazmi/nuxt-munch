@@ -4,25 +4,23 @@
       <CarouselYummies />
     </div>
     <TopCategories />
-    <!-- <h2>Exclusive 🌟</h2> -->
-    <!-- <pre>{{ exclusive }}</pre> -->
-    <!--     <div class="mt-4 row flex-nowrap">
-      <div class="col-5 col-md-3 mb-3" v-for="p in exclusive" :key="p.id">
-        <ProductItem
-          :id="p.id"
-          :name="p.name"
-          :weight="p.weight"
-          :originalPrice="p.price"
-          :thumb="p.imageUrl"
-          :product="p.name.replace(/ +/g, '-').toLowerCase()"
-          :category="p.category.name.replace(/ +/g, '-').toLowerCase()"
-          :categoryId="p.category.id"
-          :quantity="p.quantity"
-          freeDelivery
-        />
-      </div>
-    </div> -->
-    <HotDamn title="Hot Damn" />
+    <CarouselProducts
+      title="Hot Damn 🔥"
+      id="hot-damn"
+      product="hot-damn"
+      landing="/trending/"
+    />
+    <CarouselProducts
+      title="Exclusive Munchies 🤫"
+      id="exclusive"
+      product="exclusive"
+    />
+    <CarouselProducts
+      title="New in the game 🌟"
+      id="new-in-the-game"
+      product="new-in-the-game"
+    />
+    <CarouselBrands id="brands" />
   </div>
 </template>
 

@@ -2,7 +2,7 @@
   <div class="container px-0 py-5">
     <div class="row">
       <div class="col">
-        <h2 class="mb-4">{{ title }} 🔥</h2>
+        <h2 class="mb-4">{{ title }}</h2>
         <div class="row align-items-center">
           <div class="col">
             <p v-if="$fetchState.pending" class="text-center">
@@ -10,14 +10,14 @@
             </p>
             <div v-else class="swiper swiper-products">
               <div
-                id="swiper-hotdamn-prev"
+                :id="`swiper-${id}-prev`"
                 class="swiper-button-prev"
                 slot="button-prev"
               >
                 <span class="material-icons">navigate_before</span>
               </div>
               <div
-                id="swiper-hotdamn-next"
+                :id="`swiper-${id}-next`"
                 class="swiper-button-next"
                 slot="button-next"
               >
@@ -34,7 +34,7 @@
                   </div>
                   <div class="swiper-slide align-self-center text-center">
                     <BaseButton
-                      url="/trending/"
+                      :url="landing"
                       icon="navigate_next"
                       type="secondary"
                       rounded
@@ -72,7 +72,7 @@
 import { mapState } from "vuex";
 
 export default {
-  props: ["title"],
+  props: ["id", "product", "title", "landing"],
   data() {
     return {
       products: [],
@@ -81,8 +81,8 @@ export default {
         slidesPerGroup: 4,
         loop: false,
         navigation: {
-          nextEl: "#swiper-hotdamn-next",
-          prevEl: "#swiper-hotdamn-prev",
+          nextEl: `#swiper-${this.id}-next`,
+          prevEl: `#swiper-${this.id}-prev`,
         },
         breakpoints: {
           769: {
@@ -96,14 +96,12 @@ export default {
   methods: {},
   computed: {
     ...mapState({
-      // products: (state) => state.products.products.filter((e) => e.tag == ""),
-      // products: (state) => state.products.products,
       serviceArea: (state) => state.serviceArea,
     }),
   },
   async fetch() {
     const res = await this.$axios.get(
-      `/qa/v2/public/hub-product/hot-damn?serviceAreaId=${this.serviceArea}&statuses=IN_STOCK`
+      `/qa/v2/public/hub-product/${this.product}?serviceAreaId=${this.serviceArea}&descending=true&statuses=IN_STOCK&status=OUT_OF_STOCK&pageNumber=1&pageSize=20`
     );
     this.products = this.$syncProductsWithCart(res.data.data);
   },

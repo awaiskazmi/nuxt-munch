@@ -1,15 +1,16 @@
 export const state = () => ({
   auth: false,
-  token: "",
-  user: {},
   cart: 0,
-  locationObj: {},
+  serviceArea: null,
+  hubId: null,
+  token: "",
   location: "",
-  latLng: {},
-  serviceArea: -1,
   globalSearchQuery: "",
-  recentSearches: [],
+  user: {},
+  latLng: {},
+  locationObj: {},
   shoppingCart: [],
+  recentSearches: [],
   recentSearches: [],
 });
 
@@ -30,8 +31,15 @@ export const getters = {
 
 export const actions = {
   // GLOBAL GET SERVICE AREA ACTION
-  async getServiceArea({ commit, state }, payload) {
+  async getServiceArea({ commit, state, dispatch }, payload) {
     console.log("...FETCHING SERVICE AREA...");
+
+    // dispatch('toast', {
+    //   title: 'Just a moment...',
+    //   message: "We're setting up everything so that you can enjoy your shopping experience!",
+    //   variant: 'info',
+    //   position: 'bottom-full'
+    // });
 
     let formData = new FormData();
     let currentServiceArea = state.serviceArea;
@@ -52,12 +60,15 @@ export const actions = {
       },
     });
 
-    // service area not found
+    // if service area not found
     if (res.data.length == 0) {
       console.log(payload.address);
+      commit("setHubId", null);
+      commit("setCategories", {});
       commit("setServiceArea", null);
       commit("setUserLocation", null);
       commit("setUserLocationObject", {});
+      localStorage.removeItem('m_hubId');
       localStorage.removeItem('m_latlng');
       localStorage.removeItem('m_location');
       localStorage.removeItem('m_serviceArea');
@@ -69,27 +80,63 @@ export const actions = {
 
       // update service area in store
       commit("setServiceArea", newServiceArea);
+
       // update service area in localstorage
       localStorage.setItem(
         "m_location",
         JSON.stringify({ ...payload, service_area: newServiceArea })
       );
+
       // update location in store
       commit("setUserLocationObject", {
         ...payload,
         service_area: newServiceArea,
       });
+
+      // dispatch GET hubId action
+      dispatch('getHubId', newServiceArea);
+
+      // dispatch GET categories action
+      dispatch('getHubCategories', newServiceArea);
     }
   },
 
-  // GET CATEGORIES BY SERVICE AREA
-  async gerServiceAreaCategories({ commit }, serviceAreaId) {
-    const res = await this.$axios({
+  // GET HUB ID BY SERVICE AREA
+  async getHubId({ commit, dispatch }, serviceAreaId) {
+    // GET hubId from service area
+    const hubData = await this.$axios({
       mode: "cors",
       method: "get",
-      url: `/qa/v1/public/categories?serviceAreaId=${serviceAreaId}&activeStatus=ACTIVE`,
+      url: `/qa/v2/public/hub?serviceAreaId=${serviceAreaId}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
-    console.log('SERVICE AREA CATEGORIES', res);
+
+    // print hubData
+    console.log('...HUB DATA...', hubData);
+
+    // save hubId in store and localstorage
+    commit("setHubId", hubData.data.data[0].id);
+  },
+
+  // GET CATEGORIES BY SERVICE AREA
+  async getHubCategories({ commit, dispatch }, serviceAreaId) {
+    // GET product categories based on service area
+    const categoryData = await this.$axios({
+      mode: "cors",
+      method: "get",
+      url: `/qa/v2/public/hub-product-category/all?descending=false&hubTypes=INTERNAL&role=ROLE_CUSTOMER&serviceAreaId=${serviceAreaId}&sortProperties=productCategory.sequenceNumber&status=ACTIVE`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    // print categories
+    console.log('...CATEGORIES...', categoryData);
+
+    // update categories in store
+    commit('setCategories', categoryData.data.data);
   },
 
   // SET RECENT SEARCHES
@@ -102,13 +149,13 @@ export const actions = {
   },
 
   // GENERATE TOAST
-  async toast({ commit }, { message, title, variant }) {
+  async toast({ commit }, { message, title, variant, position = 'bottom-center', autoHide = false }) {
     this._vm.$bvToast.toast(message, {
       title: title,
       variant: variant,
-      toaster: 'b-toaster-bottom-center',
+      toaster: 'b-toaster-' + position,
+      noAutoHide: autoHide,
       solid: true,
-      noAutoHide: true
     });
   },
 };
@@ -119,6 +166,10 @@ export const mutations = {
   },
   setAuthToken(state, token) {
     state.token = token;
+  },
+  setHubId(state, hubId) {
+    state.hubId = hubId;
+    localStorage.setItem("m_hubId", hubId);
   },
   setUserLabelOption(state, option) {
     state.locationObj.labelOption = option;

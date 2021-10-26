@@ -117,6 +117,13 @@ export default ({ app, route }, inject) => {
     const localStorageServiceArea = localStorage.getItem("m_serviceArea");
     if (localStorageServiceArea) {
       app.store.commit("setServiceArea", localStorageServiceArea);
+      app.store.dispatch('getHubId', localStorageServiceArea);
+      app.store.dispatch('getHubCategories', localStorageServiceArea);
+    }
+    // set loggin in user service area
+    const localHubId = localStorage.getItem("m_hubId");
+    if (localHubId) {
+      app.store.commit("setHubId", localHubId);
     }
     // set shopping cart if present
     const localStorageShoppingCart = localStorage.getItem("m_shoppingCart");
@@ -142,12 +149,22 @@ export default ({ app, route }, inject) => {
 
   // ?hubTypes=INTERNAL&role=ROLE_CUSTOMER&sortProperties=productCategory.sequenceNumber&status=ACTIVE
 
+
+
+
+
   // get all categories
   if (process.client) {
     let locationObj = app.store.state.locationObj;
-    console.log('...location already set...', locationObj);
-    app.store.dispatch("gerServiceAreaCategories", locationObj.service_area);
+    console.log('...location object...', locationObj);
+    // if no location set
+    if (Object.keys(locationObj).length === 0) {
+      return;
+    } else {
+      console.log('...LOCATION WAS ALREADY SET...')
+    }
     return;
+    app.store.dispatch("gerServiceAreaCategories", locationObj.service_area);
     if (Object.keys(locationObj).length != 0) {
       app.$axios
         .get(
@@ -159,4 +176,9 @@ export default ({ app, route }, inject) => {
         });
     }
   }
+
+
+
+
+
 };

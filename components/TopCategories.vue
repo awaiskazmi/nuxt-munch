@@ -73,11 +73,12 @@ export default {
     ...mapState({
       categories: (state) => state.categories.categories,
       location: (state) => state.locationObj,
+      hubId: (state) => state.hubId,
     }),
   },
   // async fetch() {
   //   const res = await this.$axios.get(
-  //     `/qa/v2/public/hub-product-category/all?hubTypes=INTERNAL&role=ROLE_CUSTOMER&serviceAreaId=${this.location.service_area}&sortProperties=productCategory.sequenceNumber&status=ACTIVE`
+  //     `/qa/v2/public/hub-product-category/all?descending=false&hubTypes=INTERNAL&role=ROLE_CUSTOMER&serviceAreaId=${this.location.service_area}&sortProperties=productCategory.sequenceNumber&status=ACTIVE`
   //   );
   //   this.categories = res.data.data;
   // },

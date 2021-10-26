@@ -27,27 +27,30 @@
         <div class="row">
           <div class="col">
             <p class="h1 font-weight-bold mb-3">Search</p>
-            <!-- <pre>{{ serviceArea }}</pre> -->
-            <!-- <pre>{{ uCategories }}</pre> -->
-            <BaseInput
-              prepend="search"
-              variant="lg"
-              placeholder="I'm craving for"
-              v-model="search"
-              @keyup="onkeyup"
-            />
-            <div class="categories d-flex flex-wrap mt-3">
-              <BaseRadio
-                v-for="c in uCategories"
-                :key="c.id"
-                :data-category="c.id"
-                :id="c.id"
-                :label="c.name"
-                :value="c.id"
-                v-model="filterId"
-                name="filterId"
-                @change="filterProducts(c.id)"
+            <div v-if="serviceArea == null">
+              <p class="p-5 text-center">Please select a location first.</p>
+            </div>
+            <div v-else>
+              <BaseInput
+                prepend="search"
+                variant="lg"
+                placeholder="I'm craving for"
+                v-model="search"
+                @keyup="onkeyup"
               />
+              <div class="categories d-flex flex-wrap mt-3">
+                <BaseRadio
+                  v-for="c in uCategories"
+                  :key="c.id"
+                  :data-category="c.id"
+                  :id="c.id"
+                  :label="c.name"
+                  :value="c.id"
+                  v-model="filterId"
+                  name="filterId"
+                  @change="filterProducts(c.id)"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -66,6 +69,21 @@
               >
                 <ProductItem :product="p" />
               </div>
+            </div>
+            <p v-show="isLoadingMore" class="mt-5 text-center">
+              <b-spinner variant="primary" label="Spinning"></b-spinner>
+            </p>
+            <div
+              v-show="currentPage < totalPages && isLoadingMore == false"
+              class="mt-5 text-center"
+            >
+              <BaseButton
+                :disabled="isLoadingMore"
+                type="primary"
+                isButton
+                @click="loadMoreProducts"
+                >Load more products</BaseButton
+              >
             </div>
           </div>
         </div>
@@ -124,6 +142,9 @@ export default {
       categories: [],
       filterId: null,
       searching: false,
+      totalPages: -1,
+      currentPage: 1,
+      isLoadingMore: false,
     };
   },
   watch: {
@@ -132,6 +153,13 @@ export default {
     },
   },
   computed: {
+    ...mapState({
+      serviceArea: (state) => state.locationObj.service_area,
+      recent: (state) => state.recentSearches,
+    }),
+    ...mapGetters({
+      getSearchQuery: "getglobalSearchQuery",
+    }),
     filteredProducts() {
       if (this.filterId == null) {
         return this.products;
@@ -146,15 +174,6 @@ export default {
         ...new Map(this.categories.map((item) => [item["id"], item])).values(),
       ];
     },
-    serviceArea() {
-      return this.$store.state.locationObj.service_area;
-    },
-    ...mapState({
-      recent: (state) => state.recentSearches,
-    }),
-    ...mapGetters({
-      getSearchQuery: "getglobalSearchQuery",
-    }),
     search: {
       get() {
         return this.getSearchQuery;
@@ -165,7 +184,6 @@ export default {
       },
     },
   },
-  mounted() {},
   methods: {
     ...mapActions(["setRecentSearches"]),
     filterProducts(id) {
@@ -199,8 +217,28 @@ export default {
         name: p.category.name,
       }));
       this.products = this.$syncProductsWithCart(res.data.data);
+      this.totalPages = res.data.totalPages;
       this.$store.dispatch("setRecentSearches", this.search);
       this.searching = false;
+    },
+    async loadMoreProducts() {
+      this.isLoadingMore = true;
+      this.currentPage++;
+      if (this.currentPage <= this.totalPages) {
+        const moreProducts = await this.$axios({
+          mode: "cors",
+          method: "get",
+          url: `/qa/v2/public/hub-product/all?hubTypes=INTERNAL&keyword=${this.search}&role=ROLE_CUSTOMER&serviceAreaId=${this.serviceArea}&statuses=IN_STOCK&statuses=OUT_OF_STOCK&pageNumber=${this.currentPage}`,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        this.isLoadingMore = false;
+        this.products = this.$syncProductsWithCart([
+          ...this.products,
+          ...moreProducts.data.data,
+        ]);
+      }
     },
   },
 };

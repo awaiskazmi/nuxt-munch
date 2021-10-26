@@ -1,13 +1,7 @@
 <template>
   <nuxt-link :to="`/orders/${id}`" :id="id" class="category">
     <div class="img-wrapper img">
-      <img
-        :src="
-          'https://munchies-qa.impact.venturedive.com/v2/public/resources/' +
-          imageUrl
-        "
-        :alt="name"
-      />
+      <img :src="$config.resourceUrl + imageUrl" :alt="name" />
     </div>
     <h5>{{ name }}</h5>
   </nuxt-link>

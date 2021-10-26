@@ -46,7 +46,7 @@
       <span class="sale">Rs. {{ product.price }}</span>
     </div>
     <p class="m-0 name">{{ product.name }}</p>
-    <p class="m-0 weight">{{ product.weight }}</p>
+    <!-- <p class="m-0 weight">{{ product.weight }}</p> -->
     <NuxtLink
       class="product-link"
       :to="`/orders/${product.category.id}/${product.id}`"

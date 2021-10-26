@@ -4,6 +4,7 @@ export default {
   publicRuntimeConfig: {
     googleSheetKey: "${GOOGLE_SHEET_KEY}",
     placeholderImage: "${PLACEHOLDER_IMAGE}",
+    resourceUrl: "${RESOURCE_URL}"
   },
   // PRIVATE
   privateRuntimeConfig: {
@@ -102,7 +103,7 @@ export default {
       pathRewrite: { "^/api/": "" },
     },
     "/qa/": {
-      target: "https://munchies-qa.impact.venturedive.com",
+      target: "https://munchies-stage.impact.venturedive.com",
       pathRewrite: { "^/qa/": "" },
     },
     "/test/": {

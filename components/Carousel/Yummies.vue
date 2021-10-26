@@ -1,5 +1,8 @@
 <template>
-  <div class="swiper swiper-yummies">
+  <p v-if="$fetchState.pending" class="text-center">
+    <b-spinner variant="primary" label="Spinning"></b-spinner>
+  </p>
+  <div v-else class="swiper swiper-yummies">
     <div id="swiper-yummies-prev" class="swiper-button-prev" slot="button-prev">
       <span class="material-icons">navigate_before</span>
     </div>
@@ -8,9 +11,18 @@
     </div>
     <div v-swiper:swiperYummies="options">
       <div class="swiper-wrapper">
-        <div v-for="s in slides" class="swiper-slide yummy">
-          <h5 class="font-weight-bold">Pie in the Sky</h5>
-          <nuxt-link to="/">View yummies</nuxt-link>
+        <div
+          v-for="p in products"
+          :key="p.id"
+          class="swiper-slide yummy overflow-hidden"
+        >
+          <!-- <ProductItem :product="p" :animationDelay="index * 50" /> -->
+          <img
+            :src="$config.resourceUrl + p.imageUrl"
+            alt=""
+            class="img-fluid"
+          />
+          <nuxt-link :to="p.link"></nuxt-link>
         </div>
       </div>
     </div>
@@ -21,7 +33,7 @@
 export default {
   data() {
     return {
-      slides: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }],
+      products: [],
       options: {
         spaceBetween: 24,
         slidesPerView: 3,
@@ -40,14 +52,19 @@ export default {
       },
     };
   },
+  async fetch() {
+    const res = await this.$axios.get(
+      `/qa/v1/public/featuredProducts/?bannerType=HOME_SCREEN`
+    );
+    this.products = this.$syncProductsWithCart(res.data.data);
+  },
+  fetchOnServer: false,
 };
 </script>
 
 <style lang="css" scoped>
 .yummy {
   position: relative;
-  aspect-ratio: 2/0.85;
-  padding: 1.25rem;
   border-radius: 8px;
   background-color: #f4c7c8;
   display: flex;
