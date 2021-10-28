@@ -28,6 +28,16 @@ export default ({ app, route }, inject) => {
   };
   inject("verificationTypes", verificationTypes);
 
+  // VERIFICATION ENDPOINTS
+  const verificationEndpoints = {
+    forgot: "auth-reset-password",
+    signup: "index",
+    verify: "index",
+    checkout: "orders-checkout",
+  };
+  inject("verificationEndpoints", verificationEndpoints);
+
+
   // SET LOCATION
   inject("setLocation", (location) => {
     localStorage.setItem("m_location_name", location);

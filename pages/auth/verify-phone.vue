@@ -18,8 +18,11 @@
       v-if="phoneVerified && !otpVerified"
       @otpVerified="onOtpVerified"
     />
-    <!-- STEP 3 : Set New Password -->
-    <!-- <ForgotPasswordSetNew :token="token" v-if="phoneVerified && otpVerified" /> -->
+    <!--
+      In STEP 2, it redirects to respective flows.
+      In case of forgot password, user is redirected to password reset flow.
+      In case of signup, user is redirected to signup phone number flow.
+    -->
   </div>
 </template>
 

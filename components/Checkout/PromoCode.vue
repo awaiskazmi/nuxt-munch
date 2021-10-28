@@ -1,9 +1,9 @@
 <template>
-  <div :id="id" class="mb-4">
+  <div :id="promocode.id" class="mb-4">
     <b-card
       header-bg-variant="white"
       footer-bg-variant="white"
-      :title="title"
+      :title="promocode.title"
       header-tag="header"
       footer-tag="footer"
     >
@@ -12,17 +12,20 @@
           <h6 class="d-flex align-items-center mb-0">
             <span v-if="applied" class="material-icons text-success mr-1"
               >check_circle</span
-            ><span>{{ code }}</span>
+            ><span>{{ promocode.code }}</span>
           </h6>
           <span>Expires: {{ expires }}</span>
         </div>
       </template>
-      <b-card-text>{{ description }}</b-card-text>
+      <b-card-text>
+        {{ promocode.description }}
+        <pre>{{ promocode }}</pre>
+      </b-card-text>
       <template #footer>
         <div class="d-flex align-items-center justify-content-between">
           <small class="text-muted">Terms and conditions apply</small>
           <BaseButton
-            v-if="!applied"
+            :disabled="applied"
             isButton
             @click="onPromoSelect"
             type="outline-primary px-5"
@@ -36,7 +39,7 @@
 
 <script>
 export default {
-  props: ["id", "code", "description", "start", "end", "status", "title"],
+  props: ["promocode"],
   data() {
     return {
       applied: false,
@@ -44,14 +47,14 @@ export default {
   },
   computed: {
     expires() {
-      let end = new Date(this.end);
-      return `${end.getDay()}-${end.getMonth()}-${end.getFullYear()}`;
+      let end = new Date(this.promocode.expiredOn);
+      return `${end.getDate()}-${end.getMonth()}-${end.getFullYear()}`;
     },
   },
   methods: {
     onPromoSelect() {
       this.applied = true;
-      this.$emit("select", this.code);
+      this.$emit("select", this.promocode);
     },
   },
 };

@@ -22,7 +22,7 @@
             alt=""
             class="img-fluid"
           />
-          <nuxt-link :to="p.link"></nuxt-link>
+          <!-- <nuxt-link :to="p.link"></nuxt-link> -->
         </div>
       </div>
     </div>
@@ -87,6 +87,6 @@ export default {
   bottom: 0;
 }
 .yummy:hover {
-  transform: scale(0.97);
+  /* transform: scale(0.97); */
 }
 </style>

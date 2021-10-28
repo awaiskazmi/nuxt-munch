@@ -33,8 +33,8 @@
         </div>
         <div class="col-12 col-md">
           <div class="px-md-5">
-            <h1 class="name">{{ product.name }}</h1>
-            <p class="weight">{{ product.weight }}</p>
+            <h1 class="name mb-3">{{ product.name }}</h1>
+            <!-- <p class="weight">{{ product.weight }}</p> -->
             <p class="desc">{{ product.productDescription }}</p>
             <div class="row align-items-center justify-content-between">
               <div class="col-auto col-md-12">

@@ -37,4 +37,18 @@ export default ({ app }, inject) => {
       console.log('ERROR LOGGING IN', err);
     });
   })
+
+  // LOGOUT IF ACCESS TOKEN INVALID CODE 4000
+  inject('logoutOutSessionExpired', () => {
+    console.log("...logging out...");
+    localStorage.removeItem("m_token");
+    localStorage.removeItem("m_user");
+    app.store.commit("setUserObject", {});
+    app.router.push('/login/')
+    app.store.dispatch('toast', {
+      title: 'Session expired',
+      message: 'You need to login again!',
+      variant: 'info',
+    })
+  })
 };

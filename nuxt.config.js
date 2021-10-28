@@ -103,7 +103,7 @@ export default {
       pathRewrite: { "^/api/": "" },
     },
     "/qa/": {
-      target: "https://munchies-stage.impact.venturedive.com",
+      target: "https://munchies-qa.impact.venturedive.com",
       pathRewrite: { "^/qa/": "" },
     },
     "/test/": {

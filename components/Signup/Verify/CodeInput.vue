@@ -179,6 +179,11 @@ export default {
           }
         } catch (err) {
           this.phoneInvalid = true;
+          this.$store.dispatch("toast", {
+            title: "Error!",
+            message: err.response.body.message,
+            variant: "danger",
+          });
           console.log(err.response);
         }
       }

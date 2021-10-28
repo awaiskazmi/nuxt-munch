@@ -16,6 +16,7 @@
       <div class="d-flex flex-column justify-content-between h-100">
         <div class="pt-6 px-3 px-md-4">
           <p class="my-4 h2 font-weight-bold">Schedule Order</p>
+          <pre>Selected option: {{ selected }}</pre>
           <p>Select your delivery date & schedule</p>
           <div class="radio-group">
             <div class="radio-group-input">
@@ -24,7 +25,7 @@
                 <span>Today</span>
                 <span
                   >{{ today.toLocaleString("default", { month: "long" }) }}
-                  {{ today.getDay() }}</span
+                  {{ today.getDate() }}</span
                 >
               </label>
             </div>
@@ -34,7 +35,7 @@
                 <span>Tomorrow</span>
                 <span
                   >{{ tomorrow.toLocaleString("default", { month: "long" }) }}
-                  {{ tomorrow.getDay() }}</span
+                  {{ tomorrow.getDate() }}</span
                 >
               </label>
             </div>
@@ -51,7 +52,7 @@
                 }}</span>
                 <span
                   >{{ dayAfter.toLocaleString("default", { month: "long" }) }}
-                  {{ dayAfter.getDay() }}</span
+                  {{ dayAfter.getDate() }}</span
                 >
               </label>
             </div>
@@ -88,6 +89,7 @@
 
 <script>
 export default {
+  props: ["selected"],
   data() {
     return {
       slot: "one",

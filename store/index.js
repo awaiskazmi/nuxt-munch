@@ -34,13 +34,6 @@ export const actions = {
   async getServiceArea({ commit, state, dispatch }, payload) {
     console.log("...FETCHING SERVICE AREA...");
 
-    // dispatch('toast', {
-    //   title: 'Just a moment...',
-    //   message: "We're setting up everything so that you can enjoy your shopping experience!",
-    //   variant: 'info',
-    //   position: 'bottom-full'
-    // });
-
     let formData = new FormData();
     let currentServiceArea = state.serviceArea;
     let cartCount = state.products.products.length;
@@ -107,7 +100,7 @@ export const actions = {
     const hubData = await this.$axios({
       mode: "cors",
       method: "get",
-      url: `/qa/v2/public/hub?serviceAreaId=${serviceAreaId}`,
+      url: `/qa/v2/public/hub?serviceAreaId=${serviceAreaId}&hubTypes=INTERNAL`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -179,10 +172,14 @@ export const mutations = {
     // state.locationObj.address = location;
   },
   setUserLocationAddress(state, address) {
+    console.log(address);
     state.locationObj.details = address.details;
     state.locationObj.label = address.label;
+    state.locationObj.locationName = address.locationName;
+    state.locationObj.addressId = address.id;
+    state.locationObj.additionalDetails = address.additionalDetails;
     localStorage.setItem("m_location", JSON.stringify(state.locationObj));
-    localStorage.setItem("m_location_name", state.locationObj.address);
+    localStorage.setItem("m_location_name", state.locationObj.locationName);
   },
   setUserLocationObject(state, locationObj) {
     state.locationObj = locationObj;

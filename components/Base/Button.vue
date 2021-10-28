@@ -3,10 +3,11 @@
     v-if="isButton"
     :disabled="disabled"
     :class="'m-btn btn btn-' + classes"
+    :type="isFormSubmit ? 'submit' : ''"
     @click="$emit('click')"
   >
     <span v-if="icon" class="m-btn-icon material-icons">{{ icon }}</span>
-    <span class="m-btn-label">
+    <span class="m-btn-label d-flex align-items-center">
       <slot></slot>
     </span>
   </button>
@@ -31,6 +32,7 @@ export default {
       default: "#",
     },
     isButton: Boolean,
+    isFormSubmit: Boolean,
     disabled: Boolean,
     variant: String,
   },

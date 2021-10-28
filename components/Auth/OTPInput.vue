@@ -4,8 +4,9 @@
     <p>
       Please enter the 4-digit verification code sent to your number &mdash;
     </p>
+    <pre>Page to redirect to is: {{ redirect }}</pre>
     <div class="d-inline-flex align-items-center mb-4">
-      <span>{{ phoneValue }}</span>
+      <pre>Number to verify is: {{ phoneValue }}</pre>
     </div>
     <SignupVerifyCodeInput
       @otpVerified="otpVerified"
@@ -17,16 +18,20 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   layout: "half-form",
   props: ["otp", "phone", "pageRef", "phoneValue"],
   data() {
     return {
-      redirect: this.pageRef == "forgot" ? "auth-reset-password" : this.pageRef,
+      redirect: this.$verificationEndpoints[this.pageRef], // named route
       redirectQuery: "",
     };
   },
   computed: {
+    ...mapState({
+      user: (state) => state.user,
+    }),
     verification() {
       return this.$verificationTypes[this.pageRef];
     },
@@ -37,6 +42,35 @@ export default {
         token: token,
         verification: this.verification,
       };
+
+      // if not forgot password
+      if (this.pageRef != "forgot") {
+        // update local state
+        this.$store.commit("setUserObject", {
+          ...this.user,
+          phoneVerified: true,
+        });
+
+        // update local storage
+        localStorage.setItem(
+          "m_user",
+          JSON.stringify({
+            ...this.user,
+            phoneVerified: true,
+          })
+        );
+
+        // show toast
+        this.$store.dispatch("toast", {
+          title: "Hurray!",
+          message:
+            "Your phone number has been verified. You can now place orders and enjoy your munchies.",
+          variant: "success",
+          position: "bottom-full",
+        });
+      }
+
+      // redirect to path
       this.$router.push({ name: this.redirect, query: this.redirectQuery });
     },
   },

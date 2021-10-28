@@ -28,11 +28,16 @@
         >
       </div>
       <div class="form-group">
-        <input
-          type="submit"
-          value="Sign in"
-          class="btn btn-primary btn-block btn-lg"
-        />
+        <BaseButton
+          :disabled="isAttemptingLogin"
+          isButton
+          isFormSubmit
+          type="primary"
+          variant="lg"
+          full
+          ><b-spinner v-show="isAttemptingLogin" class="mr-1" small></b-spinner
+          ><span>Sign in</span></BaseButton
+        >
       </div>
       <div>
         <div class="hrh my-4">or sign in via</div>
@@ -59,6 +64,7 @@ export default {
     return {
       email: "",
       password: "",
+      isAttemptingLogin: false,
     };
   },
   computed: {
@@ -78,6 +84,7 @@ export default {
   },
   methods: {
     handleSubmit() {
+      this.isAttemptingLogin = true;
       this.$loginUser(this.userObject);
     },
   },

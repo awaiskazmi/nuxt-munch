@@ -74,11 +74,16 @@
         </div>
       </div>
       <div class="form-group mt-4">
-        <input
-          type="submit"
-          value="Sign up"
-          class="btn btn-primary btn-block btn-lg"
-        />
+        <BaseButton
+          :disabled="isAttemptingSignup"
+          isButton
+          isFormSubmit
+          type="primary"
+          variant="lg"
+          full
+          ><b-spinner v-show="isAttemptingSignup" class="mr-1" small></b-spinner
+          ><span>Sign up</span></BaseButton
+        >
       </div>
       <div v-if="formInvalid" class="form-group my-4">
         <b-alert
@@ -109,13 +114,14 @@ export default {
     return {
       name: "Awais Kazmi",
       phone: "3214221073",
-      email: "awais.kazmi@munchieshome.com",
+      email: "awais.kazmi+60@munchieshome.com",
       password: "Awais.123",
       repassword: "Awais.123",
       emailError: false,
       phoneError: false,
       passwordError: false,
       formInvalid: false,
+      isAttemptingSignup: false,
       errorMsg: "",
     };
   },
@@ -129,7 +135,7 @@ export default {
         password: this.password,
         ref: "auth-verify-phone",
         refQuery: {
-          ref: "verify",
+          ref: "signup",
         },
       };
     },
@@ -156,6 +162,9 @@ export default {
       this.passwordError = false;
       this.formInvalid = false;
 
+      // diasble signup button
+      this.isAttemptingSignup = true;
+
       let userData = {
         email: this.email,
         name: this.name,
@@ -176,14 +185,15 @@ export default {
         },
       })
         .then(({ data }) => {
-          console.log("SIGNUP SUCCESSFUL", data);
-          this.$loginUser(this.userObject);
-          // this.$router.push("/signup/verify?ref=signup");
-          return;
           let { code, message, autoLoginToken } = data;
 
-          // FAILURE
+          // SUCCESS
+          // auto login user and redirect to phone verification screen
+          if (autoLoginToken) {
+            this.$loginUser(this.userObject);
+          }
 
+          // FAILURE
           // Invalid Phone / Already Used
           if (code === 2106) {
             this.errorMsg = message;
@@ -202,15 +212,19 @@ export default {
             this.formInvalid = true;
             this.passwordError = true;
           }
-
-          // SUCCESS
-          if (autoLoginToken) {
-            this.$loginUser(this.userObject);
-            // this.$store.commit("setVerificationData", this.prePhone);
-            // this.$router.push("/signup/verify?ref=signup");
-          }
         })
-        .catch((err) => console.log(userData, err.response.data));
+        .catch((err) => this.processError(err.response.data));
+    },
+    processError(error) {
+      // show error message in toast
+      this.$store.dispatch("toast", {
+        title: "Error signing up!",
+        message: error.message,
+        variant: "danger",
+      });
+
+      // enable signup button
+      this.isAttemptingSignup = false;
     },
   },
 };

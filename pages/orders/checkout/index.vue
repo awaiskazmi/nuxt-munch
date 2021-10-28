@@ -41,11 +41,11 @@
                 </div>
                 <div class="col pr-md-4">
                   <h6 class="font-weight-bold">
-                    {{ address.label }}
+                    {{ address.locationName }}
                   </h6>
                   <p class="text-muted m-0">
-                    <small v-if="'details' in address">{{
-                      address.details
+                    <small v-if="'additionalDetails' in address">{{
+                      address.additionalDetails
                     }}</small>
                     <small v-else>Click on plus to add address details</small>
                   </p>
@@ -68,9 +68,10 @@
             </div>
             <div class="col-auto ml-auto">
               <BaseButton
-                url="/orders/view-cart"
+                isButton
                 type="outline-secondary"
                 variant="sm"
+                v-b-toggle.sidebar-order-details
                 >View details</BaseButton
               >
             </div>
@@ -125,7 +126,7 @@
               <h4>When</h4>
             </div>
             <div class="col-auto ml-auto">
-              <span>6pm &mdash; 9pm</span>
+              <span>15 &mdash; 20 minutes</span>
             </div>
           </div>
           <div class="row">
@@ -190,10 +191,14 @@
               <p><label for="">Recipient's Details</label></p>
               <div class="row">
                 <div class="col-6">
-                  <BaseInput placeholder="Name" />
+                  <BaseInput v-model="someoneElse.name" placeholder="Name" />
                 </div>
                 <div class="col-6">
-                  <BaseInput placeholder="Phone" />
+                  <BaseInput
+                    v-model="someoneElse.phone"
+                    prependText="+92"
+                    placeholder="Phone"
+                  />
                 </div>
               </div>
             </div>
@@ -214,6 +219,7 @@
             <div class="col">
               <textarea
                 rows="5"
+                v-model="notes"
                 placeholder="e.g. please don't ring the bell"
                 class="form-control"
               ></textarea>
@@ -221,11 +227,37 @@
           </div>
         </div>
         <!-- place order -->
-        <div>
+        <!-- if phone number is verified -->
+        <div v-if="user.phoneVerified">
           <div class="row mt-4">
             <div class="col">
-              <BaseButton disabled isButton type="primary" full
-                >Place Order - Rs. {{ total }}</BaseButton
+              <BaseButton
+                :disabled="isAttemptingPlacingOrder"
+                isButton
+                type="primary"
+                full
+                @click="placeOrder"
+                ><b-spinner
+                  v-show="isAttemptingPlacingOrder"
+                  class="mr-1"
+                  small
+                ></b-spinner
+                ><span
+                  >Place Order - <u>Rs. {{ total }}</u></span
+                ></BaseButton
+              >
+            </div>
+          </div>
+        </div>
+        <!-- if phone number is NOT verified -->
+        <div v-else>
+          <div class="row mt-4">
+            <div class="col">
+              <BaseButton
+                url="/auth/verify-phone?ref=checkout"
+                type="primary"
+                full
+                >Verify phone number</BaseButton
               >
             </div>
           </div>
@@ -239,15 +271,20 @@
     </div>
     <!-- Address sidebar -->
     <CheckoutAddressSidebar @update="onAddressUpdate" />
+    <!-- Order details sidebar -->
+    <CheckoutOrderDetailsSidebar />
     <!-- Promo code sidebar -->
     <CheckoutPromoCodeSidebar @select="onPromoCodeSelect" />
     <!-- Schedule sidebar -->
-    <CheckoutScheduleSidebar @select="onScheduleSelect" />
+    <!-- <CheckoutScheduleSidebar
+      :selected="scheduleOptionSelected"
+      @select="onScheduleSelect"
+    /> -->
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import nuxtjsStickySidebar from "nuxtjs-sticky-sidebar";
 
 export default {
@@ -261,29 +298,38 @@ export default {
   },
   data() {
     return {
+      isAttemptingPlacingOrder: false,
       scheduleOptions: [
         {
           id: 1,
           name: "Now",
         },
-        {
-          id: 2,
-          name: "Later",
-        },
+        // {
+        //   id: 2,
+        //   name: "Later",
+        // },
       ],
       address: this.$store.state.locationObj,
-      scheduleOptionSelected: null,
+      scheduleOptionSelected: "Now",
       center: {},
       promo: {},
       schedule: {},
       paymentMethod: 1, // 1 = cash
       someoneElseSwitch: false,
-      someoneElse: {},
-      notes: {},
+      someoneElse: {
+        name: "",
+        phone: "",
+      },
+      notes: "",
       invoice: {},
     };
   },
   computed: {
+    ...mapState({
+      user: (state) => state.user,
+      location: (state) => state.locationObj,
+      hubId: (state) => state.hubId,
+    }),
     ...mapGetters({
       getAddedProducts: "getAddedProducts",
     }),
@@ -291,6 +337,9 @@ export default {
       get() {
         return this.getAddedProducts;
       },
+    },
+    elsePrePhone() {
+      return "+92" + this.someoneElse.phone;
     },
     itemsCount() {
       return this.items
@@ -304,10 +353,40 @@ export default {
       });
       return total;
     },
+    contactPersonName() {
+      return this.someoneElseSwitch ? this.someoneElse.name : this.user.name;
+    },
+    contactPersonPhone() {
+      return this.someoneElseSwitch
+        ? "+92" + this.someoneElse.phone
+        : this.user.phone;
+    },
+    orderDetails() {
+      return {
+        addressId: this.location.addressId,
+        serviceAreaId: this.location.service_area,
+        customerId: this.user.id,
+        partialOrderAcceptable: true,
+        swappable: true,
+        paymentId: 1, // 1 = COD
+        hubId: this.hubId,
+        fake: false,
+        contactPersonName: this.contactPersonName,
+        contactPersonPhone: this.contactPersonPhone,
+        orderType: "NORMAL",
+        deliveryInstruction: this.notes,
+        deliverySlotId: 0,
+        deliveryTime: 0,
+        deliveryType: "NOW",
+        orderItems: this.items.map((item) => ({
+          productsId: item.productId,
+          quantity: item.quantity,
+        })),
+      };
+    },
   },
   methods: {
     onScheduleOption(option) {
-      console.log(option);
       if (option.name == "Later") {
         this.$root.$emit("bv::toggle::collapse", "sidebar-schedule");
       }
@@ -316,7 +395,7 @@ export default {
       this.center = center;
     },
     onAddressUpdate(address) {
-      this.$store.commit("setUserLocation", address.label);
+      this.$store.commit("setUserLocation", address.locationName);
       this.$store.commit("setUserLocationAddress", address);
       this.address = address;
     },
@@ -326,6 +405,40 @@ export default {
     onScheduleSelect(schedule) {
       console.log(schedule);
       return;
+    },
+    async placeOrder() {
+      console.log("...placing order...");
+      this.isAttemptingPlacingOrder = true;
+
+      try {
+        // place order
+        const res = await this.$axios({
+          mode: "cors",
+          method: "post",
+          url: `/qa/v2/api/order`,
+          headers: {
+            Authorization: `Bearer ${this.$store.state.token}`,
+          },
+          data: this.orderDetails,
+        });
+
+        // enable place order button
+        console.log("...order placed...", res);
+        this.isAttemptingPlacingOrder = false;
+
+        // reset cart
+        this.$store.commit("resetCart");
+
+        // redirect to order detail page
+        this.$router.push(`/orders/tracking/${res.data.id}`);
+      } catch (error) {
+        this.$store.dispatch("toast", {
+          title: "Error",
+          message: error.response.data.message,
+          variant: "danger",
+        });
+        this.isAttemptingPlacingOrder = false;
+      }
     },
   },
 };

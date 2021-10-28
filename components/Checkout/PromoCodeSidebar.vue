@@ -18,39 +18,34 @@
       </div>
       <div class="bg-light p-3">
         <p>Add promo code</p>
+        <pre>{{ invoice }}</pre>
         <div class="d-flex">
           <BaseInput
             :disabled="customPromoVerifying"
             class="input-custom-promo"
             v-model="customPromo"
             prepend="local_offer"
-            placeholder="PROMOCODE"
+            placeholder="Enter promo code"
           />
           <BaseButton
-            :disabled="customPromo.length == 0"
+            :disabled="customPromo.length == 0 || customPromoVerifying == true"
             isButton
             type="outline-secondary ml-2"
             @click="applyCustomPromo"
-            >Apply</BaseButton
+            ><b-spinner
+              v-show="customPromoVerifying"
+              class="mr-1"
+              small
+            ></b-spinner
+            ><span>Apply</span></BaseButton
           >
         </div>
-        <div class="pt-3 text-center">
-          <b-spinner variant="secondary" label="Spinning"></b-spinner>
-        </div>
-        {{ customPromo }}
-        <pre>{{ invoice }}</pre>
       </div>
       <div class="promo-codes p-3">
         <CheckoutPromoCode
           v-for="p in promos"
           :key="p.id"
-          :id="p.id"
-          :code="p.code"
-          :description="p.description"
-          :start="p.effectiveFrom"
-          :end="p.expiredOn"
-          :status="p.status"
-          :title="p.title"
+          :promocode="p"
           @select="onPromoCodeSelect"
         />
       </div>
@@ -64,9 +59,9 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      customPromo: "MYPROMO",
-      customPromoVerifying: false,
       promos: [],
+      customPromo: "",
+      customPromoVerifying: false,
     };
   },
   computed: {
@@ -74,22 +69,29 @@ export default {
       user: (state) => state.user,
       location: (state) => state.locationObj,
       products: (state) => state.products.products,
+      hubId: (state) => state.hubId,
     }),
     serviceArea() {
       return this.location.service_area;
     },
+    orderItems() {
+      return this.products.map((p) => ({
+        productsId: p.id,
+        quantity: p.quantity,
+      }));
+    },
     invoice() {
       return {
-        orderItems: this.products,
+        orderItems: this.orderItems,
         orderType: "NORMAL",
         serviceAreaId: this.serviceArea,
         contactPersonName: this.user.name,
         contactPersonPhone: this.user.phone,
         fake: false,
-        hubId: 11836,
+        hubId: this.hubId,
         partialOrderAcceptable: false,
         paymentId: 1, // 1 = cash on delivery
-        promoCode: "mypromo", // 1 = cash on delivery
+        promoCode: this.customPromo, // 1 = cash on delivery
       };
     },
   },
@@ -103,27 +105,47 @@ export default {
           Authorization: `Bearer ${this.$store.state.token}`,
         },
       });
+      console.log("...ACTIVE PROMO CODES...", res);
+      this.promos = res.data.data;
     } catch (error) {
-      console.log(error);
+      console.log("...PROMO CODES NOT FETCHED...");
+      console.log(error.response.data);
+      // session expired, logout user and redirect to login page
+      if (error.response.data.code == 4000) {
+        this.$logoutOutSessionExpired();
+      }
     }
   },
   methods: {
     async applyCustomPromo() {
+      this.customPromoVerifying = true;
       let invoice = { ...this.invoice, promoCode: this.customPromo };
-      const res = await this.$axios({
-        mode: "cors",
-        method: "post",
-        url: `/qa/v2/api/order/invoice`,
-        data: invoice,
-        headers: {
-          Authorization: `Bearer ${this.$store.state.token}`,
-        },
-      });
-      console.log(res);
+      try {
+        const res = await this.$axios({
+          mode: "cors",
+          method: "post",
+          url: `/qa/v2/api/order/invoice`,
+          data: invoice,
+          headers: {
+            Authorization: `Bearer ${this.$store.state.token}`,
+          },
+        });
+
+        console.log(res);
+      } catch (err) {
+        this.$store.dispatch("toast", {
+          title: "Error!",
+          message: err.response.data.message,
+          variant: "danger",
+        });
+        this.customPromoVerifying = false;
+        console.log(err.response.data);
+      }
     },
-    onPromoCodeSelect(code) {
-      this.$emit("select", code);
-      this.$root.$emit("bv::toggle::collapse", "sidebar-promo-code");
+    onPromoCodeSelect(promocode) {
+      console.log("selected promo", promocode);
+      this.$emit("select", promocode);
+      // this.$root.$emit("bv::toggle::collapse", "sidebar-promo-code");
     },
   },
 };

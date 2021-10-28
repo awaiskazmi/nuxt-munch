@@ -14,7 +14,16 @@
       :readonly="readonly"
     />
     <div class="invalid-feedback text-left">Phone number doesn't exist</div>
-    <Button @click="onclick" class="btn btn-primary mt-4">Send OTP</Button>
+    <div class="mt-3">
+      <BaseButton
+        isButton
+        type="primary"
+        @click="onclick"
+        :disabled="isSendingOtp"
+        ><b-spinner v-show="isSendingOtp" class="mr-1" small></b-spinner
+        ><span>Send OTP</span></BaseButton
+      >
+    </div>
   </div>
 </template>
 
@@ -26,6 +35,7 @@ export default {
       phone: this.phoneValue,
       readonly: this.pageRef == "forgot" ? false : true,
       phoneInvalid: false,
+      isSendingOtp: false,
     };
   },
   computed: {
@@ -44,12 +54,18 @@ export default {
       this.phoneInvalid = false;
     },
     async onclick() {
+      // disbale send otp button
+      this.isSendingOtp = true;
+
+      // prepare headers for request
       const config = {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
       };
+
+      // send request
       try {
         const res = await this.$axios.post(
           `/qa/v1/public/verificationCode/${this.verificationType}`,
@@ -60,6 +76,9 @@ export default {
           config
         );
         if (res.status == 200) {
+          // enable send otp button
+          this.isSendingOtp = false;
+
           let verifiedData = {
             phone: this.prePhone,
             code: res.data.data.code,
@@ -67,6 +86,8 @@ export default {
           this.$emit("phoneVerified", verifiedData);
         }
       } catch (err) {
+        // enable send otp button
+        this.isSendingOtp = false;
         this.phoneInvalid = true;
         console.log(err.response.data);
       }

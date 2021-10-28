@@ -9,9 +9,8 @@
           </span>
         </b-breadcrumb-item>
         <b-breadcrumb-item to="/orders">Orders</b-breadcrumb-item>
-        <!-- <b-breadcrumb-item to="/categories">Categories</b-breadcrumb-item> -->
         <b-breadcrumb-item class="cap" active to="">{{
-          categoryName
+          category.name
         }}</b-breadcrumb-item>
       </b-breadcrumb>
     </div>
@@ -22,7 +21,7 @@
           <h5 class="font-weight-bold mb-3">Categories</h5>
           <div class="sidebar-categories">
             <div v-for="c in categories" :key="c.id">
-              <NuxtLink class="sidebar-category" :to="`/orders/${c.id}`">
+              <NuxtLink class="sidebar-category cap" :to="`/orders/${c.id}`">
                 <div class="sidebar-category-thumb">
                   <img
                     :src="$config.resourceUrl + c.imageUrl"
@@ -36,33 +35,48 @@
         </nuxtjs-sticky-sidebar>
       </div>
       <div class="col mt-3 mt-md-0">
-        <h2 class="cap">{{ categoryName }}</h2>
+        <h2 class="cap mb-4 mb-md-5">{{ category.name }}</h2>
         <p v-if="$fetchState.pending" class="text-center">
           <b-spinner variant="primary" label="Spinning"></b-spinner>
         </p>
-        <div v-if="products.length > 0" class="row">
-          <div
-            class="col-6 col-md-4 mb-3"
-            v-for="(p, index) in products"
-            :key="p.id"
-          >
-            <ProductItem :product="p" :animationDelay="index * 50" />
+        <div v-if="!$fetchState.pending">
+          <div v-if="products.length > 0" class="row">
+            <div
+              class="col-6 col-md-4 mb-3"
+              v-for="(p, index) in products"
+              :key="p.id"
+            >
+              <ProductItem :product="p" :animationDelay="index * 50" />
+            </div>
           </div>
-        </div>
-        <p v-show="isLoadingMore" class="mt-5 text-center">
-          <b-spinner variant="primary" label="Spinning"></b-spinner>
-        </p>
-        <div
-          v-show="currentPage < totalPages && isLoadingMore == false"
-          class="mt-5 text-center"
-        >
-          <BaseButton
-            :disabled="isLoadingMore"
-            type="primary"
-            isButton
-            @click="loadMoreProducts"
-            >Load more products</BaseButton
+          <div v-else class="row">
+            <div class="col-12 col-md-6 mx-auto text-center">
+              <lottie
+                :height="300"
+                :options="lottieOptions"
+                v-on:animCreated="handleAnimation"
+              />
+              <h4 class="font-weight-bold">... Well this is awkward</h4>
+              <p class="text-muted">
+                Browse through other categories as we restock!
+              </p>
+            </div>
+          </div>
+          <p v-show="isLoadingMore" class="mt-5 text-center">
+            <b-spinner variant="primary" label="Spinning"></b-spinner>
+          </p>
+          <div
+            v-show="currentPage < totalPages && isLoadingMore == false"
+            class="mt-5 text-center"
           >
+            <BaseButton
+              :disabled="isLoadingMore"
+              type="primary"
+              isButton
+              @click="loadMoreProducts"
+              >Load more products</BaseButton
+            >
+          </div>
         </div>
       </div>
     </div>
@@ -71,20 +85,27 @@
 
 <script>
 import { mapState } from "vuex";
+import lottie from "vue-lottie/src/lottie.vue";
 import nuxtjsStickySidebar from "nuxtjs-sticky-sidebar";
+import * as animData from "~/static/lottie/out-of-stock.json";
 
 export default {
   components: {
     "nuxtjs-sticky-sidebar": nuxtjsStickySidebar,
+    lottie: lottie,
   },
   data() {
     return {
-      categoryName: "",
+      anim: null,
+      lottieOptions: {
+        animationData: animData.default,
+      },
       categoryId: this.$route.params.category,
       totalPages: -1,
       currentPage: 1,
       isLoadingMore: false,
       products: [],
+      category: {},
     };
   },
   computed: {
@@ -92,9 +113,12 @@ export default {
       categories: (state) => state.categories.categories,
       serviceArea: (state) => state.locationObj.service_area,
     }),
-    category() {
-      return this.categories.find((p) => p.id === this.categoryId);
-    },
+    // category() {
+    //   return this.categories.find((p) => p.id == this.categoryId);
+    // },
+  },
+  mounted() {
+    console.log("...MATCH...", this.category);
   },
   async fetch() {
     // fetch products by category
@@ -105,13 +129,16 @@ export default {
     this.products = this.$syncProductsWithCart(products.data.data);
     this.totalPages = products.data.totalPages;
     // fetch category
-    // const category = await this.$axios.get(
-    //   `/qa/v2/public/hub-product-category/${this.categoryId}`
-    // );
-    // this.category = category.data;
+    const category = await this.$axios.get(
+      `/qa/v2/public/hub-product-category/${this.categoryId}`
+    );
+    this.category = category.data;
   },
   fetchOnServer: false,
   methods: {
+    handleAnimation(anim) {
+      this.anim = anim;
+    },
     async loadMoreProducts() {
       this.isLoadingMore = true;
       this.currentPage++;
@@ -136,6 +163,11 @@ export default {
 </script>
 
 <style scoped>
+.sidebar-categories {
+  max-height: 90vh;
+  padding-right: 1rem;
+  overflow: auto;
+}
 .sidebar-category {
   display: flex;
   align-items: center;
@@ -169,6 +201,7 @@ export default {
     display: flex;
     flex-wrap: nowrap;
     overflow: auto;
+    padding: 0;
   }
   .sidebar-category-thumb {
     display: none;
@@ -181,6 +214,7 @@ export default {
     color: #315780;
     margin-right: 4px;
   }
+  .sidebar-category:hover,
   .nuxt-link-exact-active {
     background-color: #315780;
     color: #fff;

@@ -114,6 +114,10 @@ export default {
           address: address,
         },
         (results, status) => {
+          console.log(
+            "...map results...",
+            results[0].address_components[0].long_name
+          );
           if (status == google.maps.GeocoderStatus.OK) {
             let latLng = {};
             latLng.lat = results[0].geometry.location.lat();
@@ -125,8 +129,10 @@ export default {
             let payload = {
               lat: latLng.lat,
               lng: latLng.lng,
+              locationName: address,
               address: address,
               label: address,
+              poi: results[0].address_components[0].long_name,
             };
             this.$store.dispatch("getServiceArea", payload);
           }

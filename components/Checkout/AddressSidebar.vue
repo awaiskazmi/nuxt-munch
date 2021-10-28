@@ -14,9 +14,11 @@
         <span class="material-icons">close</span>
       </BaseButton>
       <div class="d-flex flex-column justify-content-between h-100">
-        <div class="py-6 px-3 px-md-4">
+        <div class="pt-6 pb-2 px-3 px-md-4">
           <p class="my-4 h2 font-weight-bold">Add address details</p>
+          <!-- <pre>My address details: {{ addressData }}</pre> -->
           <p>Please enter location details and label them</p>
+          <!-- <pre>My saved addresses:</pre> -->
           <p class="mt-3">
             <small><strong>Location details</strong></small>
           </p>
@@ -49,10 +51,30 @@
               v-model="address.label"
             />
           </div>
+          <!-- If a user has saved addresses -->
+          <div v-show="savedAddresses.length > 0">
+            <p class="mt-4">Or choose an address saved already</p>
+            <div
+              v-for="add in savedAddresses"
+              :key="add.id"
+              class="card card-body mb-3 pointer shadow-sm saved-address"
+              @click="chooseSavedAddress(add)"
+            >
+              <h6>{{ add.locationName }}</h6>
+              <p class="mb-2 text-muted">{{ add.additionalDetails }}</p>
+              <p class="m-0">{{ add.poi }}</p>
+            </div>
+          </div>
         </div>
         <div class="px-3 pb-4">
-          <BaseButton @click="saveAddress" isButton type="primary" full
-            >Save address details</BaseButton
+          <BaseButton
+            :disabled="isAttemptingSave"
+            @click="saveAddress"
+            isButton
+            type="primary"
+            full
+            ><b-spinner v-show="isAttemptingSave" class="mr-1" small></b-spinner
+            ><span>Save address details</span></BaseButton
           >
         </div>
       </div>
@@ -66,6 +88,7 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
+      savedAddresses: [],
       labels: [
         {
           id: 1,
@@ -88,7 +111,44 @@ export default {
         label: this.$store.state.locationObj.label,
       },
       labelOption: this.$store.state.locationObj.labelOption,
+      isAttemptingSave: false,
     };
+  },
+  computed: {
+    ...mapState({
+      location: (state) => state.locationObj,
+    }),
+    addressData() {
+      return {
+        additionalDetails: this.address.details,
+        poi: this.location.poi,
+        locationName: this.address.label,
+        serviceAreaId: this.location.service_area,
+        latitude: this.location.lat,
+        longitude: this.location.lng,
+        address: this.location.address,
+        addressType: this.labelOption,
+      };
+    },
+  },
+  async mounted() {
+    try {
+      const res = await this.$axios({
+        mode: "cors",
+        method: "get",
+        url: `/qa/v1/api/addresses`,
+        headers: {
+          Authorization: `Bearer ${this.$store.state.token}`,
+        },
+      });
+      this.savedAddresses = res.data.data;
+    } catch (error) {
+      this.$store.dispatch("toast", {
+        title: "Error",
+        message: error.response.data.message,
+        variant: "danger",
+      });
+    }
   },
   methods: {
     updateLabelOption(option) {
@@ -100,8 +160,39 @@ export default {
         this.address.label = null;
       }
     },
-    saveAddress() {
-      this.$emit("update", { ...this.address });
+    async saveAddress() {
+      this.isAttemptingSave = true;
+
+      try {
+        const res = await this.$axios({
+          mode: "cors",
+          method: "post",
+          url: `/qa/v1/api/addresses`,
+          headers: {
+            Authorization: `Bearer ${this.$store.state.token}`,
+          },
+          data: {
+            ...this.addressData,
+            addressType: this.labelOption.toUpperCase(),
+          },
+        });
+
+        // enable save button
+        this.isAttemptingSave = false;
+
+        // choose new address
+        this.chooseSavedAddress(res.data);
+      } catch (error) {
+        this.$store.dispatch("toast", {
+          title: "Error",
+          message: error.response.data.message,
+          variant: "danger",
+        });
+        this.isAttemptingSave = false;
+      }
+    },
+    chooseSavedAddress(address) {
+      this.$emit("update", address);
       this.$root.$emit("bv::toggle::collapse", "sidebar-address");
     },
   },
@@ -111,5 +202,8 @@ export default {
 <style lang="css" scoped>
 .labels {
   display: flex;
+}
+.saved-address:hover {
+  background-color: #f7f7f7;
 }
 </style>

@@ -15,9 +15,9 @@ import { mapState } from "vuex";
 
 export default {
   computed: {
-    ...mapState(["location"]),
+    ...mapState(["locationObj"]),
     locationLabel() {
-      return this.location ? this.location : "Add location";
+      return this.locationObj ? this.locationObj.locationName : "Add location";
     },
   },
 };
@@ -26,10 +26,10 @@ export default {
 <style lang="sass" scoped>
 a,
 button
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  margin-left: 40px;
+  overflow: hidden
+  text-overflow: ellipsis
+  white-space: nowrap
+  margin-left: 40px
 
   @media(max-width: 768px)
     margin-left: 0
