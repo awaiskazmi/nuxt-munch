@@ -108,15 +108,16 @@
 </template>
 
 <script>
+import comingSoonVue from "../coming-soon.vue";
 export default {
   layout: "half-form",
   data() {
     return {
-      name: "Awais Kazmi",
-      phone: "3214221073",
-      email: "awais.kazmi+60@munchieshome.com",
-      password: "Awais.123",
-      repassword: "Awais.123",
+      name: "",
+      phone: "",
+      email: "",
+      password: "",
+      repassword: "",
       emailError: false,
       phoneError: false,
       passwordError: false,
@@ -153,6 +154,10 @@ export default {
     refUrlSting() {
       return this.refUrl ? `?ref=${this.refUrl}` : "";
     },
+    deviceId() {
+      let id = this.$mRandomString(25);
+      return id;
+    },
   },
   methods: {
     handleSubmit() {
@@ -180,7 +185,7 @@ export default {
         url: "/qa/v1/public/users",
         data: userData,
         headers: {
-          device_id: this.$mRandomString(25),
+          device_id: this.deviceId,
           "Content-Type": "application/json",
         },
       })
