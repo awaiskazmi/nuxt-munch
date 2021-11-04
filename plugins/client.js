@@ -16,6 +16,9 @@ export default ({ app, route }, inject) => {
 
   // GET RANDOM STRING
   inject('mRandomString', (length) => {
+    let randomInt = Math.floor(Math.random() * 100000000000000000000);
+    return randomInt;
+
     String.random = function (length) {
       let radom13chars = function () {
         return Math.random().toString(16).substring(2, 15)
