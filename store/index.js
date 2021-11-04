@@ -71,6 +71,17 @@ export const actions = {
       console.log("...SERVICE AREA DETAILS...", res);
       newServiceArea = res.data[0].id;
 
+      let cartCount = state.products.products.length;
+      console.log('CART COUNT ===', cartCount);
+
+      // products in cart but location changed, reset cart
+      if (cartCount > 0) {
+        commit("resetCart");
+      }
+
+      // redirect to home page
+      this.$router.push('/');
+
       // update service area in store
       commit("setServiceArea", newServiceArea);
 
@@ -172,7 +183,6 @@ export const mutations = {
     // state.locationObj.address = location;
   },
   setUserLocationAddress(state, address) {
-    console.log(address);
     state.locationObj.details = address.details;
     state.locationObj.label = address.label;
     state.locationObj.locationName = address.locationName;

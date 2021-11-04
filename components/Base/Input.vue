@@ -7,6 +7,7 @@
       prependText
     }}</span>
     <input
+      autocomplete="off"
       :id="id"
       :type="type"
       :placeholder="placeholder"

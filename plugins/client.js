@@ -16,7 +16,19 @@ export default ({ app, route }, inject) => {
 
   // GET RANDOM STRING
   inject('mRandomString', (length) => {
-    return [...Array(length)].map(i => (~~(Math.random() * 36)).toString(36)).join('')
+    String.random = function (length) {
+      let radom13chars = function () {
+        return Math.random().toString(16).substring(2, 15)
+      }
+      let loops = Math.ceil(length / 13)
+      return new Array(loops).fill(radom13chars).reduce((string, func) => {
+        return string + func()
+      }, '').substring(0, length)
+    }
+    let randomString = String.random(length);
+    console.log('random string', randomString);
+    return randomString;
+    // return [...Array(length)].map(i => (~~(Math.random() * 36)).toString(36)).join('')
   })
 
   // VERIFICATION TYPES
@@ -28,6 +40,12 @@ export default ({ app, route }, inject) => {
   };
   inject("verificationTypes", verificationTypes);
 
+  // ORDER STATUS TYPES
+  const orderStatusTypes = {
+    'ADMIN_CANCELLED_ORDER': "Cancelled",
+  };
+  inject("orderStatusTypes", orderStatusTypes);
+
   // VERIFICATION ENDPOINTS
   const verificationEndpoints = {
     forgot: "auth-reset-password",
@@ -37,7 +55,6 @@ export default ({ app, route }, inject) => {
   };
   inject("verificationEndpoints", verificationEndpoints);
 
-
   // SET LOCATION
   inject("setLocation", (location) => {
     localStorage.setItem("m_location_name", location);
@@ -46,13 +63,14 @@ export default ({ app, route }, inject) => {
 
   // MATCH PRODUCTS WITH CART AND UPDATE QUANTITY
   inject("syncProductsWithCart", (products) => {
-    let cart = app.store.state.products.products;
+    let cart = [...app.store.state.products.products];
+    console.log('...SHOPPING CART...', cart);
     products = products.map((p) => {
       let foundIndex = cart.findIndex((element) => element.id === p.id);
       if (foundIndex > -1) {
-        return { ...p, quantity: cart[foundIndex].quantity };
+        return { ...p, cartQuantity: cart[foundIndex].cartQuantity };
       } else {
-        return p;
+        return { ...p, cartQuantity: 0 };
       }
     });
     return products;
@@ -60,12 +78,12 @@ export default ({ app, route }, inject) => {
 
   // MATCH SINGLE PRODUCT WITH CART AND UPDATE QUANTITY
   inject("syncProductWithCart", (product) => {
-    let cart = app.store.state.products.products;
+    let cart = [...app.store.state.products.products];
     let foundIndex = cart.findIndex((element) => element.id === product.id);
     if (foundIndex > -1) {
-      return { ...product, quantity: cart[foundIndex].quantity };
+      return { ...product, cartQuantity: cart[foundIndex].cartQuantity };
     } else {
-      return product;
+      return { ...product, cartQuantity: 0 };
     }
   });
 

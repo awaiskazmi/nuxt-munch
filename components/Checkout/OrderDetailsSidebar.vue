@@ -23,11 +23,11 @@
             class="row mb-3 product-rows"
           >
             <div class="col d-flex align-items-center">
-              <div class="product-count">{{ product.quantity }}</div>
+              <div class="product-count">{{ product.cartQuantity }}</div>
               <div class="product-name">{{ product.name }}</div>
             </div>
             <div class="col-auto ml-auto">
-              Rs. {{ product.quantity * product.price }}
+              Rs. {{ product.cartQuantity * product.price }}
             </div>
           </div>
           <hr />
@@ -36,9 +36,13 @@
             <div class="col-auto ml-auto">Rs. {{ subtotal }}</div>
           </div>
           <div class="row mb-3">
+            <div class="col-auto">Discount</div>
+            <div class="col-auto ml-auto">Rs. {{ discount }}</div>
+          </div>
+          <div class="row mb-3">
             <div class="col-auto">Delivery charges</div>
             <div class="col-auto ml-auto">
-              <small class="text-secondary">Free</small>
+              <small class="text-secondary">Rs. {{ daliveryCharges }}</small>
             </div>
           </div>
           <hr />
@@ -46,7 +50,6 @@
             <div class="col-auto h5">Total</div>
             <div class="col-auto ml-auto h5">Rs. {{ total }}</div>
           </div>
-          <!-- <pre>{{ products }}</pre> -->
         </div>
       </div>
     </template>
@@ -57,6 +60,7 @@
 import { mapState } from "vuex";
 
 export default {
+  props: ["orderAmountDetails"],
   data() {
     return {};
   },
@@ -64,15 +68,17 @@ export default {
     ...mapState({
       products: (state) => state.products.products,
     }),
+    discount() {
+      return this.orderAmountDetails.discount;
+    },
+    daliveryCharges() {
+      return this.orderAmountDetails.delivery;
+    },
     subtotal() {
-      let reducer = (prev, next) =>
-        prev.price * prev.quantity + next.price * next.quantity;
-      return this.products.reduce(reducer);
+      return this.orderAmountDetails.discountedSubTotal;
     },
     total() {
-      let reducer = (prev, next) =>
-        prev.price * prev.quantity + next.price * next.quantity;
-      return this.products.reduce(reducer);
+      return this.orderAmountDetails.orderTotal;
     },
   },
 };

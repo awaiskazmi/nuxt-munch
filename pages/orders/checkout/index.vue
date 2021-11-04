@@ -84,7 +84,17 @@
                 </div>
                 <div class="col">
                   <h6 class="font-weight-bold">
-                    {{ itemsCount }} items - Rs. {{ total }}
+                    {{ itemsCount }} items - Rs.
+                    {{ orderAmountDetails.orderTotal }}
+                    <!-- discount applied -->
+                    <small
+                      class="text-danger"
+                      v-if="
+                        orderAmountDetails.orderTotal !=
+                        orderAmountDetails.total
+                      "
+                      ><s>Rs. {{ orderAmountDetails.total }}</s></small
+                    >
                   </h6>
                 </div>
               </div>
@@ -106,8 +116,13 @@
                   <img src="~/assets/images/icon-location.svg" height="24" />
                 </div>
                 <div class="col">
-                  <h6 class="text-muted">Add promo code</h6>
-                  <p class="mt-1 mb-0" v-if="promo.length > 0">{{ promo }}</p>
+                  <h6 class="text-muted">
+                    {{
+                      orderAmountDetails.orderTotal == orderAmountDetails.total
+                        ? "Add promo code"
+                        : "Promo code applied"
+                    }}
+                  </h6>
                 </div>
                 <div class="col-auto">
                   <button v-b-toggle.sidebar-promo-code class="btn m-btn-add">
@@ -171,7 +186,7 @@
           </div>
           <hr />
         </div>
-        <!-- payment method -->
+        <!-- someone else -->
         <div>
           <div class="row">
             <div class="col-auto">
@@ -198,6 +213,7 @@
                     v-model="someoneElse.phone"
                     prependText="+92"
                     placeholder="Phone"
+                    maxLength="10"
                   />
                 </div>
               </div>
@@ -232,10 +248,13 @@
           <div class="row mt-4">
             <div class="col">
               <BaseButton
-                :disabled="isAttemptingPlacingOrder"
+                :disabled="isAttemptingPlacingOrder || !readyToOrder"
                 isButton
                 type="primary"
                 full
+                :title="
+                  !readyToOrder ? 'You need to add your address details' : ''
+                "
                 @click="placeOrder"
                 ><b-spinner
                   v-show="isAttemptingPlacingOrder"
@@ -243,7 +262,8 @@
                   small
                 ></b-spinner
                 ><span
-                  >Place Order - <u>Rs. {{ total }}</u></span
+                  >Place Order -
+                  <u>Rs. {{ orderAmountDetails.orderTotal }}</u></span
                 ></BaseButton
               >
             </div>
@@ -272,7 +292,7 @@
     <!-- Address sidebar -->
     <CheckoutAddressSidebar @update="onAddressUpdate" />
     <!-- Order details sidebar -->
-    <CheckoutOrderDetailsSidebar />
+    <CheckoutOrderDetailsSidebar :orderAmountDetails="orderAmountDetails" />
     <!-- Promo code sidebar -->
     <CheckoutPromoCodeSidebar @select="onPromoCodeSelect" />
     <!-- Schedule sidebar -->
@@ -312,7 +332,7 @@ export default {
       address: this.$store.state.locationObj,
       scheduleOptionSelected: "Now",
       center: {},
-      promo: {},
+      promo: null,
       schedule: {},
       paymentMethod: 1, // 1 = cash
       someoneElseSwitch: false,
@@ -321,7 +341,8 @@ export default {
         phone: "",
       },
       notes: "",
-      invoice: {},
+      orderAmountDetails: [],
+      readyToOrder: this.$store.state.locationObj.addressId ? true : false,
     };
   },
   computed: {
@@ -343,13 +364,13 @@ export default {
     },
     itemsCount() {
       return this.items
-        .map((obj) => obj.quantity)
+        .map((obj) => obj.cartQuantity)
         .reduce((prev, next) => prev + next, 0);
     },
     total() {
       let total = 0;
       this.items.forEach((p) => {
-        total = total + parseInt(p.quantity) * parseInt(p.price);
+        total = total + parseInt(p.cartQuantity) * parseInt(p.price);
       });
       return total;
     },
@@ -360,6 +381,23 @@ export default {
       return this.someoneElseSwitch
         ? "+92" + this.someoneElse.phone
         : this.user.phone;
+    },
+    invoice() {
+      return {
+        orderItems: this.items.map((item) => ({
+          productsId: item.productId,
+          quantity: item.cartQuantity,
+        })),
+        orderType: "NORMAL",
+        serviceAreaId: this.location.service_area,
+        contactPersonName: this.contactPersonName,
+        contactPersonPhone: this.contactPersonPhone,
+        fake: false,
+        hubId: this.hubId,
+        partialOrderAcceptable: false,
+        paymentId: 1, // 1 = cash on delivery
+        promoCode: null,
+      };
     },
     orderDetails() {
       return {
@@ -378,14 +416,40 @@ export default {
         deliverySlotId: 0,
         deliveryTime: 0,
         deliveryType: "NOW",
+        promoCode: this.promo,
         orderItems: this.items.map((item) => ({
           productsId: item.productId,
-          quantity: item.quantity,
+          quantity: item.cartQuantity,
         })),
       };
     },
   },
+  created() {
+    // send invoice call and get all the details
+    this.fetchInvoice();
+  },
   methods: {
+    async fetchInvoice() {
+      try {
+        const res = await this.$axios({
+          mode: "cors",
+          method: "post",
+          url: `/qa/v2/api/order/invoice`,
+          data: this.invoice,
+          headers: {
+            Authorization: `Bearer ${this.$store.state.token}`,
+          },
+        });
+        this.orderAmountDetails = res.data;
+        console.log("ORDER DETAILS WITHOUT PROMO ===", res.data);
+      } catch (error) {
+        console.log(error.response.data);
+        // session expired, logout user and redirect to login page
+        if (error.response.data.code == 4000) {
+          this.$logoutOutSessionExpired();
+        }
+      }
+    },
     onScheduleOption(option) {
       if (option.name == "Later") {
         this.$root.$emit("bv::toggle::collapse", "sidebar-schedule");
@@ -398,8 +462,11 @@ export default {
       this.$store.commit("setUserLocation", address.locationName);
       this.$store.commit("setUserLocationAddress", address);
       this.address = address;
+      this.readyToOrder = true;
+      this.$forceUpdate();
     },
-    onPromoCodeSelect(promo) {
+    onPromoCodeSelect({ invoice, promo }) {
+      this.orderAmountDetails = invoice;
       this.promo = promo;
     },
     onScheduleSelect(schedule) {

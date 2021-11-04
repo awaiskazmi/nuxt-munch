@@ -19,17 +19,18 @@
       </template>
       <b-card-text>
         {{ promocode.description }}
-        <pre>{{ promocode }}</pre>
+        <pre>{{ selected }}</pre>
       </b-card-text>
       <template #footer>
         <div class="d-flex align-items-center justify-content-between">
           <small class="text-muted">Terms and conditions apply</small>
           <BaseButton
-            :disabled="applied"
+            :disabled="verifyingPromo || applied"
             isButton
             @click="onPromoSelect"
             type="outline-primary px-5"
-            >Apply</BaseButton
+            ><b-spinner v-show="verifyingPromo" class="mr-1" small></b-spinner
+            ><span>{{ !applied ? "Apply" : "Applied" }}</span></BaseButton
           >
         </div>
       </template>
@@ -39,9 +40,10 @@
 
 <script>
 export default {
-  props: ["promocode"],
+  props: ["promocode", "invoice", "selected"],
   data() {
     return {
+      verifyingPromo: false,
       applied: false,
     };
   },
@@ -52,9 +54,34 @@ export default {
     },
   },
   methods: {
-    onPromoSelect() {
-      this.applied = true;
-      this.$emit("select", this.promocode);
+    async onPromoSelect() {
+      this.verifyingPromo = true;
+
+      let invoice = { ...this.invoice, promoCode: this.promocode.code };
+
+      try {
+        const invoiceResponse = await this.$axios({
+          mode: "cors",
+          method: "post",
+          url: `/qa/v2/api/order/invoice`,
+          data: invoice,
+          headers: {
+            Authorization: `Bearer ${this.$store.state.token}`,
+          },
+        });
+        this.verifyingPromo = false;
+        this.applied = true;
+      } catch (err) {
+        this.$store.dispatch("toast", {
+          title: `Error ${err.response.data.code}`,
+          message: err.response.data.message,
+          variant: "danger",
+        });
+        this.verifyingPromo = false;
+        this.applied = false;
+      }
+
+      return;
     },
   },
 };

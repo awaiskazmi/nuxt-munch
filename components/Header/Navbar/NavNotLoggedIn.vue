@@ -5,9 +5,6 @@
       <li>
         <!-- <NuxtLink to="/profile">{{ currentUser.user.name }}</NuxtLink> -->
       </li>
-      <li>
-        <BaseButton url="/about-us" rounded type="link">About</BaseButton>
-      </li>
       <li><HeaderToggleSearch /></li>
       <li>
         <BaseButton url="/orders" rounded type="link" icon="local_offer"
@@ -71,7 +68,7 @@ export default {
       added: "getAddedProducts",
     }),
     cartCount() {
-      let added = this.added.map((p) => p.quantity);
+      let added = this.added.map((p) => p.cartQuantity);
       return added.reduce((prev, next) => prev + next, 0);
     },
   },

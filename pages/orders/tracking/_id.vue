@@ -36,6 +36,14 @@
         <div>{{ order.address.locationName }}, {{ order.address.poi }}</div>
       </div>
     </div>
+    <p class="py-3 px-1">
+      <nuxt-link
+        to="/orders/tracking"
+        class="d-flex align-items-center text-dark"
+        ><span class="material-icons mr-1">arrow_back</span> Back to
+        orders</nuxt-link
+      >
+    </p>
   </div>
 </template>
 

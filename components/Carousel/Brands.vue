@@ -31,14 +31,14 @@
                     v-for="(brand, index) in brands"
                     :key="brand.id"
                   >
-                    <div class="brand">
+                    <nuxt-link :to="`/orders/brand/${brand.id}`" class="brand">
                       <div class="img-wrapper img">
                         <img
                           :src="$config.resourceUrl + brand.imageUrl"
                           :alt="brand.name"
                         />
                       </div>
-                    </div>
+                    </nuxt-link>
                   </div>
                   <div class="swiper-slide align-self-center text-center">
                     <BaseButton
@@ -102,7 +102,9 @@ export default {
 
 <style lang="sass" scoped>
 .brand
+  display: block
   margin-right: 1rem
+  color: #000
 
   &:hover
     text-decoration: none

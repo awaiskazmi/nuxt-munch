@@ -9,7 +9,9 @@
           </span>
         </b-breadcrumb-item>
         <b-breadcrumb-item to="/orders">Orders</b-breadcrumb-item>
-        <b-breadcrumb-item class="cap" active to="">Hot Damn</b-breadcrumb-item>
+        <b-breadcrumb-item class="cap" active to=""
+          >Exclusive</b-breadcrumb-item
+        >
       </b-breadcrumb>
     </div>
     <div class="row mt-3 mt-md-5">
@@ -20,7 +22,7 @@
         <div v-if="!$fetchState.pending">
           <div class="row">
             <div class="col-12">
-              <h1 class="h2 font-weight-bold mb-5">Hot Damn 🔥</h1>
+              <h1 class="h2 font-weight-bold mb-5">Exclusive Munchies 🤫</h1>
             </div>
           </div>
           <div v-if="products.length > 0" class="row">
@@ -98,7 +100,7 @@ export default {
   async fetch() {
     // fetch products by category
     const products = await this.$axios.get(
-      `/qa/v2/public/hub-product/hot-damn?serviceAreaId=${this.serviceArea}&descending=true&statuses=IN_STOCK&statuses=OUT_OF_STOCK`
+      `/qa/v2/public/hub-product/exclusive?serviceAreaId=${this.serviceArea}&descending=true&statuses=IN_STOCK&statuses=OUT_OF_STOCK`
     );
     this.products = this.$syncProductsWithCart(products.data.data);
     this.totalPages = products.data.totalPages;
@@ -115,7 +117,7 @@ export default {
         const moreProducts = await this.$axios({
           mode: "cors",
           method: "get",
-          url: `/qa/v2/public/hub-product/hot-damn?serviceAreaId=${this.serviceArea}&descending=true&statuses=IN_STOCK&status=OUT_OF_STOCK&pageNumber=${this.currentPage}`,
+          url: `/qa/v2/public/hub-product/exclusive?serviceAreaId=${this.serviceArea}&descending=true&statuses=IN_STOCK&status=OUT_OF_STOCK&pageNumber=${this.currentPage}`,
           headers: {
             "Content-Type": "application/json",
           },

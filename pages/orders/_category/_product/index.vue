@@ -41,7 +41,12 @@
                 <p class="price m-0">Rs. {{ product.price }}</p>
               </div>
               <div class="col-auto col-md-12 mt-md-5">
-                <ProductControls label="Add" :product="product" />
+                <ProductControls
+                  v-if="product.status == 'IN_STOCK'"
+                  label="Add"
+                  :product="product"
+                />
+                <p v-else class="badge badge-warning m-0">OUT OF STOCK</p>
               </div>
             </div>
           </div>
@@ -53,7 +58,12 @@
       </div>
       <div class="row">
         <div class="col">
-          <TopCategories />
+          <CarouselPairItWith
+            title="Pair it with ❤️️"
+            id="pair-it-with"
+            product="pair-it-with"
+            :productId="product.productId"
+          />
         </div>
       </div>
     </div>

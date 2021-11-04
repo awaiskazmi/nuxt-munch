@@ -5,9 +5,6 @@
         <BaseButton url="/" type="link">Home</BaseButton>
       </li>
       <li>
-        <BaseButton url="/about-us" type="link">About</BaseButton>
-      </li>
-      <li>
         <BaseButton url="/orders" type="link">Orders</BaseButton>
       </li>
       <li>

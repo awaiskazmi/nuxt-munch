@@ -6,19 +6,24 @@
     <TopCategories />
     <CarouselProducts
       title="Hot Damn 🔥"
+      subtitle="Browse through the hottest selling snacks!"
       id="hot-damn"
       product="hot-damn"
       landing="/trending/"
     />
     <CarouselProducts
       title="Exclusive Munchies 🤫"
+      subtitle="Psst... Snacks you can only find on Munchies!"
       id="exclusive"
       product="exclusive"
+      landing="/exclusive/"
     />
     <CarouselProducts
       title="New in the game 🌟"
+      subtitle="Check out these newly added snacks!"
       id="new-in-the-game"
       product="new-in-the-game"
+      landing="/new-in-the-game/"
     />
     <CarouselBrands id="brands" />
   </div>

@@ -17,7 +17,9 @@ export default {
   computed: {
     ...mapState(["locationObj"]),
     locationLabel() {
-      return this.locationObj ? this.locationObj.locationName : "Add location";
+      return Object.keys(this.locationObj).length > 0
+        ? this.locationObj.locationName
+        : "Add location";
     },
   },
 };

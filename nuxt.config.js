@@ -106,6 +106,10 @@ export default {
       target: "https://munchies-qa.impact.venturedive.com",
       pathRewrite: { "^/qa/": "" },
     },
+    "/munchies/": {
+      target: "https://munchies-qa.munchieshome.com",
+      pathRewrite: { "^/munchies/": "" },
+    },
     "/test/": {
       target: "https://awais-users.000webhostapp.com/api",
       pathRewrite: { "^/test/": "" },

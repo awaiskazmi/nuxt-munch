@@ -6,7 +6,7 @@
         updateQuantity('add');
         $emit('click');
       "
-      v-if="product.quantity == 0"
+      v-if="product.cartQuantity == 0"
       class="btn-add"
     >
       <span v-if="label">{{ label }}</span>
@@ -15,10 +15,12 @@
     <!-- if quantity > 0 -->
     <div v-else class="btns">
       <button @click="updateQuantity('sub')">
-        <span v-if="product.quantity == 1" class="material-icons">delete</span>
+        <span v-if="product.cartQuantity == 1" class="material-icons"
+          >delete</span
+        >
         <span v-else class="material-icons">remove</span>
       </button>
-      <span>{{ product.quantity }}</span>
+      <span>{{ product.cartQuantity }}</span>
       <button @click="updateQuantity('add')">
         <span class="material-icons">add</span>
       </button>
@@ -38,12 +40,12 @@ export default {
   methods: {
     updateQuantity(operator) {
       if (operator == "add") {
-        this.product.quantity += 1;
+        this.product.cartQuantity += 1;
       } else {
-        this.product.quantity -= 1;
+        this.product.cartQuantity -= 1;
       }
       // removed from cart
-      if (this.product.quantity == 0) {
+      if (this.product.cartQuantity == 0) {
         this.$store.commit("removeProductFromCart", this.id);
       } else {
         this.$store.commit("setProductQuantity", { ...this.product }); // {...} SPREAD OPERATOR VERY IMPORTANT!

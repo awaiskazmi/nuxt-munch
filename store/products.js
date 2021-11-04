@@ -7,7 +7,7 @@ export const state = () => ({
 export const getters = {
   getProductQuantityById: (state) => (id) => {
     // let productIndex = state.products.findIndex((obj) => obj.id == id);
-    return state.products.find((product) => product.id === id).quantity;
+    return state.products.find((product) => product.id === id).cartQuantity;
   },
   getAllProducts: (state) => () => {
     return state.products;
@@ -16,7 +16,7 @@ export const getters = {
     return state.products.find((product) => product.id === id);
   },
   getAddedProducts: (state) => {
-    return state.products.filter((product) => product.quantity > 0);
+    return state.products.filter((product) => product.cartQuantity > 0);
   },
 };
 
@@ -84,7 +84,7 @@ export const mutations = {
     let productIndex = state.products.findIndex((obj) => obj.id == product.id);
     // if already added, updated quantity
     if (productIndex > -1) {
-      state.products[productIndex].quantity = product.quantity;
+      state.products[productIndex].cartQuantity = product.cartQuantity;
     } else { // otherwise add to cart
       state.products.push(product);
     }

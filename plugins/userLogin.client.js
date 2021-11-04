@@ -44,7 +44,9 @@ export default ({ app }, inject) => {
     localStorage.removeItem("m_token");
     localStorage.removeItem("m_user");
     app.store.commit("setUserObject", {});
-    app.router.push('/login/')
+    app.store.commit("setAuthToken", null);
+    app.store.commit("setAuth", null);
+    app.router.push('/login/');
     app.store.dispatch('toast', {
       title: 'Session expired',
       message: 'You need to login again!',

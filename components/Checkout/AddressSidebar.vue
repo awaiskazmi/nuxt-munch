@@ -53,16 +53,39 @@
           </div>
           <!-- If a user has saved addresses -->
           <div v-show="savedAddresses.length > 0">
-            <p class="mt-4">Or choose an address saved already</p>
+            <p class="mt-4">Or choose an already saved address</p>
             <div
               v-for="add in savedAddresses"
               :key="add.id"
-              class="card card-body mb-3 pointer shadow-sm saved-address"
+              class="mb-3 pointer"
               @click="chooseSavedAddress(add)"
             >
-              <h6>{{ add.locationName }}</h6>
+              <div class="row">
+                <div class="col address-details">
+                  <div class="row no-gutters align-items-center suggestion">
+                    <div class="col-auto mr-3">
+                      <img
+                        src="~/assets/images/icon-location.svg"
+                        height="24"
+                      />
+                    </div>
+                    <div class="col pr-md-4">
+                      <h6 class="font-weight-bold">
+                        {{ add.locationName }}
+                      </h6>
+                      <p class="text-muted m-0">
+                        <small
+                          >{{ add.additionalDetails }} &mdash;
+                          {{ add.poi }}</small
+                        >
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <h6>{{ add.locationName }}</h6>
               <p class="mb-2 text-muted">{{ add.additionalDetails }}</p>
-              <p class="m-0">{{ add.poi }}</p>
+              <p class="m-0">{{ add.poi }}</p> -->
             </div>
           </div>
         </div>
@@ -199,11 +222,22 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
-.labels {
-  display: flex;
-}
-.saved-address:hover {
-  background-color: #f7f7f7;
-}
+<style lang="sass" scoped>
+.labels
+  display: flex
+
+.suggestion
+  padding: 1rem
+  border-radius: 8px
+
+  &:hover
+    background-color: rgba(227,245,251,0.5)
+
+  &:not(:last-child)::after
+    content: ''
+    display: none
+    height: 1px
+    width: 100%
+    margin: 1rem 0
+    background-color: #E0E0E0
 </style>

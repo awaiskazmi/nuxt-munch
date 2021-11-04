@@ -2,7 +2,8 @@
   <div class="container px-0 py-5">
     <div class="row">
       <div class="col">
-        <h2 class="mb-4">{{ title }}</h2>
+        <h2 class="mb-3">{{ title }}</h2>
+        <p v-if="subtitle" class="text-muted">{{ subtitle }}</p>
         <div class="row align-items-center">
           <div class="col">
             <p v-if="$fetchState.pending" class="text-center">
@@ -32,7 +33,10 @@
                   >
                     <ProductItem :product="p" :animationDelay="index * 50" />
                   </div>
-                  <div class="swiper-slide align-self-center text-center">
+                  <div
+                    v-if="landing"
+                    class="swiper-slide align-self-center text-center"
+                  >
                     <BaseButton
                       :url="landing"
                       icon="navigate_next"
@@ -72,7 +76,7 @@
 import { mapState } from "vuex";
 
 export default {
-  props: ["id", "product", "title", "landing"],
+  props: ["id", "product", "title", "subtitle", "landing"],
   data() {
     return {
       products: [],

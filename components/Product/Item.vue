@@ -1,36 +1,11 @@
 <template>
-  <!-- path: `/orders/${category}/${name}`, -->
-  <!-- @click="
-      $router.push({
-        name: `orders-category-product`,
-        params: { id: id, product: product, category: category },
-      })
-    " -->
   <div class="product" data-aoses="zoom-in" :data-aoses-delay="animationDelay">
     <div class="product-wrapper">
       <!-- <span v-if="off" class="off">off</span> -->
-      <span v-if="freeDelivery" class="free-delivery">Free Delivery</span>
-      <div class="controls d-none">
-        <!-- if quantity == 0 -->
-        <button
-          @click="updateQuantity('add')"
-          v-if="product.quantity == 0"
-          class="btn-add"
-        >
-          <span class="material-icons">add</span>
-        </button>
-        <!-- if quantity > 0 -->
-        <div v-else class="btns">
-          <button @click="updateQuantity('sub')">
-            <span class="material-icons">delete</span>
-          </button>
-          <span>{{ product.quantity }}</span>
-          <button @click="updateQuantity('add')">
-            <span class="material-icons">add</span>
-          </button>
-        </div>
-      </div>
-      <ProductControls :product="product" />
+      <span v-if="product.status == 'OUT_OF_STOCK'" class="free-delivery"
+        >OUT OF STOCK</span
+      >
+      <ProductControls v-if="product.status == 'IN_STOCK'" :product="product" />
       <!-- <div class="qty">
         {{ quantity }}
       </div> -->

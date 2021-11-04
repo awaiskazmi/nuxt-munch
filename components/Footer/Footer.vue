@@ -34,9 +34,9 @@
           <h5>Munchies</h5>
           <ul class="list-unstyled">
             <li><NuxtLink to="/">Home</NuxtLink></li>
-            <li><NuxtLink to="#">Snacks</NuxtLink></li>
-            <li><NuxtLink to="#">Promos</NuxtLink></li>
-            <li><NuxtLink to="#">Favourites</NuxtLink></li>
+            <li><NuxtLink to="/orders">Snacks</NuxtLink></li>
+            <!-- <li><NuxtLink to="#">Promos</NuxtLink></li> -->
+            <li><NuxtLink to="/trending">Favourites</NuxtLink></li>
           </ul>
         </div>
         <div class="col-6 col-lg">
@@ -75,51 +75,51 @@
           <div class="row no-gutters">
             <div class="col">
               <ul class="list-unstyled">
-                <li><button class="btn btn-link">PECHS</button></li>
+                <li><span class="btn btn-link">PECHS</span></li>
                 <li>
-                  <button class="btn btn-link">DHA</button>
+                  <span class="btn btn-link">DHA</span>
                 </li>
                 <li>
-                  <button class="btn btn-link">Clifton</button>
-                </li>
-              </ul>
-            </div>
-            <div class="col">
-              <ul class="list-unstyled">
-                <li>
-                  <button class="btn btn-link">Nazimabad</button>
-                </li>
-                <li>
-                  <button class="btn btn-link">Gulshan e Iqbal</button>
-                </li>
-                <li>
-                  <button class="btn btn-link">Gulistan e Jauhar</button>
+                  <span class="btn btn-link">Clifton</span>
                 </li>
               </ul>
             </div>
             <div class="col">
               <ul class="list-unstyled">
                 <li>
-                  <button class="btn btn-link">North Nazimabad</button>
+                  <span class="btn btn-link">Nazimabad</span>
                 </li>
                 <li>
-                  <button class="btn btn-link">Saddar</button>
+                  <span class="btn btn-link">Gulshan e Iqbal</span>
                 </li>
                 <li>
-                  <button class="btn btn-link">Garden</button>
+                  <span class="btn btn-link">Gulistan e Jauhar</span>
                 </li>
               </ul>
             </div>
             <div class="col">
               <ul class="list-unstyled">
                 <li>
-                  <button class="btn btn-link">Soldier Bazar</button>
+                  <span class="btn btn-link">North Nazimabad</span>
                 </li>
                 <li>
-                  <button class="btn btn-link">Federal B Area</button>
+                  <span class="btn btn-link">Saddar</span>
                 </li>
                 <li>
-                  <button class="btn btn-link">North Karachi</button>
+                  <span class="btn btn-link">Garden</span>
+                </li>
+              </ul>
+            </div>
+            <div class="col">
+              <ul class="list-unstyled">
+                <li>
+                  <span class="btn btn-link">Soldier Bazar</span>
+                </li>
+                <li>
+                  <span class="btn btn-link">Federal B Area</span>
+                </li>
+                <li>
+                  <span class="btn btn-link">North Karachi</span>
                 </li>
               </ul>
             </div>
@@ -168,8 +168,12 @@ small
   color: #808080
 a,
 .btn-link
+  text-decoration: none
   display: inline-block
   color: #808080
   padding: 0
   margin-bottom: 1rem
+
+.btn-link
+  cursor: default !important
 </style>

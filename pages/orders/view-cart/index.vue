@@ -22,16 +22,16 @@
               <div class="col-3 pr-0">
                 <div class="image-wrapper">
                   <img
-                    :src="
-                      `https://munchies-qa.impact.venturedive.com/v2/public/resources/${p.imageUrl}`
-                    "
+                    :src="`https://munchies-qa.impact.venturedive.com/v2/public/resources/${p.imageUrl}`"
                     alt=""
                   />
                 </div>
               </div>
-              <div class="col-9 col-md">
+              <div
+                class="col-9 col-md d-flex flex-column justify-content-between"
+              >
                 <h4 class="font-weight-bold mb-3">{{ p.name }}</h4>
-                <p class="text-muted">{{ p.weight }}</p>
+                <!-- <p class="text-muted">{{ p.weight }}</p> -->
                 <div class="d-flex align-items-center justify-content-between">
                   <h5 class="m-0">Rs. {{ p.price }}</h5>
                   <ProductControls :product="{ ...p }" />
@@ -137,7 +137,7 @@ export default {
     total() {
       let total = 0;
       this.products.forEach((p) => {
-        total = total + parseInt(p.quantity) * parseInt(p.price);
+        total = total + parseInt(p.cartQuantity) * parseInt(p.price);
       });
       return total;
     },

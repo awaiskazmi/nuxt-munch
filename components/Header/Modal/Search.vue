@@ -199,13 +199,14 @@ export default {
         this.products = [];
         this.categories = [];
         this.filterId = null;
+        clearTimeout(this.timer);
         return;
       }
       clearTimeout(this.timer);
       this.timer = setTimeout(() => {
         this.searching = true;
         this.getSearchResults(this.search);
-      }, 350);
+      }, 1000);
     },
     async getSearchResults(query) {
       this.filterId = null;

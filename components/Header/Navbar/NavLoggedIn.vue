@@ -155,7 +155,7 @@ export default {
       added: "getAddedProducts",
     }),
     cartCount() {
-      let added = this.added.map((p) => p.quantity);
+      let added = this.added.map((p) => p.cartQuantity);
       return added.reduce((prev, next) => prev + next, 0);
     },
   },

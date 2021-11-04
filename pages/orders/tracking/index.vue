@@ -21,15 +21,18 @@
                   </div>
                   <div class="col-auto ml-auto">
                     <BaseButton
-                      type="primary"
+                      type="light"
                       variant="sm"
                       :url="`/orders/tracking/${order.id}`"
-                      >Track order</BaseButton
+                      >View details</BaseButton
                     >
                   </div>
                 </div>
               </div>
-              <div class="card-body">Rs. {{ order.orderTotal }}</div>
+              <div class="card-body">
+                <p class="h5">Rs. {{ order.orderTotal }}</p>
+                <small>{{ order.status }}</small>
+              </div>
             </div>
           </div>
         </div>
@@ -58,15 +61,15 @@ export default {
   async fetch() {
     try {
       // get all orders
+      // orderStates=IN_PROGRESS&orderStates=SCHEDULED&orderStates=CANCELED&orderStatus=ADMIN_CANCELLED_ORDER&
       const res = await this.$axios({
         mode: "cors",
         method: "get",
-        url: `/qa/v2/api/orders/list?orderStates=IN_PROGRESS&orderStates=SCHEDULED&orderStates=CANCELED`,
+        url: `/qa/v2/api/orders/list?descending=true`,
         headers: {
           Authorization: `Bearer ${this.$store.state.token}`,
         },
       });
-
       console.log("...orders list...", res);
       this.orders = res.data.data;
     } catch (error) {
@@ -76,6 +79,13 @@ export default {
         variant: "danger",
       });
     }
+  },
+  methods: {
+    orderStatus(status) {
+      console.log(status);
+      return;
+      return this.$orderStatusTypes[status];
+    },
   },
 };
 </script>
