@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <form @submit="onclick">
     <h1>{{ title }}</h1>
     <p>{{ subtitle }}</p>
     <label class="d-block text-left" for="">Phone Number</label>
@@ -12,19 +12,16 @@
       maxLength="10"
       :class="invalid"
       :readonly="readonly"
+      required
     />
     <div class="invalid-feedback text-left">Phone number doesn't exist</div>
     <div class="mt-3">
-      <BaseButton
-        isButton
-        type="primary"
-        @click="onclick"
-        :disabled="isSendingOtp"
+      <BaseButton isButton type="primary" :disabled="isSendingOtp"
         ><b-spinner v-show="isSendingOtp" class="mr-1" small></b-spinner
         ><span>Send OTP</span></BaseButton
       >
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
@@ -53,7 +50,8 @@ export default {
     onfocus() {
       this.phoneInvalid = false;
     },
-    async onclick() {
+    async onclick(e) {
+      e.preventDefault();
       // disbale send otp button
       this.isSendingOtp = true;
 

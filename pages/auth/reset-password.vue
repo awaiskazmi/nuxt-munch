@@ -1,5 +1,8 @@
 <template>
-  <div class="p-2 p-lg-6 text-center align-self-center flex-grow-1">
+  <form
+    @submit="setPassword"
+    class="p-2 p-lg-6 text-center align-self-center flex-grow-1"
+  >
     <h1>Enter new password</h1>
     <p>Let's setup your new password</p>
     <div class="form-group">
@@ -9,6 +12,7 @@
         type="password"
         placeholder="Enter password"
         variant="lg"
+        required
       />
       <small class="form-text text-left text-muted"
         >Password must contain lowercase, uppercase, and special characters e.g.
@@ -22,6 +26,7 @@
         type="password"
         placeholder="Re-enter password"
         variant="lg"
+        required
         :classList="invalid"
       />
       <div v-if="passwordInvalid" class="d-block text-left invalid-feedback">
@@ -29,11 +34,11 @@
       </div>
     </div>
     <div class="form-group">
-      <button @click="setPassword" class="btn btn-primary btn-block">
+      <button type="submit" class="btn btn-primary btn-block">
         Set Password
       </button>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
@@ -53,9 +58,11 @@ export default {
     },
   },
   methods: {
-    async setPassword() {
+    async setPassword(e) {
+      e.preventDefault();
       if (this.password != this.repassword) {
         this.passwordInvalid = true;
+        return;
       }
       const config = {
         headers: {
@@ -67,7 +74,7 @@ export default {
         const res = await this.$axios.put(
           "/qa/v1/public/users/reset-password",
           {
-            password: this.password,
+            password: this.repassword,
             token: this.query.token,
           },
           config

@@ -4,9 +4,8 @@
     <p>
       Please enter the 4-digit verification code sent to your number &mdash;
     </p>
-    <pre>Page to redirect to is: {{ redirect }}</pre>
     <div class="d-inline-flex align-items-center mb-4">
-      <pre>Number to verify is: {{ phoneValue }}</pre>
+      <p>{{ phoneValue }}</p>
     </div>
     <SignupVerifyCodeInput
       @otpVerified="otpVerified"

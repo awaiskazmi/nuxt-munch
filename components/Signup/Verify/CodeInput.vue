@@ -88,7 +88,7 @@ export default {
       input4: "",
       otpInvalid: false,
       enteredOtp: this.otp,
-      interval: 3,
+      interval: 30,
     };
   },
   computed: {
