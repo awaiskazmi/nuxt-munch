@@ -53,6 +53,7 @@ export default {
       // categories: [],
       options: {
         // slidesPerView: "auto",
+        slidesPerGroup: 8,
         slidesPerView: 8,
         spaceBetween: 24,
         loop: false,

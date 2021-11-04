@@ -86,6 +86,9 @@ export default {
     handleSubmit() {
       this.isAttemptingLogin = true;
       this.$loginUser(this.userObject);
+      setTimeout(() => {
+        this.isAttemptingLogin = false;
+      }, 2000);
     },
   },
 };

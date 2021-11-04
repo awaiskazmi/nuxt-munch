@@ -1,5 +1,18 @@
 <template>
   <header class="bg-white">
+    <!-- floating cart button for mobile view -->
+    <div
+      class="floating-cart d-block d-md-none"
+      :class="cartCount == 0 ? 'hidden' : ''"
+    >
+      <BaseButton
+        url="/orders/view-cart"
+        rounded
+        icon="shopping_cart"
+        type="cart"
+        >Cart . {{ cartCount }} items</BaseButton
+      >
+    </div>
     <div class="header container d-block d-md-flex">
       <div class="d-flex align-items-center overflow-hidden">
         <NuxtLink class="navbar-brand" to="/">
@@ -60,8 +73,13 @@ export default {
     ...mapState(["auth"]),
     ...mapState(["user"]),
     ...mapGetters({
+      added: "getAddedProducts",
       getSearchQuery: "getglobalSearchQuery",
     }),
+    cartCount() {
+      let added = this.added.map((p) => p.cartQuantity);
+      return added.reduce((prev, next) => prev + next, 0);
+    },
     search: {
       get() {
         return this.getSearchQuery;
@@ -92,4 +110,24 @@ export default {
 
   @media (max-width: 768px)
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1)
+
+.floating-cart
+  position: fixed
+  bottom: 1.5rem
+  right: 1rem
+  z-index: 1051
+  transition: all 0.4s ease
+
+  &.hidden
+    opacity: 0
+    pointer-events: none
+    transform: translateY(10px)
+
+  a, button
+    transition: all 0.4s ease
+    box-shadow: 1px 3px 7px rgba(0,0,0,0.5)
+
+    &:hover
+      transform: translateY(-4px)
+      box-shadow: 3px 7px 14px rgba(0,0,0,0.4)
 </style>

@@ -118,11 +118,11 @@ export default {
   layout: "half-form",
   data() {
     return {
-      name: "",
-      phone: "",
-      email: "",
-      password: "",
-      repassword: "",
+      name: "Awais Kazmises",
+      phone: "3333333333",
+      email: "awais.kazmises@munchieshome.com",
+      password: "Awais.123",
+      repassword: "Awais.123",
       emailError: false,
       phoneError: false,
       passwordError: false,
@@ -175,6 +175,12 @@ export default {
       // diasble signup button
       this.isAttemptingSignup = true;
 
+      let payload = new FormData();
+      payload.append("email", this.email);
+      payload.append("password", this.password);
+      payload.append("phone", this.prePhone);
+      payload.append("username", this.name);
+
       let userData = {
         email: this.email,
         name: this.name,
@@ -187,11 +193,12 @@ export default {
       this.$axios({
         mode: "cors",
         method: "post",
-        url: "/qa/v1/public/users",
-        data: userData,
+        url: "/api/proceed-signup",
+        data: payload,
         headers: {
-          device_id: this.deviceId,
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
+          // device_id: this.deviceId,
+          // "Content-Type": "application/json",
         },
       })
         .then(({ data }) => {
@@ -202,25 +209,37 @@ export default {
           if (autoLoginToken) {
             this.$loginUser(this.userObject);
           }
-
           // FAILURE
+          if (code == 2077) this.phoneError = true; // invalid number
+          if (code == 2106) this.phoneError = true; // number already in use
+          if (code == 2254) this.emailError = true; // email already in use
+          if (code == 2256) this.passwordError = true; // weak password
+          // show error message in toast
+          this.$store.dispatch("toast", {
+            title: "Error signing up!",
+            message: message,
+            variant: "danger",
+          });
+          // enable signup button
+          this.isAttemptingSignup = false;
         })
-        .catch((err) => this.processError(err.response.data));
+        .catch((err) => this.processError(err));
     },
     processError(error) {
-      // process error codes
-      if (error.code == 2077) this.phoneError = true; // invalid number
-      if (error.code == 2106) this.phoneError = true; // number already in use
-      if (error.code == 2254) this.emailError = true; // email already in use
-      if (error.code == 2256) this.passwordError = true; // weak password
-      // show error message in toast
-      this.$store.dispatch("toast", {
-        title: "Error signing up!",
-        message: error.message,
-        variant: "danger",
-      });
-      // enable signup button
-      this.isAttemptingSignup = false;
+      // console.log("...I RAN...");
+      // // process error codes
+      // if (error.code == 2077) this.phoneError = true; // invalid number
+      // if (error.code == 2106) this.phoneError = true; // number already in use
+      // if (error.code == 2254) this.emailError = true; // email already in use
+      // if (error.code == 2256) this.passwordError = true; // weak password
+      // // show error message in toast
+      // this.$store.dispatch("toast", {
+      //   title: "Error signing up!",
+      //   message: error.message,
+      //   variant: "danger",
+      // });
+      // // enable signup button
+      // this.isAttemptingSignup = false;
     },
   },
 };
