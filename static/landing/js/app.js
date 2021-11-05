@@ -124,7 +124,6 @@ function handleScroll(e) {
 w.onresize = function() {
   // c.width = window.innerWidth;
   // c.height = window.innerHeight;
-  s.refresh();
-
+  // s.refresh();
   // drawImageProp(ctx, images[frame]);
 };
