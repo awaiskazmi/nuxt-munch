@@ -61,18 +61,18 @@ export const actions = {
       commit("setServiceArea", null);
       commit("setUserLocation", null);
       commit("setUserLocationObject", {});
-      localStorage.removeItem('m_hubId');
-      localStorage.removeItem('m_latlng');
-      localStorage.removeItem('m_location');
-      localStorage.removeItem('m_serviceArea');
-      localStorage.removeItem('m_location_name');
+      localStorage.removeItem("m_hubId");
+      localStorage.removeItem("m_latlng");
+      localStorage.removeItem("m_location");
+      localStorage.removeItem("m_serviceArea");
+      localStorage.removeItem("m_location_name");
       this.$router.push(`/coming-soon?area=${payload.address}`);
     } else {
       console.log("...SERVICE AREA DETAILS...", res);
       newServiceArea = res.data[0].id;
 
       let cartCount = state.products.products.length;
-      console.log('CART COUNT ===', cartCount);
+      console.log("CART COUNT ===", cartCount);
 
       // products in cart but location changed, reset cart
       if (cartCount > 0) {
@@ -80,7 +80,7 @@ export const actions = {
       }
 
       // redirect to home page
-      this.$router.push('/');
+      this.$router.push("/orders");
 
       // update service area in store
       commit("setServiceArea", newServiceArea);
@@ -98,10 +98,10 @@ export const actions = {
       });
 
       // dispatch GET hubId action
-      dispatch('getHubId', newServiceArea);
+      dispatch("getHubId", newServiceArea);
 
       // dispatch GET categories action
-      dispatch('getHubCategories', newServiceArea);
+      dispatch("getHubCategories", newServiceArea);
     }
   },
 
@@ -118,7 +118,7 @@ export const actions = {
     });
 
     // print hubData
-    console.log('...HUB DATA...', hubData);
+    console.log("...HUB DATA...", hubData);
 
     // save hubId in store and localstorage
     commit("setHubId", hubData.data.data[0].id);
@@ -137,10 +137,10 @@ export const actions = {
     });
 
     // print categories
-    console.log('...CATEGORIES...', categoryData);
+    console.log("...CATEGORIES...", categoryData);
 
     // update categories in store
-    commit('setCategories', categoryData.data.data);
+    commit("setCategories", categoryData.data.data);
   },
 
   // SET RECENT SEARCHES
@@ -153,11 +153,14 @@ export const actions = {
   },
 
   // GENERATE TOAST
-  async toast({ commit }, { message, title, variant, position = 'bottom-center', autoHide = false }) {
+  async toast(
+    { commit },
+    { message, title, variant, position = "bottom-center", autoHide = false }
+  ) {
     this._vm.$bvToast.toast(message, {
       title: title,
       variant: variant,
-      toaster: 'b-toaster-' + position,
+      toaster: "b-toaster-" + position,
       noAutoHide: autoHide,
       solid: true,
     });

@@ -236,7 +236,7 @@
         data-anchor-target="#trigger-logo"
         data-top="width:100%;margin-top:35vh;"
         data-top-bottom="width:50%;margin-top:0%;"
-        src="/landing/images/logo.svg"
+        src="~/assets/images/landing/logo.svg"
         class="nav-logo"
       />
     </div>
@@ -291,7 +291,11 @@
         </div>
       </section>
       <!-- STARVIN MARVIN -->
-      <section style="position:relative;z-index:8;" id="starvin">
+      <section
+        style="position:relative;z-index:8;"
+        :style="{ backgroundImage: `url(${babyBg})` }"
+        id="starvin"
+      >
         <div class="container">
           <div class="row">
             <div class="col-12 col-md-10 mx-auto">
@@ -410,7 +414,7 @@
       <div style="position:fixed;z-index:7;" id="category-images-wrapper">
         <!-- category images -->
         <img
-          src="/landing/images/ice-cream.png"
+          src="~/assets/images/landing/ice-cream.png"
           class="product-image"
           data-anchor-target="#trigger-category-1"
           data--50-center-top="transform:scale(0);opacity:0"
@@ -419,7 +423,7 @@
           data--50-center-bottom="transform:scale(0);opacity:0"
         />
         <img
-          src="/landing/images/chips.png"
+          src="~/assets/images/landing/chips.png"
           class="product-image"
           data-anchor-target="#trigger-category-2"
           data--50-center-top="transform:scale(0);opacity:0"
@@ -428,7 +432,7 @@
           data--50-center-bottom="transform:scale(0);opacity:0"
         />
         <img
-          src="/landing/images/beverages.png"
+          src="~/assets/images/landing/beverages.png"
           class="product-image"
           data-anchor-target="#trigger-category-3"
           data--50-center-top="transform:scale(0);opacity:0"
@@ -437,7 +441,7 @@
           data--50-center-bottom="transform:scale(0);opacity:0"
         />
         <img
-          src="/landing/images/chocolate.png"
+          src="~/assets/images/landing/chocolate.png"
           class="product-image"
           data-anchor-target="#trigger-category-4"
           data--50-center-top="transform:scale(0);opacity:0"
@@ -446,7 +450,7 @@
           data--50-center-bottom="transform:scale(0);opacity:0"
         />
         <img
-          src="/landing/images/breakfast.png"
+          src="~/assets/images/landing/breakfast.png"
           class="product-image"
           data-anchor-target="#trigger-category-5"
           data--50-center-top="transform:scale(0);opacity:0"
@@ -455,7 +459,7 @@
           data--50-center-bottom="transform:scale(0);opacity:0"
         />
         <img
-          src="/landing/images/bakery.png"
+          src="~/assets/images/landing/bakery.png"
           class="product-image"
           data-anchor-target="#trigger-category-6"
           data--50-center-top="transform:scale(0);opacity:0"
@@ -464,7 +468,7 @@
           data--50-center-bottom="transform:scale(0);opacity:0"
         />
         <img
-          src="/landing/images/biscuits.png"
+          src="~/assets/images/landing/biscuits.png"
           class="product-image"
           data-anchor-target="#trigger-category-7"
           data--50-center-top="transform:scale(0);opacity:0"
@@ -473,7 +477,7 @@
           data--50-center-bottom="transform:scale(0);opacity:0"
         />
         <img
-          src="/landing/images/candies.png"
+          src="~/assets/images/landing/candies.png"
           class="product-image"
           data-anchor-target="#trigger-category-8"
           data--50-center-top="transform:scale(0);opacity:0"
@@ -500,7 +504,7 @@
           data-top="transform:rotateZ(0deg) translate(35%,-15%);"
           data-400-bottom="transform:rotateZ(0deg) translate(-79%,-45%);"
           data-bottom="transform:rotateZ(0deg) translate(-79%,-200%);"
-          src="/landing/images/hungry.svg"
+          src="~/assets/images/landing/hungry.svg"
           alt=""
         />
       </h2>
@@ -613,6 +617,8 @@
 </template>
 
 <script>
+import babyBg from "assets/images/landing/baby.jpg";
+
 export default {
   layout: "landing",
   head() {
@@ -633,6 +639,7 @@ export default {
   },
   data() {
     return {
+      babyBg: babyBg,
       activeQuestion: 0,
       questions: [
         {
@@ -724,4 +731,8 @@ export default {
 };
 </script>
 
-<style lang="css" scoped></style>
+<style lang="css">
+.game-screen .radio-group input:checked ~ label::before {
+  background-image: url("./assets/images/landing/radio-checked.svg");
+}
+</style>
