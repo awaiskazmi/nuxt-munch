@@ -219,23 +219,31 @@
                 app <br class="d-none d-md-block" />to get exclusive deals
               </p>
               <div class="row justify-content-center">
-                <div class="col-6 col-md-4 pr-1 pr-md-2">
-                  <nuxt-link class="" to="/">
+                <div class="col-6 col-md-3 pr-1 pr-md-2">
+                  <a
+                    target="_blank"
+                    class=""
+                    href="https://munchiespak.page.link/appdownloads"
+                  >
                     <img
                       class="img-fluid"
                       src="@/assets/images/badge-google.png"
                       alt="Download Munchies App on Google Play Store"
                     />
-                  </nuxt-link>
+                  </a>
                 </div>
-                <div class="col-6 col-md-4 pl-1 pl-md-2">
-                  <nuxt-link class="" to="/">
+                <div class="col-6 col-md-3 pl-1 pl-md-2">
+                  <a
+                    target="_blank"
+                    class=""
+                    href="https://munchiespak.page.link/appdownloads"
+                  >
                     <img
                       class="img-fluid"
                       src="@/assets/images/badge-apple.png"
                       alt="Download Munchies App on Apple App Store"
                     />
-                  </nuxt-link>
+                  </a>
                 </div>
               </div>
             </div>
@@ -492,6 +500,7 @@ export default {
     }),
   },
   mounted() {
+    return;
     console.log("USER", this.user);
     console.log("LOCATION", this.location);
     console.log("CART", this.cart);

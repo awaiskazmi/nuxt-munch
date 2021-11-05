@@ -15,20 +15,26 @@
             snacks delivered to your doorstep within minutes.
           </p>
           <p class="mt-4 mb-5 mb-md-0 d-flex">
-            <NuxtLink to="/">
+            <a
+              target="_blank"
+              href="https://munchiespak.page.link/appdownloads"
+            >
               <img
                 class="app-badge"
                 src="~/assets/images/badge-google.png"
                 alt="Download Munchies App on Google Play Store"
               />
-            </NuxtLink>
-            <NuxtLink to="/">
+            </a>
+            <a
+              target="_blank"
+              href="https://munchiespak.page.link/appdownloads"
+            >
               <img
                 class="ml-3 app-badge"
                 src="~/assets/images/badge-apple.png"
                 alt="Download Munchies App on Apple Store"
               />
-            </NuxtLink>
+            </a>
           </p>
         </div>
         <div class="col-6 col-lg">
