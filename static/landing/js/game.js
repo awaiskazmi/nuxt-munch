@@ -1,12 +1,13 @@
-console.log("...play the game...");
-
-let gameWrapper = document.getElementById("game");
-let pageHeader = document.getElementById("header");
-let starGame = document.getElementById("btn-start-game");
+var gameWrapper = document.getElementById("game");
+var pageHeader = document.getElementById("header");
+var starGame = document.getElementById("btn-start-game");
 
 starGame.addEventListener("click", () => {
-  console.log("...wow...");
-  document.body.style.overflow = "hidden";
+  document.getElementById("loading").style.display = "none";
+  document.getElementById("fixed-elements").style.display = "none";
+  document.getElementById("skrollr-body").style.display = "none";
+  document.getElementById("fixed-above-frame").style.display = "none";
+  document.getElementById("fixed-above-categories").style.display = "none";
   gameWrapper.classList.add("active");
 });
 

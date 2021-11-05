@@ -1,16 +1,16 @@
-let indexStart = 0;
-let indexEnd = 172;
-let loadedFrames = 0;
-let w = window;
-let images = [];
-let scrollHeight = 0;
-let frame = 0;
-let imageFrame = document.getElementById("img-frame");
-let categoriesOffset = document.getElementById("categories").offsetTop;
-let howHungryDiv = document.getElementById("how-hungry-title-wrapper");
-let howHungryTitle = document.getElementById("how-hungry-title");
-let lazyLoadWrapper = document.getElementById("lazy-load-stuff");
-let s;
+var indexStart = 0;
+var indexEnd = 172;
+var loadedFrames = 0;
+var w = window;
+var images = [];
+var scrollHeight = 0;
+var frame = 0;
+var imageFrame = document.getElementById("img-frame");
+var categoriesOffset = document.getElementById("categories").offsetTop;
+var howHungryDiv = document.getElementById("how-hungry-title-wrapper");
+var howHungryTitle = document.getElementById("how-hungry-title");
+var lazyLoadWrapper = document.getElementById("lazy-load-stuff");
+var s;
 
 // onload
 w.onload = function() {
@@ -33,6 +33,7 @@ for (i = indexStart; i <= indexEnd; i++) {
     if (loadedFrames >= 10) {
       howHungryDiv.style.height = howHungryTitle.clientWidth + "px";
       document.querySelector(".loading").classList.add("done");
+      document.body.classList.add("landing-loaded");
       // initialize skrollr
       s = skrollr.init({
         forceHeight: false,

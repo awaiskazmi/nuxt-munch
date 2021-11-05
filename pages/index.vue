@@ -1,6 +1,6 @@
 <template>
   <div class="m-landing">
-    <div class="loading">
+    <div id="loading" class="loading" :classes="isLoadedAlready ? 'done' : ''">
       <div class="spinner"></div>
     </div>
     <!-- FIXED ELEMENTS -->
@@ -687,6 +687,11 @@ export default {
     };
   },
   computed: {
+    isLoadedAlready() {
+      if (process.client) {
+        return document.body.classList.contains("landing-loaded");
+      }
+    },
     isFinished() {
       return this.activeQuestion == this.questions.length;
     },
