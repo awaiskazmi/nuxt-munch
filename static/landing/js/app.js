@@ -29,8 +29,8 @@ for (i = indexStart; i <= indexEnd; i++) {
   img.onload = function() {
     images.push(img);
     loadedFrames++;
-    // if 64 frames loaded, enable page
-    if (loadedFrames >= 64) {
+    // if 10 frames loaded, enable page
+    if (loadedFrames >= 10) {
       howHungryDiv.style.height = howHungryTitle.clientWidth + "px";
       document.querySelector(".loading").classList.add("done");
       // initialize skrollr
