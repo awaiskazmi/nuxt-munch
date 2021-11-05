@@ -126,7 +126,7 @@
             full
             type="link"
             url="/auth/verify-phone?ref=verify"
-            class="m-btn-align-left mt-2"
+            class="m-btn-align-left mt-2 d-none"
             icon="phone"
             >Verify Phone</BaseButton
           >

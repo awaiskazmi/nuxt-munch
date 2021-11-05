@@ -218,19 +218,25 @@
                 Order snacks anywhere, anytime with munchies app! Download the
                 app <br class="d-none d-md-block" />to get exclusive deals
               </p>
-              <div class="d-flex justify-content-center">
-                <nuxt-link class="mx-2" to="/">
-                  <img
-                    src="@/assets/images/badge-google.png"
-                    alt="Download Munchies App on Google Play Store"
-                  />
-                </nuxt-link>
-                <nuxt-link class="mx-2" to="/">
-                  <img
-                    src="@/assets/images/badge-apple.png"
-                    alt="Download Munchies App on Apple App Store"
-                  />
-                </nuxt-link>
+              <div class="row justify-content-center">
+                <div class="col-6 col-md-4 pr-1 pr-md-2">
+                  <nuxt-link class="" to="/">
+                    <img
+                      class="img-fluid"
+                      src="@/assets/images/badge-google.png"
+                      alt="Download Munchies App on Google Play Store"
+                    />
+                  </nuxt-link>
+                </div>
+                <div class="col-6 col-md-4 pl-1 pl-md-2">
+                  <nuxt-link class="" to="/">
+                    <img
+                      class="img-fluid"
+                      src="@/assets/images/badge-apple.png"
+                      alt="Download Munchies App on Apple App Store"
+                    />
+                  </nuxt-link>
+                </div>
               </div>
             </div>
             <div class="row mt-5">
@@ -288,6 +294,7 @@
                       <div class="mt-3 stars">
                         <span
                           v-for="n in 5"
+                          :key="n"
                           class="material-icons"
                           :class="n <= s.stars ? 'text-primary' : 'text-muted'"
                           >star</span

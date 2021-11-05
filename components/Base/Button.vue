@@ -11,7 +11,12 @@
       <slot></slot>
     </span>
   </button>
-  <NuxtLink v-else :class="'m-btn btn btn-' + classes" :to="url">
+  <NuxtLink
+    v-else
+    :disabled="disabled"
+    :class="'m-btn btn btn-' + classes"
+    :to="url"
+  >
     <span v-if="icon" class="m-btn-icon material-icons">{{ icon }}</span>
     <span class="m-btn-label">
       <slot></slot>

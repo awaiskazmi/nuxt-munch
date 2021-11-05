@@ -2,6 +2,7 @@
   <header class="bg-white">
     <!-- floating cart button for mobile view -->
     <div
+      v-if="cartShow"
       class="floating-cart d-block d-md-none"
       :class="cartCount == 0 ? 'hidden' : ''"
     >
@@ -16,7 +17,7 @@
     <div class="header container d-block d-md-flex">
       <div class="d-flex align-items-center overflow-hidden">
         <NuxtLink class="navbar-brand" to="/">
-          <img src="~/assets/images/logo.png" alt="" height="40"
+          <img src="~/assets/images/logo.svg" alt="" height="40"
         /></NuxtLink>
         <HeaderToggleLocation />
         <HeaderToggleNavbar @click="onNavToggle" :class="navMenu" />
@@ -76,9 +77,17 @@ export default {
       added: "getAddedProducts",
       getSearchQuery: "getglobalSearchQuery",
     }),
+    routeName() {
+      return this.$route.name;
+    },
     cartCount() {
       let added = this.added.map((p) => p.cartQuantity);
       return added.reduce((prev, next) => prev + next, 0);
+    },
+    cartShow() {
+      if (this.$hideFloatingCartRoutes.indexOf(this.routeName) > -1)
+        return false;
+      else return true;
     },
     search: {
       get() {

@@ -49,6 +49,12 @@ export default ({ app, route }, inject) => {
   };
   inject("orderStatusTypes", orderStatusTypes);
 
+  // HIDE FLOATING CART ICON ROUTES
+  const hideFloatingCartRoutes = [
+    'signup', 'login', 'orders-view-cart', 'orders-checkout', 'auth-verify-phone', 'auth-reset-password'
+  ];
+  inject("hideFloatingCartRoutes", hideFloatingCartRoutes);
+
   // VERIFICATION ENDPOINTS
   const verificationEndpoints = {
     forgot: "auth-reset-password",

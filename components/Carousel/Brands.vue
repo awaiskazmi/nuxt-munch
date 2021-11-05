@@ -77,8 +77,8 @@ export default {
         },
         breakpoints: {
           769: {
-            slidesPerView: 3,
-            slidesPerGroup: 3,
+            slidesPerView: 3.5,
+            slidesPerGroup: 3.5,
           },
         },
       },

@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col">
           <p>
-            <img src="~/assets/images/logo.png" />
+            <img class="footer-brand" src="~/assets/images/logo.svg" />
           </p>
         </div>
       </div>
@@ -17,13 +17,14 @@
           <p class="mt-4 mb-5 mb-md-0 d-flex">
             <NuxtLink to="/">
               <img
+                class="app-badge"
                 src="~/assets/images/badge-google.png"
                 alt="Download Munchies App on Google Play Store"
               />
             </NuxtLink>
             <NuxtLink to="/">
               <img
-                class="ml-3"
+                class="ml-3 app-badge"
                 src="~/assets/images/badge-apple.png"
                 alt="Download Munchies App on Apple Store"
               />

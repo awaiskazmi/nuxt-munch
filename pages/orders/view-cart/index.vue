@@ -67,17 +67,27 @@
                   </div>
                 </div>
               </div>
-              <BaseButton
-                title="You need to sign in to place an order"
-                v-if="!auth"
-                full
-                type="primary"
-                url="/login?ref=orders-view-cart"
-                >Checkout - Rs. {{ total }}</BaseButton
-              >
-              <BaseButton v-else full type="primary" url="/orders/checkout"
-                >Checkout - Rs. {{ total }}</BaseButton
-              >
+              <div v-if="!auth">
+                <BaseButton
+                  full
+                  type="primary"
+                  url="/login?ref=orders-view-cart"
+                  >Sign in to place order</BaseButton
+                >
+              </div>
+              <div v-else-if="auth && total < 100">
+                <div class="alert alert-light text-center">
+                  Minimum order amount is Rs. 100
+                </div>
+                <BaseButton disabled full type="primary" url="/orders/"
+                  >Checkout - Rs. {{ total }}</BaseButton
+                >
+              </div>
+              <div v-else-if="auth && total >= 100">
+                <BaseButton full type="primary" url="/orders/checkout"
+                  >Checkout - Rs. {{ total }}</BaseButton
+                >
+              </div>
             </nuxtjs-sticky-sidebar>
           </div>
         </div>
@@ -139,7 +149,7 @@ export default {
       this.products.forEach((p) => {
         total = total + parseInt(p.cartQuantity) * parseInt(p.price);
       });
-      return total;
+      return parseInt(total);
     },
   },
 };

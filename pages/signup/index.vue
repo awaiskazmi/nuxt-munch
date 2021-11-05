@@ -1,5 +1,5 @@
 <template>
-  <div class="p-2 p-lg-6 flex-grow-1">
+  <div class="py-4 py-lg-6 px-2 px-lg-6 flex-grow-1">
     <h1>Sign up</h1>
     <p>Let's get you signed up to Munchies!</p>
     <form autocomplete="off" @submit.prevent="handleSubmit" class="mt-5">
@@ -118,11 +118,11 @@ export default {
   layout: "half-form",
   data() {
     return {
-      name: "Awais Kazmises",
-      phone: "3333333333",
-      email: "awais.kazmises@munchieshome.com",
-      password: "Awais.123",
-      repassword: "Awais.123",
+      name: "",
+      phone: "",
+      email: "",
+      password: "",
+      repassword: "",
       emailError: false,
       phoneError: false,
       passwordError: false,

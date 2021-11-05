@@ -4,6 +4,12 @@
   align-items: center;
   justify-content: center;
 
+  &[disabled="disabled"] {
+    opacity: 0.7;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
   &.m-btn-align-left {
     justify-content: flex-start;
   }

@@ -1,5 +1,5 @@
 <template>
-  <div class="container px-0 py-5">
+  <div class="container px-0 py-3 py-md-5">
     <div class="row">
       <div class="col">
         <h2 class="mb-3">{{ title }}</h2>
@@ -90,8 +90,8 @@ export default {
         },
         breakpoints: {
           769: {
-            slidesPerView: 2,
-            slidesPerGroup: 2,
+            slidesPerView: 2.5,
+            slidesPerGroup: 2.5,
           },
         },
       },

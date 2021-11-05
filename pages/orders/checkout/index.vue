@@ -1,7 +1,7 @@
 <template>
-  <div class="container-fluid py-md-5">
+  <div class="container py-md-5">
     <div class="row">
-      <div class="col-12 col-md-6 order-1 order-md-0 px-md-7">
+      <div class="col-12 col-md-6 order-1 order-md-0 pr-md-5">
         <!-- breadcrumbs -->
         <div class="d-none d-md-block">
           <b-breadcrumb>
@@ -201,14 +201,14 @@
               />
             </div>
           </div>
-          <div class="row" v-if="someoneElseSwitch">
+          <div class="row mb-4" v-if="someoneElseSwitch">
             <div class="col">
               <p><label for="">Recipient's Details</label></p>
               <div class="row">
-                <div class="col-6">
+                <div class="col-6 pr-2">
                   <BaseInput v-model="someoneElse.name" placeholder="Name" />
                 </div>
-                <div class="col-6">
+                <div class="col-6 pl-2">
                   <BaseInput
                     v-model="someoneElse.phone"
                     prependText="+92"
@@ -283,7 +283,10 @@
           </div>
         </div>
       </div>
-      <div class="col-12 col-md-6 order-0 order-md-1 p-0" id="map-wrapper">
+      <div
+        class="col-12 col-md-6 order-0 order-md-1 px-0 px-md-3"
+        id="map-wrapper"
+      >
         <nuxtjs-sticky-sidebar class="h-100">
           <CheckoutMap @update="onMapUpdate" />
         </nuxtjs-sticky-sidebar>
