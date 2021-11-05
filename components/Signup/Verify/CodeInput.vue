@@ -124,7 +124,7 @@ export default {
       }
     },
     async resendOtp() {
-      this.interval = 3;
+      this.interval = 30;
       const config = {
         headers: {
           Accept: "application/json",

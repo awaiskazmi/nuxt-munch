@@ -16,10 +16,11 @@
       <div class="form-group">
         <label>Password</label>
         <BaseInputPassword
-          type="password"
-          placeholder="Enter password"
-          variant="md"
           v-model="password"
+          type="password"
+          variant="md"
+          required
+          placeholder="Enter password"
         />
       </div>
       <div class="form-group text-right">
