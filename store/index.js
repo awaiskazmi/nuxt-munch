@@ -71,6 +71,8 @@ export const actions = {
       console.log("...SERVICE AREA DETAILS...", res);
       newServiceArea = res.data[0].id;
 
+      commit('updateProductsKey');
+
       let cartCount = state.products.products.length;
       console.log("CART COUNT ===", cartCount);
 

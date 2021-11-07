@@ -62,6 +62,9 @@ export const mutations = {
   setProducts(state, products) {
     state.products = products;
   },
+  updateProductsKey(state) {
+    state.productsKey = state.productsKey + 1;
+  },
   addProducts(state, products) {
     products.forEach((p) => {
       state.products.push(p);

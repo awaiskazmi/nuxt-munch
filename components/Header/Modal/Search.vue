@@ -147,11 +147,6 @@ export default {
       isLoadingMore: false,
     };
   },
-  watch: {
-    $route(to, from) {
-      this.$bvModal.hide("modal-search");
-    },
-  },
   computed: {
     ...mapState({
       serviceArea: (state) => state.locationObj.service_area,
@@ -186,6 +181,9 @@ export default {
     },
   },
   watch: {
+    $route(to, from) {
+      this.$bvModal.hide("modal-search");
+    },
     productsKey(oldVal, newVal) {
       this.products = this.$syncProductsWithCart(this.products);
     },

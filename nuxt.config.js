@@ -145,6 +145,8 @@ export default {
   bootstrapVue: {
     bootstrapCSS: false,
     bootstrapVueCSS: false,
+    componentPlugins: ['Collapse', 'Spinner', 'Modal', 'Sidebar', 'Breadcrumb', 'Card', 'Alert', 'Toast', 'Form-Checkbox'], // Here you can specify which components you want to load and use
+    directivePlugins: ['Toggle']
   },
 
   styleResources: {
@@ -152,5 +154,7 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    // analyze: true,
+  },
 };
