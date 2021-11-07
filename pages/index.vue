@@ -7,7 +7,7 @@
     <div id="fixed-elements">
       <!-- image frames -->
       <div
-        style="position:fixed;z-index:1;"
+        style="position: fixed; z-index: 1"
         id="img-frame"
         class="img-frame"
         data-0="background-image:!url('/landing/frames/frame-0.jpg')"
@@ -186,7 +186,7 @@
       ></div>
       <!-- tagline -->
       <div
-        style="position:fixed;z-index:2;"
+        style="position: fixed; z-index: 2"
         data-0="opacity:1;top:1rem;"
         data-500="opacity:0;top:-4rem;"
         class="tag-line"
@@ -194,7 +194,7 @@
         Nothing serious. Only delicious.
       </div>
       <!-- headline text -->
-      <div style="position:fixed;z-index:3;" class="" id="headline-text">
+      <div style="position: fixed; z-index: 3" class="" id="headline-text">
         <p
           class="h1"
           data-anchor-target="#trigger-heading-text-1"
@@ -203,8 +203,8 @@
           data-150-top="opacity:1;margin-top:-1rem"
           data-50-top="opacity:0;margin-top:-2rem"
         >
-          We know you rather wish <br />you were in the Bahamas, <br />sitting
-          by the beach...
+          We know you rather wish <br class="d-none d-md-block" />you were in
+          the Bahamas, <br class="d-none d-md-block" />sitting by the beach...
         </p>
         <p
           class="h1"
@@ -214,7 +214,8 @@
           data-150-top="opacity:1;margin-top:-1rem"
           data-50-top="opacity:0;margin-top:-2rem"
         >
-          Sippin’ on some juice <br />in a fancy glass, but <br />you’re not...
+          Sippin’ on some juice <br class="d-none d-md-block" />in a fancy
+          glass, but <br class="d-none d-md-block" />you’re not...
         </p>
         <div
           class=""
@@ -225,14 +226,15 @@
           data-50-top="opacity:1;margin-top:-2rem"
         >
           <p class="h1">
-            Maybe not the views, <br />but we CAN provide <br />the juice!
+            Maybe not the views, <br class="d-none d-md-block" />but we CAN
+            provide <br class="d-none d-md-block" />the juice!
           </p>
           <button class="btn n" v-b-modal.modal-search>Find Munchies</button>
         </div>
       </div>
       <!-- logo -->
       <img
-        style="position:fixed;z-index:12;"
+        style="position: fixed; z-index: 12"
         data-anchor-target="#trigger-logo"
         data-top="width:100%;margin-top:35vh;"
         data-top-bottom="width:50%;margin-top:0%;"
@@ -249,7 +251,7 @@
       <div class="trigger vh" id="trigger-heading-text-3"></div>
       <!-- CATEGORY HEADING TRIGGERS -->
       <section
-        style="position:relative;z-index:4;"
+        style="position: relative; z-index: 4"
         class="categories"
         id="categories"
       >
@@ -270,7 +272,7 @@
         </div>
       </section>
       <!-- HOW HUNGRY? -->
-      <section style="position:relative;z-index:8;" id="how-hungry">
+      <section style="position: relative; z-index: 8" id="how-hungry">
         <div id="how-hungry-title-wrapper"></div>
         <div class="container">
           <div class="row">
@@ -292,7 +294,7 @@
       </section>
       <!-- STARVIN MARVIN -->
       <section
-        style="position:relative;z-index:8;"
+        style="position: relative; z-index: 8"
         :style="{ backgroundImage: `url(${babyBg})` }"
         id="starvin"
       >
@@ -321,7 +323,7 @@
     <div id="fixed-above-frame">
       <!-- category headings -->
       <div
-        style="position:fixed;z-index:5;"
+        style="position: fixed; z-index: 5"
         class="headings"
         data-anchor-target=".heading-triggers"
         data-start="position:!fixed;left:4rem; @smoothScroll:!0;"
@@ -404,14 +406,14 @@
       </div>
       <!-- category gradient overlay -->
       <div
-        style="position:fixed;z-index:6;"
+        style="position: fixed; z-index: 6"
         id="category-gradient-overlay"
         data-anchor-target="#categories"
         data-bottom-top="opacity:0"
         data-top="opacity:1"
       ></div>
       <!-- category images -->
-      <div style="position:fixed;z-index:7;" id="category-images-wrapper">
+      <div style="position: fixed; z-index: 7" id="category-images-wrapper">
         <!-- category images -->
         <img
           src="~/assets/images/landing/ice-cream.png"
@@ -498,7 +500,7 @@
         data-400-bottom="top:-100vh"
         data-emit-events
       ></div>
-      <h2 style="position:fixed;z-index:9;" id="how-hungry-title">
+      <h2 style="position: fixed; z-index: 9" id="how-hungry-title">
         <img
           data-anchor-target="#how-hungry"
           data-top="transform:rotateZ(0deg) translate(35%,-15%);"
@@ -510,7 +512,7 @@
       </h2>
     </div>
     <!-- GAME (active) -->
-    <section style="position:fixed;z-index:13;" id="game" class="">
+    <section style="position: fixed; z-index: 13" id="game" class="">
       <div id="game-screen" class="game-screen">
         <div id="meme-gif-wrapper">
           <video :key="activeQuestion" ref="vdo" muted autoplay loop>
@@ -598,10 +600,10 @@
     <!-- FIXED ABOVE ALL -->
     <div class="r">
       <!-- hamburger -->
-      <button style="position:fixed;z-index:16;" class="hamburger-icon">
+      <button style="position: fixed; z-index: 16" class="hamburger-icon">
         <div class="hamburger-bar"></div>
       </button>
-      <div style="position:fixed;z-index:15;" id="nav-menu">
+      <div style="position: fixed; z-index: 15" id="nav-menu">
         <ul>
           <li>
             <nuxt-link to="#" v-b-toggle.sidebar-location>I'm hungry</nuxt-link>
@@ -701,7 +703,9 @@ export default {
         : "Suuuuper hungry!";
     },
     btnText() {
-      return this.isFinished ? "Finish" : "Next";
+      return this.activeQuestion == this.questions.length - 1
+        ? "Finish"
+        : "Next";
     },
     transitionClass() {
       return this.changingQuestion ? "transition" : "";
@@ -737,7 +741,7 @@ export default {
 </script>
 
 <style lang="css">
-.game-screen .radio-group input:checked ~ label::before {
-  background-image: url("./assets/images/landing/radio-checked.svg");
+.game-screen .radio-group input:checked + label::before {
+  background-image: url("~assets/images/landing/radio-checked.svg");
 }
 </style>

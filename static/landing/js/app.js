@@ -13,7 +13,7 @@ var lazyLoadWrapper = document.getElementById("lazy-load-stuff");
 var s;
 
 // onload
-w.onload = function() {
+w.onload = function () {
   scrollHeight = document.body.scrollHeight - window.innerHeight;
   s.refresh();
   console.log("...refreshed...");
@@ -26,7 +26,7 @@ for (i = indexStart; i <= indexEnd; i++) {
   img.src = `/landing/frames/frame-${i}.jpg`;
   img.width = 1920;
   img.height = 1080;
-  img.onload = function() {
+  img.onload = function () {
     images.push(img);
     loadedFrames++;
     // if 10 frames loaded, enable page
@@ -38,14 +38,16 @@ for (i = indexStart; i <= indexEnd; i++) {
       s = skrollr.init({
         forceHeight: false,
         smoothScrolling: false,
-        keyframe: function(element, name, direction) {
+        keyframe: function (element, name, direction) {
           console.log(name, direction);
           if (name == "dataTop" && direction == "down") {
             document.getElementById("fixed-above-frame").style.display = "none";
+            document.getElementById("img-frame").style.display = "none";
           }
           if (name == "dataTop" && direction == "up") {
             document.getElementById("fixed-above-frame").style.display =
               "block";
+            document.getElementById("img-frame").style.display = "block";
           }
         },
       });
@@ -54,19 +56,19 @@ for (i = indexStart; i <= indexEnd; i++) {
 }
 
 // load videos in bg
-for (i = 0; i < 7; i++) {
-  let vdo = document.createElement("video");
-  let winWidth = window.innerWidth;
-  let userAgent = winWidth > 769 ? "web" : "mobile";
+// for (i = 0; i < 7; i++) {
+//   let vdo = document.createElement("video");
+//   let winWidth = window.innerWidth;
+//   let userAgent = winWidth > 769 ? "web" : "mobile";
 
-  vdo.src = `/landing/gifs/${userAgent}/${i}.mp4`;
-  vdo.muted = true;
-  vdo.autoplay = true;
-  vdo.loop = true;
-  lazyLoadWrapper.appendChild(vdo);
+//   vdo.src = `/landing/gifs/${userAgent}/${i}.mp4`;
+//   vdo.muted = true;
+//   vdo.autoplay = true;
+//   vdo.loop = true;
+//   lazyLoadWrapper.appendChild(vdo);
 
-  vdo.play();
-}
+//   vdo.play();
+// }
 
 function preventDefault(e) {
   e.preventDefault();
@@ -78,12 +80,12 @@ try {
     "test",
     null,
     Object.defineProperty({}, "passive", {
-      get: function() {
+      get: function () {
         supportsPassive = true;
       },
     })
   );
-} catch (e) {}
+} catch (e) { }
 
 var wheelOpt = supportsPassive ? { passive: false } : false;
 
@@ -122,7 +124,7 @@ function handleScroll(e) {
 }
 
 // resize
-w.onresize = function() {
+w.onresize = function () {
   // c.width = window.innerWidth;
   // c.height = window.innerHeight;
   // s.refresh();

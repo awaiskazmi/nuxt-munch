@@ -2,6 +2,6 @@
   background-image: url("../images/baby.jpg") !important;
 }*/
 
-.game-screen .radio-group input:checked ~ label::before {
+/* .game-screen .radio-group input:checked ~ label::before {
   background-image: url("../images/radio-checked.svg") !important;
-}
+} */

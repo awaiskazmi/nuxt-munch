@@ -811,7 +811,9 @@
 	}
 
 	.game-screen .radio-group input:checked ~ label::before {
-		background: center/contain no-repeat;
+		background-position: center;
+		background-size: contain;
+		background-repeat: no-repeat;
 	}
 
 	#fixed-elements,

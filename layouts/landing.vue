@@ -1,15 +1,15 @@
 <template>
-	<div>
-		<HeaderModalLocation />
-		<nuxt />
-	</div>
+  <div>
+    <HeaderModalLocation />
+    <nuxt />
+  </div>
 </template>
 
 <script>
 export default {
-	data() {
-		return {};
-	},
+  data() {
+    return {};
+  },
 };
 </script>
 

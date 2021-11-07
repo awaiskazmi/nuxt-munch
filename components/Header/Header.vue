@@ -16,7 +16,7 @@
     </div>
     <div class="header container d-block d-md-flex">
       <div class="d-flex align-items-center overflow-hidden">
-        <NuxtLink class="navbar-brand" to="/">
+        <NuxtLink class="navbar-brand" to="/orders">
           <img src="~/assets/images/logo.svg" alt="" height="40"
         /></NuxtLink>
         <HeaderToggleLocation />
@@ -107,7 +107,11 @@ export default {
       this.isNavActive = !this.isNavActive;
     },
   },
-  mounted() {},
+  mounted() {
+    // if coming from landing page on mobile
+    document.body.style.overflow = "unset";
+    document.documentElement.style.overflow = "unset";
+  },
 };
 </script>
 
