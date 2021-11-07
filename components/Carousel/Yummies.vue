@@ -10,7 +10,7 @@
       <span class="material-icons">navigate_next</span>
     </div>
     <div v-swiper:swiperYummies="options">
-      <div class="swiper-wrapper">
+      <div class="swiper-wrapper align-items-center">
         <div
           v-for="p in products"
           :key="p.id"

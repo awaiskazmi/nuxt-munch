@@ -1,5 +1,5 @@
 <template>
-  <div class="container px-0 py-3 py-md-5">
+  <div class="container px-0 py-3 py-md-5" :key="productsKey">
     <div class="row">
       <div class="col">
         <h2 class="mb-3">{{ title }}</h2>
@@ -38,6 +38,7 @@
                     class="swiper-slide align-self-center text-center"
                   >
                     <BaseButton
+                      v-if="products.length > 0"
                       :url="landing"
                       icon="navigate_next"
                       type="secondary"
@@ -50,23 +51,6 @@
             </div>
           </div>
         </div>
-        <!-- <div class="products">
-          <div class="mt-4 row flex-nowrap">
-            <div class="col-5 col-md-3 mb-3" v-for="p in products" :key="p.id">
-              <ProductItem
-                :id="p.id"
-                :name="p.name"
-                :weight="p.weight"
-                :originalPrice="p.price"
-                :thumb="p.imageUrl"
-                :product="p.name.replace(/ +/g, '-').toLowerCase()"
-                :category="p.category.name.replace(/ +/g, '-').toLowerCase()"
-                :quantity="p.quantity"
-                freeDelivery
-              />
-            </div>
-          </div>
-        </div> -->
       </div>
     </div>
   </div>
@@ -101,7 +85,13 @@ export default {
   computed: {
     ...mapState({
       serviceArea: (state) => state.serviceArea,
+      productsKey: (state) => state.products.productsKey,
     }),
+  },
+  watch: {
+    productsKey(oldVal, newVal) {
+      this.products = this.$syncProductsWithCart(this.products);
+    },
   },
   async fetch() {
     const res = await this.$axios.get(

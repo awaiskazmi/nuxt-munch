@@ -58,7 +58,7 @@
         <p v-if="searching" class="text-center py-5">
           <b-spinner variant="primary" label="Spinning"></b-spinner>
         </p>
-        <div class="row mt-5" v-if="products.length > 0">
+        <div class="row mt-5" v-if="products.length > 0" :key="productsKey">
           <div class="col-12">
             <h4 class="font-weight-bold">Search Results</h4>
             <div class="mt-4 row">
@@ -156,6 +156,7 @@ export default {
     ...mapState({
       serviceArea: (state) => state.locationObj.service_area,
       recent: (state) => state.recentSearches,
+      productsKey: (state) => state.products.productsKey,
     }),
     ...mapGetters({
       getSearchQuery: "getglobalSearchQuery",
@@ -182,6 +183,11 @@ export default {
         this.$store.commit("setglobalSearchQuery", query.trim());
         return query.trim();
       },
+    },
+  },
+  watch: {
+    productsKey(oldVal, newVal) {
+      this.products = this.$syncProductsWithCart(this.products);
     },
   },
   methods: {

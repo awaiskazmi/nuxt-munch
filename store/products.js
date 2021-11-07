@@ -2,6 +2,7 @@ export const namespaced = false;
 
 export const state = () => ({
   products: [],
+  productsKey: 0,
 });
 
 export const getters = {
@@ -78,6 +79,7 @@ export const mutations = {
       }),
       1
     );
+    state.productsKey++;
   },
   setProductQuantity(state, product) {
     // see if already added
@@ -88,5 +90,6 @@ export const mutations = {
     } else { // otherwise add to cart
       state.products.push(product);
     }
+    state.productsKey++;
   },
 };

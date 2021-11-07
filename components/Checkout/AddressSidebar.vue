@@ -13,7 +13,10 @@
       <BaseButton isButton type="m-btn-action m-sidebar-close" @click="hide">
         <span class="material-icons">close</span>
       </BaseButton>
-      <div class="d-flex flex-column justify-content-between h-100">
+      <form
+        @submit="saveAddress"
+        class="d-flex flex-column justify-content-between h-100"
+      >
         <div class="pt-6 pb-2 px-3 px-md-4">
           <p class="my-4 h2 font-weight-bold">Add address details</p>
           <!-- <pre>My address details: {{ addressData }}</pre> -->
@@ -26,6 +29,7 @@
             placeholder="House no. / Flat no. / Floor / Building name"
             variant="md"
             v-model="address.details"
+            required
           />
           <p class="mt-3">
             <small><strong>Label</strong></small>
@@ -90,17 +94,12 @@
           </div>
         </div>
         <div class="px-3 pb-4">
-          <BaseButton
-            :disabled="isAttemptingSave"
-            @click="saveAddress"
-            isButton
-            type="primary"
-            full
+          <BaseButton :disabled="isAttemptingSave" isButton type="primary" full
             ><b-spinner v-show="isAttemptingSave" class="mr-1" small></b-spinner
             ><span>Save address details</span></BaseButton
           >
         </div>
-      </div>
+      </form>
     </template>
   </b-sidebar>
 </template>
@@ -183,7 +182,22 @@ export default {
         this.address.label = null;
       }
     },
-    async saveAddress() {
+    async saveAddress(e) {
+      e.preventDefault();
+
+      if (this.labelOption == undefined) {
+        this.$store.dispatch("toast", {
+          title: "Error!",
+          message: "Please choose a label for you address.",
+          variant: "danger",
+        });
+        document
+          .getElementById("sidebar-address")
+          .querySelector(".b-sidebar-body")
+          .scrollTo(0, 0);
+        return;
+      }
+
       this.isAttemptingSave = true;
 
       try {

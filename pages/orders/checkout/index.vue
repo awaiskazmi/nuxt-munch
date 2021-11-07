@@ -247,8 +247,10 @@
         <div v-if="user.phoneVerified">
           <div class="row mt-4">
             <div class="col">
+              <!-- if address details added -->
               <BaseButton
-                :disabled="isAttemptingPlacingOrder || !readyToOrder"
+                v-if="readyToOrder"
+                :disabled="isAttemptingPlacingOrder"
                 isButton
                 type="primary"
                 full
@@ -265,6 +267,15 @@
                   >Place Order -
                   <u>Rs. {{ orderAmountDetails.orderTotal }}</u></span
                 ></BaseButton
+              >
+              <!-- if address details NOT added -->
+              <BaseButton
+                v-else
+                isButton
+                type="primary"
+                full
+                v-b-toggle.sidebar-address
+                >Add address details</BaseButton
               >
             </div>
           </div>

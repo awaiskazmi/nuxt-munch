@@ -6,6 +6,7 @@
       :name="name"
       :value="value"
       :checked="checked"
+      :required="required"
       @change="$emit('change', value)"
     />
     <label :for="`${name}-${id}`">
@@ -17,7 +18,7 @@
 
 <script>
 export default {
-  props: ["label", "value", "name", "id", "icon", "checked"],
+  props: ["label", "value", "name", "id", "icon", "checked", "required"],
 };
 </script>
 

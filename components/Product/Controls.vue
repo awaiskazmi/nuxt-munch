@@ -46,7 +46,7 @@ export default {
       }
       // removed from cart
       if (this.product.cartQuantity == 0) {
-        this.$store.commit("removeProductFromCart", this.id);
+        this.$store.commit("removeProductFromCart", this.product.id);
       } else {
         this.$store.commit("setProductQuantity", { ...this.product }); // {...} SPREAD OPERATOR VERY IMPORTANT!
       }
