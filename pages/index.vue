@@ -1,7 +1,11 @@
 <template>
   <div class="m-landing">
     <div id="loading" class="loading" :classes="isLoadedAlready ? 'done' : ''">
-      <div class="spinner"></div>
+      <img
+        class="loading-gif"
+        src="~/assets/images/landing/loader.gif"
+        alt="Munchies loading..."
+      />
     </div>
     <!-- FIXED ELEMENTS -->
     <div id="fixed-elements">
@@ -234,7 +238,7 @@
       </div>
       <!-- logo -->
       <img
-        style="position: fixed; z-index: 12"
+        style="position: fixed; z-index: 3"
         data-anchor-target="#trigger-logo"
         data-top="width:100%;margin-top:35vh;"
         data-top-bottom="width:50%;margin-top:0%;"
@@ -256,7 +260,7 @@
         id="categories"
       >
         <h3>
-          Our stash is so good, its a<br />crime you're not munching<br />right
+          Our stash is so good, it's a<br />crime you're not munching<br />right
           now.
         </h3>
         <div class="heading-trigger-spacer-mobile"></div>
@@ -276,15 +280,17 @@
         <div id="how-hungry-title-wrapper"></div>
         <div class="container">
           <div class="row">
-            <div class="col-12 col-md-7 ml-auto">
+            <div class="col-12 col-md-8 ml-auto">
               <h3>
-                Bet you're drooling.<br />Let's sign you up and, psst...<br />Here's
-                <span class="red">Rs. 150 off</span> on your <br />first order!
+                Bet you're drooling. <br class="d-none d-md-block" />Let's get
+                you some Munchies. <br class="d-none d-md-block" />Here's
+                <span class="red font-weight-bold">Rs. 150 off</span> on your
+                <br class="d-none d-md-block" />first order!
               </h3>
               <div class="row">
                 <div class="col-12 col-md-6">
-                  <button class="btn full" v-b-toggle.sidebar-location>
-                    Get started
+                  <button class="munch-btn full" v-b-toggle.sidebar-location>
+                    Order Munchies
                   </button>
                 </div>
               </div>
@@ -293,7 +299,7 @@
         </div>
       </section>
       <!-- STARVIN MARVIN -->
-      <section
+      <!-- <section
         style="position: relative; z-index: 8"
         :style="{ backgroundImage: `url(${babyBg})` }"
         id="starvin"
@@ -317,7 +323,8 @@
             </div>
           </div>
         </div>
-      </section>
+      </section> -->
+      <Footer class="landing-footer" />
     </div>
     <!-- FIXED ABOVE FRAME -->
     <div id="fixed-above-frame">
@@ -419,73 +426,73 @@
           src="~/assets/images/landing/ice-cream.png"
           class="product-image"
           data-anchor-target="#trigger-category-1"
-          data--50-center-top="transform:scale(0);opacity:0"
-          data--132-center-top="transform:scale(1);opacity:1"
-          data-center-bottom="transform:scale(1);opacity:1"
-          data--50-center-bottom="transform:scale(0);opacity:0"
+          data--50-center-top="transform:translate(-50%,-50%) scale(0);opacity:0"
+          data--132-center-top="transform:translate(-50%,-50%) scale(1);opacity:1"
+          data-center-bottom="transform:translate(-50%,-50%) scale(1);opacity:1"
+          data--50-center-bottom="transform:translate(-50%,-50%) scale(0);opacity:0"
         />
         <img
           src="~/assets/images/landing/chips.png"
           class="product-image"
           data-anchor-target="#trigger-category-2"
-          data--50-center-top="transform:scale(0);opacity:0"
-          data--132-center-top="transform:scale(1);opacity:1"
-          data-center-bottom="transform:scale(1);opacity:1"
-          data--50-center-bottom="transform:scale(0);opacity:0"
+          data--50-center-top="transform:translate(-50%,-50%) scale(0);opacity:0"
+          data--132-center-top="transform:translate(-50%,-50%) scale(1);opacity:1"
+          data-center-bottom="transform:translate(-50%,-50%) scale(1);opacity:1"
+          data--50-center-bottom="transform:translate(-50%,-50%) scale(0);opacity:0"
         />
         <img
           src="~/assets/images/landing/beverages.png"
           class="product-image"
           data-anchor-target="#trigger-category-3"
-          data--50-center-top="transform:scale(0);opacity:0"
-          data--132-center-top="transform:scale(1);opacity:1"
-          data-center-bottom="transform:scale(1);opacity:1"
-          data--50-center-bottom="transform:scale(0);opacity:0"
+          data--50-center-top="transform:translate(-50%,-50%) scale(0);opacity:0"
+          data--132-center-top="transform:translate(-50%,-50%) scale(1);opacity:1"
+          data-center-bottom="transform:translate(-50%,-50%) scale(1);opacity:1"
+          data--50-center-bottom="transform:translate(-50%,-50%) scale(0);opacity:0"
         />
         <img
           src="~/assets/images/landing/chocolate.png"
           class="product-image"
           data-anchor-target="#trigger-category-4"
-          data--50-center-top="transform:scale(0);opacity:0"
-          data--132-center-top="transform:scale(1);opacity:1"
-          data-center-bottom="transform:scale(1);opacity:1"
-          data--50-center-bottom="transform:scale(0);opacity:0"
+          data--50-center-top="transform:translate(-50%,-50%) scale(0);opacity:0"
+          data--132-center-top="transform:translate(-50%,-50%) scale(1);opacity:1"
+          data-center-bottom="transform:translate(-50%,-50%) scale(1);opacity:1"
+          data--50-center-bottom="transform:translate(-50%,-50%) scale(0);opacity:0"
         />
         <img
           src="~/assets/images/landing/breakfast.png"
           class="product-image"
           data-anchor-target="#trigger-category-5"
-          data--50-center-top="transform:scale(0);opacity:0"
-          data--132-center-top="transform:scale(1);opacity:1"
-          data-center-bottom="transform:scale(1);opacity:1"
-          data--50-center-bottom="transform:scale(0);opacity:0"
+          data--50-center-top="transform:translate(-50%,-50%) scale(0);opacity:0"
+          data--132-center-top="transform:translate(-50%,-50%) scale(1);opacity:1"
+          data-center-bottom="transform:translate(-50%,-50%) scale(1);opacity:1"
+          data--50-center-bottom="transform:translate(-50%,-50%) scale(0);opacity:0"
         />
         <img
           src="~/assets/images/landing/bakery.png"
           class="product-image"
           data-anchor-target="#trigger-category-6"
-          data--50-center-top="transform:scale(0);opacity:0"
-          data--132-center-top="transform:scale(1);opacity:1"
-          data-center-bottom="transform:scale(1);opacity:1"
-          data--50-center-bottom="transform:scale(0);opacity:0"
+          data--50-center-top="transform:translate(-50%,-50%) scale(0);opacity:0"
+          data--132-center-top="transform:translate(-50%,-50%) scale(1);opacity:1"
+          data-center-bottom="transform:translate(-50%,-50%) scale(1);opacity:1"
+          data--50-center-bottom="transform:translate(-50%,-50%) scale(0);opacity:0"
         />
         <img
           src="~/assets/images/landing/biscuits.png"
           class="product-image"
           data-anchor-target="#trigger-category-7"
-          data--50-center-top="transform:scale(0);opacity:0"
-          data--132-center-top="transform:scale(1);opacity:1"
-          data-center-bottom="transform:scale(1);opacity:1"
-          data--50-center-bottom="transform:scale(0);opacity:0"
+          data--50-center-top="transform:translate(-50%,-50%) scale(0);opacity:0"
+          data--132-center-top="transform:translate(-50%,-50%) scale(1);opacity:1"
+          data-center-bottom="transform:translate(-50%,-50%) scale(1);opacity:1"
+          data--50-center-bottom="transform:translate(-50%,-50%) scale(0);opacity:0"
         />
         <img
           src="~/assets/images/landing/candies.png"
           class="product-image"
           data-anchor-target="#trigger-category-8"
-          data--50-center-top="transform:scale(0);opacity:0"
-          data--132-center-top="transform:scale(1);opacity:1"
-          data-center-bottoms="transform:scale(1);opacity:1"
-          data--50-center-bottoms="transform:scale(0);opacity:0"
+          data--50-center-top="transform:translate(-50%,-50%) scale(0);opacity:0"
+          data--132-center-top="transform:translate(-50%,-50%) scale(1);opacity:1"
+          data-center-bottoms="transform:translate(-50%,-50%) scale(1);opacity:1"
+          data--50-center-bottoms="transform:translate(-50%,-50%) scale(0);opacity:0"
         />
       </div>
     </div>
@@ -603,6 +610,31 @@
       <button style="position: fixed; z-index: 16" class="hamburger-icon">
         <div class="hamburger-bar"></div>
       </button>
+      <!-- scroll indicator -->
+      <div
+        style="position: fixed; z-index: 14"
+        class="scroll-indicator"
+        id="scroll-indicator"
+      >
+        <svg
+          width="40"
+          height="64"
+          viewBox="0 0 40 64"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            x="1"
+            y="1"
+            width="38"
+            height="62"
+            rx="19"
+            stroke="white"
+            stroke-width="2"
+          />
+          <circle class="scroll-dot" cx="20" cy="14" r="4" fill="white" />
+        </svg>
+      </div>
       <div style="position: fixed; z-index: 15" id="nav-menu">
         <ul>
           <li>

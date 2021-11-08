@@ -2,6 +2,32 @@
 	* {
 		font-family: "MelloM", sans-serif !important;
 	}
+	.scroll-indicator {
+		left: 50%;
+		bottom: 4rem;
+		transform: translate(-50%, 0px);
+
+		.scroll-dot {
+			position: relative;
+			animation: scrollDot 1s cubic-bezier(1,0,0,1) alternate-reverse infinite;
+		}
+
+		@media(max-width: 768px) {
+			bottom: 2rem;
+
+			img, svg {
+				width: 32px;
+			}
+		}
+	}
+	@keyframes scrollDot {
+		from {
+			transform: translateY(0px);
+		}
+		to {
+			transform: translateY(15px);
+		}
+	}
 	.img-frame {
 		top: 0;
 		left: 0;
@@ -221,7 +247,7 @@
 		left: 0;
 		right: 0;
 		bottom: 0;
-		background-color: #000;
+		background-color: #3e1fa1;
 		display: -webkit-box;
 		display: -ms-flexbox;
 		display: flex;
@@ -241,6 +267,14 @@
 	.loading.done {
 		-webkit-transform: translateY(-100%);
 		transform: translateY(-100%);
+	}
+
+	.loading-gif {
+		height: 150px;
+
+		@media(max-width: 768px) {
+			height: 100px;
+		}
 	}
 
 	.spinner {
@@ -280,14 +314,16 @@
 		color: #ffb8f4;
 		margin: 0;
 		line-height: 1;
+
+		@media(max-width: 768px) {
+			color: #ffb8f4 !important;
+		}
 	}
 
 	.product-image {
 		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
+		top: 50%;
+		left: 50%;
 		height: 100%;
 		width: 100%;
 		-o-object-fit: contain;
@@ -295,6 +331,10 @@
 		-o-object-position: center;
 		object-position: center;
 		pointer-events: none;
+
+		@media(max-width: 768px) {
+			width: 110%;
+		}
 	}
 
 	.b {
@@ -336,7 +376,11 @@
 	}
 
 	#how-hungry .container {
-		padding-bottom: 8rem;
+		padding-bottom: 20rem;
+
+		@media(max-width: 768px) {
+			padding-bottom: 8rem;
+		}
 	}
 
 	#how-hungry h2 {
@@ -361,6 +405,7 @@
 	@media (max-width: 768px) {
 		#how-hungry-title {
 			padding-top: 3rem;
+			width: 420%;
 		}
 	}
 
@@ -408,7 +453,7 @@
 		margin-bottom: 1rem;
 	}
 
-	.btn {
+	.munch-btn {
 		cursor: pointer;
 		height: 56px;
 		padding: 0 48px;
@@ -417,14 +462,14 @@
 		border: none;
 		font-size: 24px;
 		color: #fff;
-		font-family: "Greycliff", sans-serif;
+		font-family: "Greycliff", sans-serif !important;
 	}
 
-	.btn.full {
+	.munch-btn.full {
 		width: 100%;
 	}
 
-	.btn:hover {
+	.munch-btn:hover {
 		background-color: #f82b2b;
 	}
 
@@ -478,6 +523,7 @@
 		#headline-text > p,
 		#headline-text div {
 			left: 2rem;
+			top: 60%;
 		}
 	}
 
@@ -844,10 +890,10 @@
 		h3 {
 			font-size: 24px;
 		}
-		.btn,
-		button {
+		.munch-btn {
 			height: 48px;
 			font-size: 20px;
+			font-weight: 700;
 		}
 		#categories {
 			padding: 6rem 2rem;

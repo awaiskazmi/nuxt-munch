@@ -80,7 +80,10 @@
             <div class="col">
               <div class="row no-gutters align-items-center suggestion">
                 <div class="col-auto mr-3">
-                  <img src="~/assets/images/icon-location.svg" height="24" />
+                  <img
+                    src="~/assets/images/icon-order-details.svg"
+                    height="24"
+                  />
                 </div>
                 <div class="col">
                   <h6 class="font-weight-bold">
@@ -113,7 +116,7 @@
             <div class="col">
               <div class="row no-gutters align-items-center suggestion">
                 <div class="col-auto mr-3">
-                  <img src="~/assets/images/icon-location.svg" height="24" />
+                  <img src="~/assets/images/icon-promo-code.svg" height="24" />
                 </div>
                 <div class="col">
                   <h6 class="text-muted">
@@ -176,7 +179,7 @@
             <div class="col">
               <div class="row no-gutters align-items-center suggestion">
                 <div class="col-auto mr-3">
-                  <img src="~/assets/images/icon-location.svg" height="24" />
+                  <img src="~/assets/images/icon-payment.svg" height="24" />
                 </div>
                 <div class="col">
                   <h6 class="text-muted">Cash on Delivery</h6>
@@ -206,13 +209,16 @@
               <p><label for="">Recipient's Details</label></p>
               <div class="row">
                 <div class="col-6 pr-2">
-                  <BaseInput v-model="someoneElse.name" placeholder="Name" />
+                  <BaseInput
+                    v-model="someoneElse.name"
+                    placeholder="Full name"
+                  />
                 </div>
                 <div class="col-6 pl-2">
                   <BaseInput
                     v-model="someoneElse.phone"
                     prependText="+92"
-                    placeholder="Phone"
+                    placeholder="Phone number"
                     maxLength="10"
                   />
                 </div>

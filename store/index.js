@@ -81,8 +81,17 @@ export const actions = {
         commit("resetCart");
       }
 
-      // redirect to home page
-      this.$router.push("/orders");
+      // redirect to orders page
+      let currentPage = this.$router.history.current.name;
+      console.log('...CURRENT ROUTE...', currentPage);
+
+      // if already at orders page, reload
+      if (currentPage == 'orders') {
+        this.$forceUpdate();
+        // this.$router.go("/orders");
+      } else { // if not, push
+        this.$router.push("/orders");
+      }
 
       // update service area in store
       commit("setServiceArea", newServiceArea);

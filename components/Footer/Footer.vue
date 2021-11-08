@@ -165,11 +165,23 @@ export default {
 
 <style scoped lang="sass">
 footer
-  background: #fff url('~/assets/images/footer-bg.svg') top right/contain no-repeat
+  background: #fff url('~/assets/images/footer-m.svg')
+  background-position: right -100px top 100px
+  background-size: contain
+  background-repeat: no-repeat
+
+  &.landing-footer
+    background: #f5f5f5 url('~/assets/images/footer-m.svg')
+    background-position: right -100px top 100px
+    background-size: contain
+    background-repeat: no-repeat
+
+    & *
+      color: #808080
 
   @media (max-width: 768px)
-    background-position: top center
-    background-size: cover
+    background-position: right -100px bottom -20px !important
+
 small
   font-size: 12px
   color: #808080

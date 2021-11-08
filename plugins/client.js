@@ -58,8 +58,8 @@ export default ({ app, route }, inject) => {
   // VERIFICATION ENDPOINTS
   const verificationEndpoints = {
     forgot: "auth-reset-password",
-    signup: "index",
-    verify: "index",
+    signup: "orders",
+    verify: "orders",
     checkout: "orders-checkout",
   };
   inject("verificationEndpoints", verificationEndpoints);

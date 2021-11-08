@@ -100,13 +100,15 @@
         >
       </div>
     </form>
-    <div>
+    <div class="d-none">
       <div class="hrh my-4">or sign up via</div>
     </div>
     <div class="form-group text-center">
       <p>
         Already have an account?
-        <NuxtLink :to="`/login${refUrlSting}`">Sign in</NuxtLink>
+        <NuxtLink :to="`/login${refUrlSting}`"
+          ><strong>Sign in</strong></NuxtLink
+        >
       </p>
     </div>
   </div>
@@ -208,6 +210,8 @@ export default {
           // auto login user and redirect to phone verification screen
           if (autoLoginToken) {
             this.$loginUser(this.userObject);
+            this.isAttemptingSignup = false;
+            return;
           }
           // FAILURE
           if (code == 2077) this.phoneError = true; // invalid number

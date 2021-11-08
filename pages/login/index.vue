@@ -40,13 +40,15 @@
           ><span>Sign in</span></BaseButton
         >
       </div>
-      <div>
+      <div class="d-none">
         <div class="hrh my-4">or sign in via</div>
       </div>
       <div class="form-group text-center">
         <p>
           Don't have an account?
-          <NuxtLink :to="`/signup${refUrlSting}`">Sign up</NuxtLink>
+          <NuxtLink :to="`/signup${refUrlSting}`"
+            ><strong>Sign up</strong></NuxtLink
+          >
         </p>
       </div>
     </form>

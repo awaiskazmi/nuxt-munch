@@ -43,11 +43,15 @@ for (i = indexStart; i <= indexEnd; i++) {
           if (name == "dataTop" && direction == "down") {
             document.getElementById("fixed-above-frame").style.display = "none";
             document.getElementById("img-frame").style.display = "none";
+            document.getElementById("headline-text").style.display = "none";
+            document.getElementById("scroll-indicator").style.display = "none";
           }
           if (name == "dataTop" && direction == "up") {
             document.getElementById("fixed-above-frame").style.display =
               "block";
             document.getElementById("img-frame").style.display = "block";
+            document.getElementById("headline-text").style.display = "block";
+            document.getElementById("scroll-indicator").style.display = "block";
           }
         },
       });
