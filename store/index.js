@@ -85,12 +85,17 @@ export const actions = {
       let currentPage = this.$router.history.current.name;
       console.log('...CURRENT ROUTE...', currentPage);
 
+      // if at home page
+      if (currentPage == 'index') {
+        this.$router.push("/orders");
+      }
+
       // if already at orders page, reload
-      // if (currentPage == 'orders') {
-      //   this.$router.go("/orders");
-      // } else { // if not, push
-      //   this.$router.push("/orders");
-      // }
+      if (currentPage == 'orders') {
+        this.$router.go("/orders");
+      } else { // if not, push
+        this.$router.push("/orders");
+      }
 
       // update service area in store
       commit("setServiceArea", newServiceArea);
