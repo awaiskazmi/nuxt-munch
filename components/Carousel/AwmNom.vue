@@ -9,8 +9,10 @@
   >
     <div class="row">
       <div class="col">
-        <h2 class="mb-3">{{ title }}</h2>
-        <p v-if="subtitle" class="text-muted">{{ subtitle }}</p>
+        <h2 class="mb-3">Awmnomnom again 🤤</h2>
+        <p v-if="subtitle" class="text-muted">
+          Order your favourite snacks again!
+        </p>
         <div class="row align-items-center">
           <div class="col">
             <div class="swiper swiper-products">
@@ -33,9 +35,9 @@
                   <div
                     class="swiper-slide mb-3"
                     v-for="(p, index) in products"
-                    :key="p.id"
+                    :key="p.productId"
                   >
-                    <ProductItem :product="p" :animationDelay="index * 50" />
+                    <!-- <ProductItem :product="p" :animationDelay="index * 50" /> -->
                   </div>
                   <div
                     v-if="landing"
@@ -98,10 +100,15 @@ export default {
     },
   },
   async fetch() {
-    const res = await this.$axios.get(
-      `/qa/v2/public/hub-product/${this.product}?serviceAreaId=${this.serviceArea}&descending=true&statuses=IN_STOCK&status=OUT_OF_STOCK&pageNumber=1&pageSize=20`
-    );
-    this.products = this.$syncProductsWithCart(res.data.data);
+    const res = await this.$axios({
+      mode: "cors",
+      method: "get",
+      url: `/qa/v2/api/orders/list?orderStates=IN_PROGRESS`,
+      headers: {
+        Authorization: `Bearer ${this.$store.state.token}`,
+      },
+    });
+    this.products = this.$syncProductsWithCart(res.data.data[0].orderItems);
   },
   fetchOnServer: false,
 };

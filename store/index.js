@@ -86,12 +86,11 @@ export const actions = {
       console.log('...CURRENT ROUTE...', currentPage);
 
       // if already at orders page, reload
-      if (currentPage == 'orders') {
-        this.$forceUpdate();
-        // this.$router.go("/orders");
-      } else { // if not, push
-        this.$router.push("/orders");
-      }
+      // if (currentPage == 'orders') {
+      //   this.$router.go("/orders");
+      // } else { // if not, push
+      //   this.$router.push("/orders");
+      // }
 
       // update service area in store
       commit("setServiceArea", newServiceArea);

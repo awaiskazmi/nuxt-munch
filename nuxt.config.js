@@ -1,4 +1,7 @@
 export default {
+  // DISABLE SSR
+  ssr: false,
+
   // .ENV VARIABLES
   // PUBLIC
   publicRuntimeConfig: {
@@ -19,7 +22,8 @@ export default {
   // SERVER CONFIG
   server: {
     port: 3000, // default: 3000
-    host: process.env.ENVIRONMENT == 'local' ? "localhost" : '0.0.0.0', // default: localhost,
+    host: '0.0.0.0',
+    // host: process.env.ENVIRONMENT == 'local' ? "localhost" : '0.0.0.0', // default: localhost,
     // host: "localhost", // default: localhost,
     timing: false,
   },

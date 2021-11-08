@@ -7,15 +7,15 @@
       no-header
       backdrop
       shadow
-      :no-close-on-esc="Object.keys(location).length === 0"
-      :no-close-on-backdrop="Object.keys(location).length === 0"
+      :nooo-close-on-esc="Object.keys(location).length === 0"
+      :nooo-close-on-backdrop="Object.keys(location).length === 0"
     >
       <template #default="{ hide }">
         <div class="py-6 px-4">
           <BaseButton
             isButton
             type="m-btn-action m-sidebar-close"
-            @click="Object.keys(location).length === 0 ? '' : hide()"
+            @click="hide()"
           >
             <span class="material-icons">close</span>
           </BaseButton>

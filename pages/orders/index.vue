@@ -18,14 +18,13 @@
       product="exclusive"
       landing="/exclusive/"
     />
-    <CarouselProducts
+    <CarouselAwmNom
       title="New in the game 🌟"
       subtitle="Check out these newly added snacks!"
-      id="new-in-the-game"
-      product="new-in-the-game"
-      landing="/new-in-the-game/"
+      id="awm-nom"
+      product="awm-nom"
     />
-    <CarouselBrands id="brands" />
+    <!-- <CarouselBrands id="brands" /> -->
   </div>
 </template>
 

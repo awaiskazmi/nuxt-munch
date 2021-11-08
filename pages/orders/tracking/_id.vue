@@ -39,9 +39,9 @@
     <p class="py-3 px-1">
       <nuxt-link
         to="/orders/tracking"
-        class="d-flex align-items-center text-dark"
-        ><span class="material-icons mr-1">arrow_back</span> Back to
-        orders</nuxt-link
+        class="d-flex align-items-center text-dark text-decoration-none"
+        ><span class="material-icons mr-1">arrow_back</span>
+        <u>Back to orders</u></nuxt-link
       >
     </p>
   </div>

@@ -11,53 +11,57 @@ var howHungryDiv = document.getElementById("how-hungry-title-wrapper");
 var howHungryTitle = document.getElementById("how-hungry-title");
 var lazyLoadWrapper = document.getElementById("lazy-load-stuff");
 var s;
-
-// onload
-w.onload = function () {
-  scrollHeight = document.body.scrollHeight - window.innerHeight;
-  s.refresh();
-  console.log("...refreshed...");
-};
+var sLoaded = false;
 
 // initial
 for (i = indexStart; i <= indexEnd; i++) {
   // load frames for later use
   let img = new Image();
   img.src = `/landing/frames/frame-${i}.jpg`;
-  img.width = 1920;
-  img.height = 1080;
   img.onload = function () {
     images.push(img);
     loadedFrames++;
     // if 10 frames loaded, enable page
-    if (loadedFrames >= 10) {
+    if (loadedFrames > 10 && !sLoaded) {
+      console.log('...SKROLLR LOADED ONCE...', howHungryTitle.clientWidth + ' HEIGHT OF WIDTH');
       howHungryDiv.style.height = howHungryTitle.clientWidth + "px";
-      document.querySelector(".loading").classList.add("done");
-      document.body.classList.add("landing-loaded");
-      // initialize skrollr
-      s = skrollr.init({
-        forceHeight: false,
-        smoothScrolling: false,
-        keyframe: function (element, name, direction) {
-          console.log(name, direction);
-          if (name == "dataTop" && direction == "down") {
-            document.getElementById("fixed-above-frame").style.display = "none";
-            document.getElementById("img-frame").style.display = "none";
-            document.getElementById("headline-text").style.display = "none";
-            document.getElementById("scroll-indicator").style.display = "none";
-          }
-          if (name == "dataTop" && direction == "up") {
-            document.getElementById("fixed-above-frame").style.display =
-              "block";
-            document.getElementById("img-frame").style.display = "block";
-            document.getElementById("headline-text").style.display = "block";
-            document.getElementById("scroll-indicator").style.display = "block";
-          }
-        },
-      });
+      initSkrollr();
+      sLoaded = true;
     }
   };
 }
+
+function initSkrollr() {
+  document.querySelector(".loading").classList.add("done");
+  document.body.classList.add("landing-loaded");
+  // initialize skrollr
+  s = skrollr.init({
+    forceHeight: false,
+    smoothScrolling: false,
+    keyframe: function (element, name, direction) {
+      if (name == "dataTop" && direction == "down") {
+        document.getElementById("fixed-above-frame").style.display = "none";
+        document.getElementById("img-frame").style.display = "none";
+        document.getElementById("headline-text").style.display = "none";
+        document.getElementById("scroll-indicator").style.display = "none";
+      }
+      if (name == "dataTop" && direction == "up") {
+        document.getElementById("fixed-above-frame").style.display =
+          "block";
+        document.getElementById("img-frame").style.display = "block";
+        document.getElementById("headline-text").style.display = "block";
+        document.getElementById("scroll-indicator").style.display = "block";
+      }
+    },
+  });
+}
+
+// onload
+w.onload = function () {
+  scrollHeight = document.body.scrollHeight - window.innerHeight;
+  s.refresh();
+  console.log("...window load complete...");
+};
 
 // load videos in bg
 // for (i = 0; i < 7; i++) {
@@ -73,64 +77,3 @@ for (i = indexStart; i <= indexEnd; i++) {
 
 //   vdo.play();
 // }
-
-function preventDefault(e) {
-  e.preventDefault();
-}
-
-var supportsPassive = false;
-try {
-  window.addEventListener(
-    "test",
-    null,
-    Object.defineProperty({}, "passive", {
-      get: function () {
-        supportsPassive = true;
-      },
-    })
-  );
-} catch (e) { }
-
-var wheelOpt = supportsPassive ? { passive: false } : false;
-
-var wheelEvent =
-  "onwheel" in document.createElement("div") ? "wheel" : "mousewheel";
-
-// disable mousewheel scroll
-// window.addEventListener('touchmove', handleScroll, wheelOpt); // mobile
-// window.addEventListener('DOMMouseScroll', handleScroll, false); // older FF
-// window.addEventListener(wheelEvent, handleScroll, wheelOpt); // modern desktop
-
-window.onscroll = handleScroll;
-
-function handleScroll(e) {
-  var doc = document.documentElement;
-  var top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
-  // var top = window.pageYOffset + window.innerHeight;
-
-  // let factor = images.length / scrollHeight;
-  let factor = images.length / categoriesOffset;
-  // let factor = totalImages / categoriesOffset;
-  let frame = Math.floor(top * factor);
-
-  let direction = e.deltaY > 0 ? "down" : "up";
-  direction == "down" ? frame++ : frame--;
-  if (frame >= images.length - 1) {
-    frame = images.length - 1;
-  }
-  if (frame < 0) {
-    frame = 0;
-  }
-  let newUrl = `url('${window.location.origin}/frames/frame-${frame}.jpg`;
-  // console.log(frame, newUrl);
-  // imageFrame.style.backgroundImage = newUrl;
-  // drawImageProp(ctx, images[frame]);
-}
-
-// resize
-w.onresize = function () {
-  // c.width = window.innerWidth;
-  // c.height = window.innerHeight;
-  // s.refresh();
-  // drawImageProp(ctx, images[frame]);
-};

@@ -39,7 +39,7 @@ import { mapState } from "vuex";
 export default {
   computed: {
     ...mapState({
-      location: (state) => state.locationObj,
+      location: (state) => state.locationObj.service_area,
       products: (state) => state.products.products,
     }),
   },
@@ -47,14 +47,17 @@ export default {
     $route(to, from) {
       this.$bvModal.hide("prompt-location");
     },
-    location(value) {
-      if (this.products.length > 0) this.$bvModal.show("prompt-location");
+    location(newValue) {
+      this.$bvModal.show("prompt-location");
+      this.$store.commit("resetCart");
+      this.$store.commit("updateProductsKey");
     },
   },
   methods: {
     onClick() {
       this.$store.commit("resetCart");
-      window.location.replace("/");
+      this.$store.commit("updateProductsKey");
+      this.$router.go("/orders");
     },
   },
 };

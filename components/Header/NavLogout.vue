@@ -18,7 +18,7 @@ export default {
       localStorage.removeItem("m_token");
       localStorage.removeItem("m_user");
       this.$store.commit("setUserObject", {});
-      window.location.replace("/");
+      window.location.replace("/orders");
     },
   },
 };

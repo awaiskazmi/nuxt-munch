@@ -40,7 +40,9 @@
                       </div>
                     </nuxt-link>
                   </div>
-                  <div class="swiper-slide align-self-center text-center">
+                  <div
+                    class="swiper-slide align-self-center text-center d-none"
+                  >
                     <BaseButton
                       url="/orders/brands/"
                       icon="navigate_next"

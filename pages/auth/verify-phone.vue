@@ -53,7 +53,9 @@ export default {
       return this.auth ? this.user.phone : this.phone;
     },
     title() {
-      return this.query.ref == "forgot" ? "Reset password" : "Verify Phone";
+      return this.query.ref == "forgot"
+        ? "Reset password"
+        : "Verify Phone Number";
     },
     subtitle() {
       return this.query.ref == "forgot"

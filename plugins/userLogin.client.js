@@ -30,7 +30,7 @@ export default ({ app }, inject) => {
           app.router.push({ name: ref, query: refQuery })
         } else {
           // window.location.replace("/");
-          app.router.push('/');
+          app.router.push('/orders');
         }
       }
     }).catch(err => {

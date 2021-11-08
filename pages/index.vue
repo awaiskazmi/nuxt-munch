@@ -259,7 +259,7 @@
         class="categories"
         id="categories"
       >
-        <h3>
+        <h3 class="">
           Our stash is so good, it's a<br />crime you're not munching<br />right
           now.
         </h3>
@@ -281,7 +281,7 @@
         <div class="container">
           <div class="row">
             <div class="col-12 col-md-8 ml-auto">
-              <h3>
+              <h3 class="">
                 Bet you're drooling. <br class="d-none d-md-block" />Let's get
                 you some Munchies. <br class="d-none d-md-block" />Here's
                 <span class="red font-weight-bold">Rs. 150 off</span> on your
@@ -519,7 +519,7 @@
       </h2>
     </div>
     <!-- GAME (active) -->
-    <section style="position: fixed; z-index: 13" id="game" class="">
+    <!-- <section style="position: fixed; z-index: 13" id="game" class="">
       <div id="game-screen" class="game-screen">
         <div id="meme-gif-wrapper">
           <video :key="activeQuestion" ref="vdo" muted autoplay loop>
@@ -603,7 +603,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
     <!-- FIXED ABOVE ALL -->
     <div class="r">
       <!-- hamburger -->
@@ -646,7 +646,7 @@
       </div>
     </div>
     <!-- THINGS TO LAZY LOAD -->
-    <div id="lazy-load-stuff" class="n"></div>
+    <!-- <div id="lazy-load-stuff" class="n"></div> -->
   </div>
 </template>
 
@@ -667,7 +667,7 @@ export default {
         { src: "/landing/js/skrollr.min.js" },
         { src: "/landing/js/app.js", body: true },
         { src: "/landing/js/hamburger.js", body: true },
-        { src: "/landing/js/game.js", body: true },
+        // { src: "/landing/js/game.js", body: true },
       ],
     };
   },
@@ -752,7 +752,7 @@ export default {
     },
   },
   mounted() {
-    this.$refs.vdo.play();
+    // this.$refs.vdo.play();
   },
   methods: {
     nextQuestion() {

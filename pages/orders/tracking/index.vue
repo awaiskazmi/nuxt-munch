@@ -53,6 +53,11 @@
 
 <script>
 export default {
+  middleware({ store, redirect }) {
+    if (!store.state.auth) {
+      return redirect("/");
+    }
+  },
   data() {
     return {
       orders: [],
@@ -65,12 +70,11 @@ export default {
       const res = await this.$axios({
         mode: "cors",
         method: "get",
-        url: `/qa/v2/api/orders/list?descending=true`,
+        url: `/qa/v2/api/orders/list?descending=true&orderStates=IN_PROGRESS&orderStates=SCHEDULED&orderStates=CANCELED`,
         headers: {
           Authorization: `Bearer ${this.$store.state.token}`,
         },
       });
-      console.log("...orders list...", res);
       this.orders = res.data.data;
     } catch (error) {
       this.$store.dispatch("toast", {

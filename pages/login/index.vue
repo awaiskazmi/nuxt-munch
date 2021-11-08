@@ -2,7 +2,12 @@
   <div class="p-2 p-lg-6 align-self-center flex-grow-1">
     <h1>Sign in</h1>
     <p>Welcome back! Time to munch on some snacks.</p>
-    <form @submit.prevent="handleSubmit" class="mt-5" autocomplete="off">
+    <form
+      ref="formLogin"
+      @submit.prevent="handleSubmit"
+      class="mt-5"
+      autocomplete="off"
+    >
       <input type="hidden" autocomplete="off" />
       <div class="form-group">
         <label>Email</label>
@@ -21,6 +26,7 @@
           variant="md"
           required
           placeholder="Enter password"
+          @keypress="onKeyPress"
         />
       </div>
       <div class="form-group text-right">
@@ -86,6 +92,16 @@ export default {
     },
   },
   methods: {
+    onKeyPress(e) {
+      // handle form submit on enter
+      if (e.code == "Enter") {
+        if (this.password.length > 0) {
+          this.handleSubmit();
+        } else {
+          return;
+        }
+      }
+    },
     handleSubmit() {
       this.isAttemptingLogin = true;
       this.$loginUser(this.userObject);

@@ -205,6 +205,7 @@ export default {
       })
         .then(({ data }) => {
           let { code, message, autoLoginToken } = data;
+          let errCodes = [2077, 2106, 2254, 2256];
 
           // SUCCESS
           // auto login user and redirect to phone verification screen
@@ -219,11 +220,13 @@ export default {
           if (code == 2254) this.emailError = true; // email already in use
           if (code == 2256) this.passwordError = true; // weak password
           // show error message in toast
-          this.$store.dispatch("toast", {
-            title: "Error signing up!",
-            message: message,
-            variant: "danger",
-          });
+          if (errCodes.indexOf(code) > -1) {
+            this.$store.dispatch("toast", {
+              title: "Error signing up!",
+              message: message,
+              variant: "danger",
+            });
+          }
           // enable signup button
           this.isAttemptingSignup = false;
         })

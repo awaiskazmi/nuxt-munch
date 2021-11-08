@@ -10,13 +10,16 @@
       :value="value"
       @input="$emit('input', $event.target.value)"
       @focus="$emit('focus')"
+      @keypress="$emit('keypress', $event)"
+      @keydown="$emit('keydown', $event)"
+      @keyup="$emit('keyup', $event)"
     />
-    <button
-      @click.prevent="onclick"
+    <span
+      @click="onClick"
       class="m-btn m-btn-icon m-btn-icon-append m-btn-toggle material-icons"
     >
-      {{ visibility }}
-    </button>
+      {{ visibilityIcon }}
+    </span>
   </div>
 </template>
 
@@ -42,7 +45,7 @@ export default {
     type() {
       return this.isVisible ? "text" : "password";
     },
-    visibility() {
+    visibilityIcon() {
       return this.isVisible ? "visibility" : "visibility_off";
     },
     classes() {
@@ -52,7 +55,8 @@ export default {
     },
   },
   methods: {
-    onclick() {
+    onClick(e) {
+      e.preventDefault();
       this.isVisible = !this.isVisible;
     },
   },

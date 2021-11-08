@@ -177,6 +177,7 @@ footer
     background-repeat: no-repeat
 
     & *
+      font-family: "Greycliff", sans-serif !important
       color: #808080
 
   @media (max-width: 768px)

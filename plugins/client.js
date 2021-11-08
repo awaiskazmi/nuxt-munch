@@ -75,7 +75,7 @@ export default ({ app, route }, inject) => {
     let cart = [...app.store.state.products.products];
     console.log('...SHOPPING CART...', cart);
     products = products.map((p) => {
-      let foundIndex = cart.findIndex((element) => element.id === p.id);
+      let foundIndex = cart.findIndex((element) => element.productId === p.productId);
       if (foundIndex > -1) {
         return { ...p, cartQuantity: cart[foundIndex].cartQuantity };
       } else {
@@ -88,7 +88,7 @@ export default ({ app, route }, inject) => {
   // MATCH SINGLE PRODUCT WITH CART AND UPDATE QUANTITY
   inject("syncProductWithCart", (product) => {
     let cart = [...app.store.state.products.products];
-    let foundIndex = cart.findIndex((element) => element.id === product.id);
+    let foundIndex = cart.findIndex((element) => element.productId === product.productId);
     if (foundIndex > -1) {
       return { ...product, cartQuantity: cart[foundIndex].cartQuantity };
     } else {

@@ -8,13 +8,13 @@ export const state = () => ({
 export const getters = {
   getProductQuantityById: (state) => (id) => {
     // let productIndex = state.products.findIndex((obj) => obj.id == id);
-    return state.products.find((product) => product.id === id).cartQuantity;
+    return state.products.find((product) => product.productId === id).cartQuantity;
   },
   getAllProducts: (state) => () => {
     return state.products;
   },
   getProductById: (state) => (id) => {
-    return state.products.find((product) => product.id === id);
+    return state.products.find((product) => product.productId === id);
   },
   getAddedProducts: (state) => {
     return state.products.filter((product) => product.cartQuantity > 0);
@@ -78,7 +78,7 @@ export const mutations = {
     console.log("REMOVING", id);
     state.products.splice(
       state.products.findIndex(function (i) {
-        return i.id === id;
+        return i.productId === id;
       }),
       1
     );
@@ -86,7 +86,7 @@ export const mutations = {
   },
   setProductQuantity(state, product) {
     // see if already added
-    let productIndex = state.products.findIndex((obj) => obj.id == product.id);
+    let productIndex = state.products.findIndex((obj) => obj.productId == product.productId);
     // if already added, updated quantity
     if (productIndex > -1) {
       state.products[productIndex].cartQuantity = product.cartQuantity;

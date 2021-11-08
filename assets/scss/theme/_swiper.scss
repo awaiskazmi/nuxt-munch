@@ -12,10 +12,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
-  @media(max-width: 768px) {
-    display: none;
-  }
 }
 
 // WITH BLUE NAV BUTTONS
@@ -32,6 +28,10 @@
     &:hover {
       color: #fff;
       background-color: $secondary;
+    }
+
+    @media(max-width: 768px) {
+      display: none;
     }
   }
 

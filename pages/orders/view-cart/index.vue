@@ -18,7 +18,7 @@
         <div v-if="products.length > 0" class="row mt-4 mt-md-5">
           <div class="col-12 col-md-8">
             <!-- product row: start -->
-            <div class="row product" v-for="p in products" :key="p.id">
+            <div class="row product" v-for="p in products" :key="p.productId">
               <div class="col-3 pr-0">
                 <div class="image-wrapper">
                   <img
@@ -41,7 +41,10 @@
             <!-- product row: end -->
           </div>
           <div class="col-12 col-md-4">
-            <nuxtjs-sticky-sidebar>
+            <p v-if="$fetchState.pending" class="p-3 text-center">
+              <b-spinner variant="primary" label="Spinning"></b-spinner>
+            </p>
+            <nuxtjs-sticky-sidebar v-else>
               <div class="bg-light mb-3">
                 <div class="p-3 border-bottom">
                   <h3>Order summary</h3>
@@ -67,26 +70,35 @@
                   </div>
                 </div>
               </div>
-              <div v-if="!auth">
-                <BaseButton
-                  full
-                  type="primary"
-                  url="/login?ref=orders-view-cart"
-                  >Sign in to place order</BaseButton
-                >
-              </div>
-              <div v-else-if="auth && total < 100">
-                <div class="alert alert-light text-center">
-                  Minimum order amount is Rs. 100
+              <div>
+                <div v-if="!auth">
+                  <BaseButton
+                    full
+                    type="primary"
+                    url="/login?ref=orders-view-cart"
+                    >Sign in to place order</BaseButton
+                  >
                 </div>
-                <BaseButton disabled full type="primary" url="/orders/"
-                  >Checkout - Rs. {{ total }}</BaseButton
+                <div v-else-if="auth && orderAlreadyInProgress">
+                  <BaseButton disabled full type="primary" url="#"
+                    >1 order(s) already in progress</BaseButton
+                  >
+                </div>
+                <div v-else-if="auth && !orderAlreadyInProgress && total < 100">
+                  <div class="alert alert-light text-center">
+                    Minimum order amount is Rs. 100
+                  </div>
+                  <BaseButton disabled full type="primary" url="/orders/"
+                    >Checkout - Rs. {{ total }}</BaseButton
+                  >
+                </div>
+                <div
+                  v-else-if="auth && !orderAlreadyInProgress && total >= 100"
                 >
-              </div>
-              <div v-else-if="auth && total >= 100">
-                <BaseButton full type="primary" url="/orders/checkout"
-                  >Checkout - Rs. {{ total }}</BaseButton
-                >
+                  <BaseButton full type="primary" url="/orders/checkout"
+                    >Checkout - Rs. {{ total }}</BaseButton
+                  >
+                </div>
               </div>
             </nuxtjs-sticky-sidebar>
           </div>
@@ -125,11 +137,24 @@ export default {
   },
   data() {
     return {
+      orderAlreadyInProgress: false,
       anim: null,
       lottieOptions: {
         animationData: animData.default,
       },
     };
+  },
+  async fetch() {
+    const res = await this.$axios({
+      mode: "cors",
+      method: "get",
+      url: `/qa/v2/api/orders/list?orderStates=IN_PROGRESS`,
+      headers: {
+        Authorization: `Bearer ${this.$store.state.token}`,
+      },
+    });
+    console.log("...IN PROGRESS ORDERS...", res.data.data);
+    if (res.data.data.length > 0) this.orderAlreadyInProgress = true;
   },
   methods: {
     handleAnimation(anim) {
