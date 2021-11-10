@@ -87,7 +87,6 @@ export default {
         // enable send otp button
         this.isSendingOtp = false;
         this.phoneInvalid = true;
-        console.log(err.response.data);
       }
     },
   },

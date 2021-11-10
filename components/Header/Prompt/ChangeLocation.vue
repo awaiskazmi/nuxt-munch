@@ -21,9 +21,9 @@
             <div class="col-12 col-md-3 mt-3 mt-md-0">
               <BaseButton
                 isButton
-                @click="onClick"
                 full
                 type="outline-secondary"
+                @click="onClick"
                 >OKAY</BaseButton
               >
             </div>
@@ -48,16 +48,20 @@ export default {
       this.$bvModal.hide("prompt-location");
     },
     location(newValue) {
-      this.$bvModal.show("prompt-location");
-      this.$store.commit("resetCart");
-      this.$store.commit("updateProductsKey");
+      console.log("=== LOCATION CHANGED ===", newValue, this.products.length);
+      // if location changed and cart has items
+      if (this.products.length > 0) {
+        this.$bvModal.show("prompt-location");
+        this.$store.commit("resetCart");
+        this.$store.commit("updateProductsKey");
+      }
     },
   },
   methods: {
     onClick() {
       this.$store.commit("resetCart");
       this.$store.commit("updateProductsKey");
-      this.$router.go("/orders");
+      window.location.replace("/orders");
     },
   },
 };

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <form @submit="onverify">
     <div class="input-grid">
       <input
         v-model="input1"
@@ -11,6 +11,7 @@
         class="form-control"
         maxlength="1"
         :class="invalid"
+        required
       />
       <input
         v-model="input2"
@@ -23,6 +24,7 @@
         class="form-control"
         maxlength="1"
         :class="invalid"
+        required
       />
       <input
         v-model="input3"
@@ -34,6 +36,7 @@
         class="form-control"
         maxlength="1"
         :class="invalid"
+        required
       />
       <input
         v-model="input4"
@@ -45,6 +48,7 @@
         class="form-control"
         maxlength="1"
         :class="invalid"
+        required
       />
     </div>
     <div v-if="otpInvalid" class="d-block invalid-feedback text-left">
@@ -61,9 +65,7 @@
         </button>
       </div>
       <div class="col">
-        <button @click="onverify" class="btn btn-primary btn-block">
-          Verify
-        </button>
+        <button type="submit" class="btn btn-primary btn-block">Verify</button>
       </div>
     </div>
     <div class="row mt-3">
@@ -74,7 +76,7 @@
         </p>
       </div>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
@@ -153,7 +155,9 @@ export default {
         });
       }
     },
-    async onverify() {
+    async onverify(e) {
+      e.preventDefault();
+
       if (this.userInput != this.enteredOtp) {
         this.otpInvalid = true;
       } else {

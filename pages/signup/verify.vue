@@ -1,6 +1,6 @@
 <template>
   <div class="p-2 p-lg-6 text-center align-self-center mx-auto">
-    <h1>Number Verification</h1>
+    <h1>Phone Number Verification</h1>
     <div v-if="ref == 'verify'">
       <p class="">
         Click on 'Send OTP' to send a 4-digit OTP to the number below.

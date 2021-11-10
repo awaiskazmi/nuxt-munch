@@ -14,6 +14,22 @@ export default ({ app, route }, inject) => {
 
 
 
+  inject('getUniqueObjects', (arr) => {
+    let visited = [];
+    let finalArray = [];
+    arr.forEach(item => {
+      if (!visited[item.hubProductId]) {
+        visited[item.hubProductId] = true;
+        finalArray.push(item);
+      }
+    });
+    console.log(finalArray);
+    return finalArray;
+  })
+
+
+
+
   // GET RANDOM STRING
   inject('mRandomString', (length) => {
     let randomInt = Math.floor(Math.random() * 100000000000000000000);
@@ -45,7 +61,10 @@ export default ({ app, route }, inject) => {
 
   // ORDER STATUS TYPES
   const orderStatusTypes = {
-    'ADMIN_CANCELLED_ORDER': "Cancelled",
+    'COMPLETED': { label: "Completed", class: "success" },
+    'IN_PROGRESS': { label: "In Progess", class: "info" },
+    'SCHEDULED': { label: "Scheduled", class: "info" },
+    'ADMIN_CANCELLED_ORDER': { label: "Cancelled", class: "danger" },
   };
   inject("orderStatusTypes", orderStatusTypes);
 
@@ -73,7 +92,6 @@ export default ({ app, route }, inject) => {
   // MATCH PRODUCTS WITH CART AND UPDATE QUANTITY
   inject("syncProductsWithCart", (products) => {
     let cart = [...app.store.state.products.products];
-    console.log('...SHOPPING CART...', cart);
     products = products.map((p) => {
       let foundIndex = cart.findIndex((element) => element.productId === p.productId);
       if (foundIndex > -1) {
@@ -127,11 +145,13 @@ export default ({ app, route }, inject) => {
       app.store.commit("setUserObject", JSON.parse(localStorageUser));
       app.store.commit("setAuth", true);
     }
+
     // set logged in user token
     const localStorageToken = localStorage.getItem("m_token");
     if (localStorageToken) {
       app.store.commit("setAuthToken", localStorageToken);
     }
+
     // set logged in user location
     const localStorageLocation = localStorage.getItem("m_location");
     if (localStorageLocation) {
@@ -140,16 +160,19 @@ export default ({ app, route }, inject) => {
         JSON.parse(localStorageLocation)
       );
     }
+
     // set logged in user locationname
     const localStorageLocationName = localStorage.getItem("m_location_name");
     if (localStorageLocationName) {
       app.store.commit("setUserLocation", localStorageLocationName);
     }
+
     // set logged in user location coordinates
     const localStorageLatLng = localStorage.getItem("m_latlng");
     if (localStorageLatLng) {
       app.store.commit("serUserLatLng", JSON.parse(localStorageLatLng));
     }
+
     // set loggin in user service area
     const localStorageServiceArea = localStorage.getItem("m_serviceArea");
     if (localStorageServiceArea) {
@@ -157,31 +180,37 @@ export default ({ app, route }, inject) => {
       app.store.dispatch('getHubId', localStorageServiceArea);
       app.store.dispatch('getHubCategories', localStorageServiceArea);
     }
+
     // set loggin in user service area
     const localHubId = localStorage.getItem("m_hubId");
     if (localHubId) {
       app.store.commit("setHubId", localHubId);
     }
+
     // set shopping cart if present
     const localStorageShoppingCart = localStorage.getItem("m_shoppingCart");
     if (localStorageShoppingCart) {
       app.store.commit("setShoppingCart", JSON.parse(localStorageShoppingCart));
     }
+
     // set recent searches if present
     const localStorageSearches = localStorage.getItem("m_recentSearches");
     if (localStorageSearches) {
       app.store.commit("setRecentSearches", JSON.parse(localStorageSearches));
     }
+
     // set cart if present
     const localStorageCart = localStorage.getItem("m_cart");
     if (localStorageCart) {
       app.store.commit("setProducts", JSON.parse(localStorageCart));
     }
+
     // set verification phone if present
     const localStorageVPhone = localStorage.getItem("m_verificationPhone");
     if (localStorageVPhone) {
       app.store.commit("setVerificationPhone", localStorageVPhone);
     }
+
   }
 
   // ?hubTypes=INTERNAL&role=ROLE_CUSTOMER&sortProperties=productCategory.sequenceNumber&status=ACTIVE

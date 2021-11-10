@@ -104,7 +104,6 @@ export default {
         hub_id: this.hubId,
       },
     });
-    console.log("=== RECOMMENDATIONS ===", res);
     this.products = this.$syncProductsWithCart(res.data.data);
   },
   fetchOnServer: false,

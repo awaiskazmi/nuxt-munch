@@ -76,11 +76,6 @@ export const actions = {
       let cartCount = state.products.products.length;
       console.log("CART COUNT ===", cartCount);
 
-      // products in cart but location changed, reset cart
-      if (cartCount > 0) {
-        commit("resetCart");
-      }
-
       // redirect to orders page
       let currentPage = this.$router.history.current.name;
       console.log('...CURRENT ROUTE...', currentPage);
@@ -91,10 +86,12 @@ export const actions = {
       }
 
       // if already at orders page, reload
-      if (currentPage == 'orders') {
-        this.$router.go("/orders");
-      } else { // if not, push
-        this.$router.push("/orders");
+      if (cartCount == 0) {
+        if (currentPage == 'orders') {
+          this.$router.go("/orders");
+        } else { // if not, push
+          this.$router.push("/orders");
+        }
       }
 
       // update service area in store

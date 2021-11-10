@@ -37,7 +37,7 @@
                     v-for="(p, index) in products"
                     :key="p.productId"
                   >
-                    <!-- <ProductItem :product="p" :animationDelay="index * 50" /> -->
+                    <ProductItem :product="p" :animationDelay="index * 50" />
                   </div>
                   <div
                     v-if="landing"
@@ -87,13 +87,13 @@ export default {
       },
     };
   },
-  methods: {},
   computed: {
     ...mapState({
       serviceArea: (state) => state.serviceArea,
       productsKey: (state) => state.products.productsKey,
     }),
   },
+  methods: {},
   watch: {
     productsKey(oldVal, newVal) {
       this.products = this.$syncProductsWithCart(this.products);
@@ -103,12 +103,29 @@ export default {
     const res = await this.$axios({
       mode: "cors",
       method: "get",
-      url: `/qa/v2/api/orders/list?orderStates=IN_PROGRESS`,
+      url: `/qa/v2/api/hub-product/previous-order-items?serviceAreaId=${this.serviceArea}`,
       headers: {
         Authorization: `Bearer ${this.$store.state.token}`,
       },
     });
-    this.products = this.$syncProductsWithCart(res.data.data[0].orderItems);
+
+    // let orderList = res.data.data,
+    //   orderItemLists,
+    //   orderItems;
+    // // 1. map and only get orderItemList from each order
+    // orderItemLists = orderList.map((p) => p.orderItemList);
+    // // 2. map and only get products in each order list
+    // orderItems = orderItemLists.map((e) => ({
+    //   ...e[0],
+    //   id: e[0].hubProductId,
+    //   category: {
+    //     id: e[0].hubProductCategory.id,
+    //   },
+    //   status: "IN_STOCK",
+    // }));
+    // orderItems = this.$getUniqueObjects(orderItems);
+    // this.products = this.$syncProductsWithCart(orderItems);
+    this.products = this.$syncProductsWithCart(res.data.data);
   },
   fetchOnServer: false,
 };

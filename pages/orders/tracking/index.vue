@@ -10,7 +10,7 @@
           <div
             v-for="order in orders"
             :key="order.id"
-            class="col-12 col-md-4 mb-3"
+            class="col-12 col-md-4 mb-3 mb-md-4"
           >
             <div class="card shadow-sm">
               <!-- <pre>{{ order }}</pre> -->
@@ -30,8 +30,12 @@
                 </div>
               </div>
               <div class="card-body">
-                <p class="h5">Rs. {{ order.orderTotal }}</p>
-                <small>{{ order.status }}</small>
+                <div class="d-flex align-items-center justify-content-between">
+                  <p class="h5 m-0">Rs. {{ order.orderTotal }}</p>
+                  <small class="badge" :class="`badge-${order.statusClass}`">{{
+                    order.status
+                  }}</small>
+                </div>
               </div>
             </div>
           </div>
@@ -70,12 +74,17 @@ export default {
       const res = await this.$axios({
         mode: "cors",
         method: "get",
-        url: `/qa/v2/api/orders/list?descending=true&orderStates=IN_PROGRESS&orderStates=SCHEDULED&orderStates=CANCELED`,
+        url: `/qa/v2/api/orders/list?descending=true&orderStates=COMPLETED&orderStates=IN_PROGRESS&orderStates=SCHEDULED&orderStates=CANCELED`,
         headers: {
           Authorization: `Bearer ${this.$store.state.token}`,
         },
       });
-      this.orders = res.data.data;
+      let orders = res.data.data.map((order) => ({
+        ...order,
+        status: this.$orderStatusTypes[order.status].label,
+        statusClass: this.$orderStatusTypes[order.status].class,
+      }));
+      this.orders = orders;
     } catch (error) {
       this.$store.dispatch("toast", {
         title: "Error",

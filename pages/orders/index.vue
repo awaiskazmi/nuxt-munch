@@ -18,13 +18,14 @@
       product="exclusive"
       landing="/exclusive/"
     />
+    <CarouselBrands id="brands" />
     <CarouselAwmNom
+      v-if="auth"
       title="New in the game 🌟"
       subtitle="Check out these newly added snacks!"
       id="awm-nom"
       product="awm-nom"
     />
-    <!-- <CarouselBrands id="brands" /> -->
   </div>
 </template>
 
@@ -37,6 +38,7 @@ export default {
   },
   computed: {
     ...mapState({
+      auth: (state) => state.auth,
       products: (state) => state.products.products,
     }),
     exclusive() {

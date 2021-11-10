@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Number Verification</h1>
+    <h1>Phone Number Verification</h1>
     <p>
       Please enter the 4-digit verification code sent to your number &mdash;
     </p>

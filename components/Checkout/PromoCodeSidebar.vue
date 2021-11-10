@@ -20,20 +20,31 @@
         <p>Add promo code</p>
         <!-- <pre>{{ invoice }}</pre> -->
         <div class="d-flex">
-          <BaseInput
-            :disabled="customPromoVerifying || promoApplied"
-            class="input-custom-promo"
-            v-model="customPromo"
-            prepend="local_offer"
-            placeholder="Enter promo code"
-          />
+          <div class="flex-grow-1 position-relative">
+            <button
+              @click="clearPromo"
+              v-if="promoCode.length > 0"
+              class="clear-promo-code"
+            >
+              <span class="material-icons">close</span>
+            </button>
+            <BaseInput
+              class="input-custom-promo"
+              v-model="promoCode"
+              prepend="local_offer"
+              placeholder="Enter promo code"
+            />
+          </div>
           <BaseButton
-            :disabled="
-              customPromo.length == 0 || customPromoVerifying || promoApplied
-            "
+            :disabled="promoCode.length == 0 || inputPromoVerifying"
             isButton
             type="outline-secondary ml-2"
-            @click="applyCustomPromo"
+            @click="applyPromoCode('input')"
+            ><b-spinner
+              v-show="inputPromoVerifying"
+              class="mr-1"
+              small
+            ></b-spinner
             ><span>Apply</span></BaseButton
           >
         </div>
@@ -70,15 +81,17 @@
               <div class="d-flex align-items-center justify-content-between">
                 <small class="text-muted">Terms and conditions apply</small>
                 <BaseButton
-                  :disabled="p.verifying || p.applied || !p.available"
+                  :disabled="p.verifying || p.applied"
                   isButton
                   @click="onPromoSelect(p)"
-                  type="outline-primary px-5"
+                  type="outline-primary px-3"
                   ><b-spinner
                     v-show="p.verifying"
                     class="mr-1"
                     small
-                  ></b-spinner
+                  ></b-spinner>
+                  <span v-show="p.applied" class="material-icons mr-1"
+                    >check</span
                   ><span>{{
                     !p.applied ? "Apply" : "Applied"
                   }}</span></BaseButton
@@ -100,9 +113,8 @@ export default {
   data() {
     return {
       promos: [],
-      customPromo: "",
-      chosenPromo: "",
-      customPromoVerifying: false,
+      promoCode: "",
+      inputPromoVerifying: false,
       promoApplied: false,
     };
   },
@@ -122,9 +134,6 @@ export default {
         quantity: p.cartQuantity,
       }));
     },
-    invoicePromo() {
-      return this.customPromo.length > 0 ? this.customPromo : this.chosenPromo;
-    },
     invoice() {
       return {
         orderItems: this.orderItems,
@@ -136,56 +145,64 @@ export default {
         hubId: this.hubId,
         partialOrderAcceptable: false,
         paymentId: 1, // 1 = cash on delivery
-        promoCode: this.invoicePromo, // 1 = cash on delivery
+        promoCode: this.promoCode, // 1 = cash on delivery
       };
     },
   },
   async fetch() {
-    // get all logged in user promo codes
-    try {
-      const res = await this.$axios({
-        mode: "cors",
-        method: "get",
-        url: `/qa/v1/api/promo-codes/active?serviceAreaId=${this.serviceArea}`,
-        headers: {
-          Authorization: `Bearer ${this.$store.state.token}`,
-        },
-      });
-      console.log("...ACTIVE PROMO CODES...", res);
-      this.promos = res.data.data;
-      this.promos = this.promos.map((pObj) => ({
-        ...pObj,
-        available: true,
-        verifying: false,
-        verified: false,
-        applied: false,
-      }));
-    } catch (error) {
-      console.log("...PROMO CODES NOT FETCHED...");
-      console.log(error.response.data);
-      // session expired, logout user and redirect to login page
-      if (error.response.data.code == 4000) {
-        this.$logoutOutSessionExpired();
-      }
-    }
+    this.getUserPromoCodes();
   },
   fetchOnServer: false,
   methods: {
+    async getUserPromoCodes() {
+      console.log("...fetching promos...");
+      // get all logged in user promo codes
+      try {
+        const res = await this.$axios({
+          mode: "cors",
+          method: "get",
+          url: `/qa/v1/api/promo-codes/active?serviceAreaId=${this.serviceArea}`,
+          headers: {
+            Authorization: `Bearer ${this.$store.state.token}`,
+          },
+        });
+        this.promos = res.data.data;
+        this.promos = this.promos.map((pObj) => ({
+          ...pObj,
+          verifying: false,
+          applied: pObj.code == this.promoCode ? true : false,
+        }));
+      } catch (error) {
+        // session expired, logout user and redirect to login page
+        if (error.response.data.code == 4000) {
+          this.$logoutOutSessionExpired();
+        }
+      }
+    },
+    clearPromo() {
+      this.promoCode = "";
+      this.getUserPromoCodes();
+    },
     promoCodeExpiry(timestamp) {
       let end = new Date(timestamp);
       return `${end.getDate()}-${end.getMonth()}-${end.getFullYear()}`;
     },
     onPromoSelect(promoCode) {
-      console.log(promoCode);
-      // 1. set verifying, disable button etc
-      promoCode.verifying = true;
-      // 2. set promo code in invoice
-      this.chosenPromo = promoCode.code;
-      // 3. send invoice call
-      this.applyCustomPromo(promoCode);
+      // 1. set promo code in invoice
+      this.customPromo = promoCode.code;
+      // 2. send invoice call
+      this.applyPromoCode("promo", promoCode);
     },
-    async applyCustomPromo(promoCode = null) {
-      this.customPromoVerifying = true;
+    async applyPromoCode(source, promoCode = null) {
+      // check if promo from input or selected
+      if (source == "input") {
+        // from input
+        this.inputPromoVerifying = true;
+      } else {
+        // from object
+        this.promoCode = promoCode.code;
+        promoCode.verifying = true;
+      }
       try {
         const res = await this.$axios({
           mode: "cors",
@@ -196,42 +213,32 @@ export default {
             Authorization: `Bearer ${this.$store.state.token}`,
           },
         });
-        if (promoCode != null) {
-          promoCode.avialable = false;
-          promoCode.verifying = false;
-          promoCode.verified = true;
-          promoCode.applied = true;
-        }
-        // disable all other promo codes
-        this.promos = this.promos.map((pObj) => ({
-          ...pObj,
-          available: false,
-        }));
-        // disable spinners
-        this.customPromoVerifying = false;
-        this.promoApplied = true;
+
+        this.getUserPromoCodes();
         // emit new invoice data
         let promoData = {
           invoice: res.data,
-          promo: this.invoicePromo,
+          promo: promoCode,
         };
+
         this.$emit("select", promoData);
         this.$root.$emit("bv::toggle::collapse", "sidebar-promo-code");
+
+        // enable disable relevant spinners
+        source == "input"
+          ? (this.inputPromoVerifying = false)
+          : (promoCode.verifying = false);
       } catch (err) {
         this.$store.dispatch("toast", {
-          title: `Error ${err.response.data.code}`,
+          title: `Error applying promo code!`,
           message: err.response.data.message,
           variant: "danger",
         });
-        this.customPromoVerifying = false;
+
+        source == "input"
+          ? (this.inputPromoVerifying = false)
+          : (promoCode.verifying = false);
       }
-    },
-    onPromoCodeSelect(promocode) {
-      console.log("selected promo", promocode.code);
-      this.customPromo = "";
-      this.chosenPromo = promocode.code;
-      this.applyCustomPromo();
-      // this.$root.$emit("bv::toggle::collapse", "sidebar-promo-code");
     },
   },
 };
@@ -243,5 +250,25 @@ export default {
 }
 .input-custom-promo {
   flex: 1;
+}
+.clear-promo-code {
+  position: absolute;
+  top: 17px;
+  right: 17px;
+  height: 16px;
+  width: 16px;
+  border-radius: 100px;
+  background-color: #000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  border: none;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+.clear-promo-code span {
+  font-size: 12px;
 }
 </style>

@@ -114,10 +114,6 @@ export default {
           address: address,
         },
         (results, status) => {
-          console.log(
-            "...map results...",
-            results[0].address_components[0].long_name
-          );
           if (status == google.maps.GeocoderStatus.OK) {
             let latLng = {};
             latLng.lat = results[0].geometry.location.lat();
@@ -141,7 +137,6 @@ export default {
     },
   },
   mounted() {
-    // console.log(this.$refs);
     // var defaultBounds = new google.maps.LatLngBounds(
     //  new google.maps.LatLng(-33.8902, 151.1759),
     //  new google.maps.LatLng(-33.8474, 151.2631)

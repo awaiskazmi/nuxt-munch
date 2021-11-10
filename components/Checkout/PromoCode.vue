@@ -28,7 +28,7 @@
             :disabled="verifyingPromo || applied"
             isButton
             @click="onPromoSelect"
-            type="outline-primary px-5"
+            type="outline-primary px-3"
             ><b-spinner v-show="verifyingPromo" class="mr-1" small></b-spinner
             ><span>{{ !applied ? "Apply" : "Applied" }}</span></BaseButton
           >

@@ -131,7 +131,6 @@ export default {
       if (finalMinutes < 10) {
         finalMinutes = "0" + finalMinutes;
       }
-      // console.log(start, interval, Math.floor(finalHours), finalMinutes);
       return Math.floor(finalHours) + ":" + finalMinutes + ":" + startTime[2];
     },
     saveTimeSchedule() {

@@ -21,9 +21,10 @@ for (i = indexStart; i <= indexEnd; i++) {
   img.onload = function () {
     images.push(img);
     loadedFrames++;
-    // if 10 frames loaded, enable page
-    if (loadedFrames > 10 && !sLoaded) {
-      console.log('...SKROLLR LOADED ONCE...', howHungryTitle.clientWidth + ' HEIGHT OF WIDTH');
+    console.log(loadedFrames);
+    // if 1/4 frames loaded, enable page
+    if (loadedFrames > 25 && !sLoaded) {
+      console.log('...SKROLLR LOADED ONCE, ENABLING PAGE...');
       howHungryDiv.style.height = howHungryTitle.clientWidth + "px";
       initSkrollr();
       sLoaded = true;
@@ -44,13 +45,15 @@ function initSkrollr() {
         document.getElementById("img-frame").style.display = "none";
         document.getElementById("headline-text").style.display = "none";
         document.getElementById("scroll-indicator").style.display = "none";
+        document.getElementById("nav-logo").style.display = "none";
       }
       if (name == "dataTop" && direction == "up") {
         document.getElementById("fixed-above-frame").style.display =
           "block";
         document.getElementById("img-frame").style.display = "block";
         document.getElementById("headline-text").style.display = "block";
-        document.getElementById("scroll-indicator").style.display = "block";
+        document.getElementById("scroll-indicator").style.display = "flex";
+        document.getElementById("nav-logo").style.display = "block";
       }
     },
   });

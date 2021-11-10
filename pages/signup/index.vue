@@ -2,7 +2,7 @@
   <div class="py-4 py-lg-6 px-2 px-lg-6 flex-grow-1">
     <h1>Sign up</h1>
     <p>Let's get you signed up to Munchies!</p>
-    <form autocomplete="off" @submit.prevent="handleSubmit" class="mt-5">
+    <form @submit.prevent="handleSubmit" class="mt-5">
       <input type="hidden" autocomplete="off" />
       <div class="row">
         <div class="col-12 col-lg-6">
@@ -73,6 +73,7 @@
               variant="md"
               v-model="repassword"
               required
+              @keypress="onKeyPress"
               :class="passwordError ? 'is-invalid' : ''"
             />
           </div>
@@ -167,6 +168,16 @@ export default {
     },
   },
   methods: {
+    onKeyPress(e) {
+      // handle form submit on enter
+      if (e.code == "Enter") {
+        if (this.repassword.length > 0) {
+          this.handleSubmit();
+        } else {
+          return;
+        }
+      }
+    },
     handleSubmit() {
       // Reset all errors
       this.emailError = false;
@@ -176,6 +187,18 @@ export default {
 
       // diasble signup button
       this.isAttemptingSignup = true;
+
+      // if passwords do not match
+      if (this.password != this.repassword) {
+        this.passwordError = true;
+        this.$store.dispatch("toast", {
+          title: "Error signing up!",
+          message: "Passwords do not match",
+          variant: "danger",
+        });
+        this.isAttemptingSignup = false;
+        return;
+      }
 
       let payload = new FormData();
       payload.append("email", this.email);

@@ -244,6 +244,7 @@
         data-top-bottom="width:50%;margin-top:0%;"
         src="~/assets/images/landing/logo.svg"
         class="nav-logo"
+        id="nav-logo"
       />
     </div>
     <!-- RELATIVE ELEMENTS / TRIGGERS / FOR MOBILE -->
@@ -510,7 +511,7 @@
       <h2 style="position: fixed; z-index: 9" id="how-hungry-title">
         <img
           data-anchor-target="#how-hungry"
-          data-top="transform:rotateZ(0deg) translate(35%,-15%);"
+          data-350-top="transform:rotateZ(0deg) translate(35%,-15%);"
           data-400-bottom="transform:rotateZ(0deg) translate(-79%,-45%);"
           data-bottom="transform:rotateZ(0deg) translate(-79%,-200%);"
           src="~/assets/images/landing/hungry.svg"
@@ -617,7 +618,7 @@
         id="scroll-indicator"
       >
         <svg
-          width="40"
+          width="30"
           height="64"
           viewBox="0 0 40 64"
           fill="none"
@@ -634,14 +635,16 @@
           />
           <circle class="scroll-dot" cx="20" cy="14" r="4" fill="white" />
         </svg>
+        <p class="m-0 text-white"><span>Keep scrolling</span></p>
       </div>
       <div style="position: fixed; z-index: 15" id="nav-menu">
         <ul>
           <li>
             <nuxt-link to="#" v-b-toggle.sidebar-location>I'm hungry</nuxt-link>
           </li>
-          <li><nuxt-link to="/new-landing">Blog</nuxt-link></li>
-          <li><nuxt-link to="/new-landing">Contact us</nuxt-link></li>
+          <li>
+            <a target="_blank" href="https://blog.munchieshome.com/">Blog</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -654,6 +657,11 @@
 import babyBg from "assets/images/landing/baby.jpg";
 
 export default {
+  middleware({ store, redirect }) {
+    if (store.state.auth) {
+      return redirect("/orders");
+    }
+  },
   layout: "landing",
   head() {
     return {

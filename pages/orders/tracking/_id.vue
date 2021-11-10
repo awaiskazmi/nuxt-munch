@@ -19,7 +19,9 @@
       <div class="card-body">
         <h5 class="font-weight-bold mb-4">Order Details</h5>
         <p class="m-0"><small class="text-muted">Status</small></p>
-        <p class="m-0">{{ order.status }}</p>
+        <p class="m-0 badge" :class="'badge-' + order.statusClass">
+          {{ order.status }}
+        </p>
         <hr />
         <p class="m-0"><small class="text-muted">Total</small></p>
         <p class="m-0">Rs. {{ order.orderTotal }}</p>
@@ -58,7 +60,10 @@ export default {
   data() {
     return {
       order: {
-        status: "",
+        status: {
+          label: "",
+          class: "",
+        },
         address: {
           locationName: "",
           poi: "",
@@ -94,8 +99,17 @@ export default {
         },
       });
 
-      console.log("...orders detail...", res);
-      this.order = res.data;
+      console.log("=== ORDER DETAILS ===", res.data);
+
+      let order = {
+        ...res.data,
+        status: this.$orderStatusTypes[res.data.status].label,
+        statusClass: this.$orderStatusTypes[res.data.status].class,
+      };
+
+      this.order = order;
+
+      console.log(order);
     } catch (error) {
       this.$store.dispatch("toast", {
         title: "Error",
