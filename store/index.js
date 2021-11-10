@@ -193,26 +193,30 @@ export const mutations = {
   setUserLabelOption(state, option) {
     state.locationObj.labelOption = option;
   },
+  setAddressId(state, id) {
+    state.locationObj.addressId = id;
+    state.locationObj = { ...state.locationObj, addressId: id };
+  },
   setUserLocation(state, location) {
     state.location = location;
     // state.locationObj.address = location;
   },
   setUserLocationAddress(state, address) {
-    state.locationObj.details = address.details;
-    state.locationObj.label = address.label;
-    state.locationObj.locationName = address.locationName;
-    state.locationObj.addressId = address.id;
-    state.locationObj.additionalDetails = address.additionalDetails;
+    state.locationObj = { ...state.locationObj, details: address.details };
+    state.locationObj = { ...state.locationObj, label: address.label };
+    state.locationObj = { ...state.locationObj, locationName: address.locationName };
+    state.locationObj = { ...state.locationObj, addressId: address.id };
+    state.locationObj = { ...state.locationObj, additionalDetails: address.additionalDetails };
     localStorage.setItem("m_location", JSON.stringify(state.locationObj));
     localStorage.setItem("m_location_name", state.locationObj.locationName);
   },
-  setUserLocationObject(state, locationObj) {
-    state.locationObj = locationObj;
+  setUserLocationObject(state, obj) {
+    state.locationObj = obj;
   },
   serUserLatLng(state, latlng) {
     state.latLng = latlng;
-    state.locationObj.lat = latlng.lat;
-    state.locationObj.lng = latlng.lng;
+    state.locationObj = { ...state.locationObj, lat: latlng.lat };
+    state.locationObj = { ...state.locationObj, lng: latlng.lng };
   },
   setServiceArea(state, id) {
     state.serviceArea = id;

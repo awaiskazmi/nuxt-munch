@@ -349,7 +349,7 @@ export default {
         //   name: "Later",
         // },
       ],
-      address: this.$store.state.locationObj,
+      title: "Custom title",
       scheduleOptionSelected: "Now",
       center: {},
       promo: null,
@@ -362,15 +362,24 @@ export default {
       },
       notes: "",
       orderAmountDetails: [],
-      readyToOrder: this.$store.state.locationObj.addressId ? true : false,
     };
   },
   computed: {
     ...mapState({
       user: (state) => state.user,
+      address: (state) => state.locationObj,
       location: (state) => state.locationObj,
       hubId: (state) => state.hubId,
     }),
+    readyToOrder: {
+      get() {
+        return this.address.addressId == null ? false : true;
+      },
+      set(newVal) {
+        console.log(newVal);
+        return newVal;
+      },
+    },
     ...mapGetters({
       getAddedProducts: "getAddedProducts",
     }),
@@ -378,6 +387,9 @@ export default {
       get() {
         return this.getAddedProducts;
       },
+    },
+    addressId() {
+      return this.address.addressId ? this.address.addressId : null;
     },
     elsePrePhone() {
       return "+92" + this.someoneElse.phone;
@@ -421,7 +433,7 @@ export default {
     },
     orderDetails() {
       return {
-        addressId: this.location.addressId,
+        addressId: this.addressId,
         serviceAreaId: this.location.service_area,
         customerId: this.user.id,
         partialOrderAcceptable: true,
@@ -479,11 +491,13 @@ export default {
       this.center = center;
     },
     onAddressUpdate(address) {
-      this.$store.commit("setUserLocation", address.locationName);
-      this.$store.commit("setUserLocationAddress", address);
-      this.address = address;
+      // console.warn(address);
+      // this.addressId = address;
+      // this.return;
+      // console.log("ADDRESS SELECTED ===", address);
+      // this.$store.commit("setUserLocation", address.locationName);
+      // this.$store.commit("setUserLocationAddress", address);
       this.readyToOrder = true;
-      this.$forceUpdate();
     },
     onPromoCodeSelect({ invoice, promo }) {
       this.orderAmountDetails = invoice;

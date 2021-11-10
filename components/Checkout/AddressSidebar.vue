@@ -229,7 +229,10 @@ export default {
       }
     },
     chooseSavedAddress(address) {
-      this.$emit("update", address);
+      // this.$emit("update", address);
+      this.$store.commit("setAddressId", address.id);
+      this.$store.commit("setUserLocation", address.locationName);
+      this.$store.commit("setUserLocationAddress", address);
       this.$root.$emit("bv::toggle::collapse", "sidebar-address");
     },
   },

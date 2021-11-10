@@ -221,7 +221,7 @@ export default {
         // emit new invoice data
         let promoData = {
           invoice: res.data,
-          promo: promoCode,
+          promo: source == "input" ? this.promoCode : promoCode.code,
         };
 
         this.$emit("select", promoData);
