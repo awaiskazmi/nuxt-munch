@@ -23,7 +23,7 @@
           <div class="flex-grow-1 position-relative">
             <button
               @click="clearPromo"
-              v-if="promoCode.length > 0"
+              v-if="promoCode && promoCode.length > 0"
               class="clear-promo-code"
             >
               <span class="material-icons">close</span>
@@ -36,7 +36,9 @@
             />
           </div>
           <BaseButton
-            :disabled="promoCode.length == 0 || inputPromoVerifying"
+            :disabled="
+              (promoCode && promoCode.length == 0) || inputPromoVerifying
+            "
             isButton
             type="outline-secondary ml-2"
             @click="applyPromoCode('input')"
@@ -180,8 +182,9 @@ export default {
       }
     },
     clearPromo() {
-      this.promoCode = "";
+      this.promoCode = null;
       this.getUserPromoCodes();
+      this.applyPromoCode("input");
     },
     promoCodeExpiry(timestamp) {
       let end = new Date(timestamp);
