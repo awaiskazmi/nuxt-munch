@@ -640,7 +640,7 @@
       <div style="position: fixed; z-index: 15" id="nav-menu">
         <ul>
           <li>
-            <nuxt-link to="#" v-b-toggle.sidebar-location>I'm hungry</nuxt-link>
+            <button v-b-toggle.sidebar-location>I'm hungry</button>
           </li>
           <li>
             <a target="_blank" href="https://blog.munchieshome.com/">Blog</a>

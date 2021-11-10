@@ -589,7 +589,7 @@
 		text-transform: uppercase;
 	}
 
-	#nav-menu ul li a {
+	#nav-menu ul li a, #nav-menu ul li button {
 		display: block;
 		color: #f95050;
 		text-decoration: none;
@@ -599,15 +599,19 @@
 		transition: -webkit-transform 0.2s ease;
 		transition: transform 0.2s ease;
 		transition: transform 0.2s ease, -webkit-transform 0.2s ease;
+		cursor: pointer;
+		background: none;
+		border: none;
+		text-transform: uppercase;
 	}
 
-	#nav-menu ul li a:hover {
+	#nav-menu ul li a:hover, #nav-menu ul li button:hover {
 		-webkit-transform: scale(0.95);
 		transform: scale(0.95);
 	}
 
 	@media (max-width: 768px) {
-		#nav-menu ul li a {
+		#nav-menu ul li a, #nav-menu ul li button {
 			font-size: 40px;
 			margin: 1rem 0;
 		}

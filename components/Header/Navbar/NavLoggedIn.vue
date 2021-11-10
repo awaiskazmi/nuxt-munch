@@ -72,7 +72,6 @@
           icon="local_offer"
           >Refer & earn</BaseButton
         >
-
         <BaseButton
           type="link"
           url="/login"
@@ -115,7 +114,7 @@
         url="/orders"
         class="m-btn-align-left mt-2"
         icon="local_offer"
-        >Orders</BaseButton
+        >Place Order</BaseButton
       >
       <BaseButton
         full
@@ -133,6 +132,14 @@
         class="m-btn-align-left mt-2"
         icon="phone"
         >Verify Phone</BaseButton
+      >
+      <BaseButton
+        full
+        type="link"
+        url="/orders/tracking"
+        class="m-btn-align-left mt-2"
+        icon="local_offer"
+        >My Orders</BaseButton
       >
       <HeaderNavLogout />
     </div>
