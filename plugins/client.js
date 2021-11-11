@@ -65,6 +65,7 @@ export default ({ app, route }, inject) => {
     'IN_PROGRESS': { label: "In Progess", class: "info" },
     'SCHEDULED': { label: "Scheduled", class: "info" },
     'ADMIN_CANCELLED_ORDER': { label: "Cancelled", class: "danger" },
+    'CUSTOMER_CANCELLED_ORDER': { label: "Cancelled", class: "danger" },
   };
   inject("orderStatusTypes", orderStatusTypes);
 

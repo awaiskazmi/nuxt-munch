@@ -49,8 +49,9 @@
   .swiper-button-prev,
   .swiper-button-next {
     margin-top: -20px;
-    background-color: $primary;
-    color: $white;
+    border: 1px solid $secondary;
+    background-color: #fff;
+    color: $secondary;
   }
 
   .swiper-button-prev {

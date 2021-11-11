@@ -23,6 +23,9 @@
           </div>
           <div v-swiper:swiperCategories="options">
             <div class="swiper-wrapper">
+              <div class="swiper-slide mb-3">
+                <Category id="discounts" name="Discounts" />
+              </div>
               <div
                 class="swiper-slide mb-3"
                 v-for="(c, index) in categories"

@@ -36,8 +36,8 @@ export default {
       products: [],
       options: {
         spaceBetween: 24,
-        slidesPerView: 3,
-        slidesPerGroup: 3,
+        slidesPerView: 2,
+        slidesPerGroup: 2,
         loop: false,
         navigation: {
           nextEl: "#swiper-yummies-next",

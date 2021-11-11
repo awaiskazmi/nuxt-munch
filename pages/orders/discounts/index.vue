@@ -9,9 +9,9 @@
           </span>
         </b-breadcrumb-item>
         <b-breadcrumb-item to="/orders">Orders</b-breadcrumb-item>
-        <b-breadcrumb-item class="cap" active to="">{{
-          brand.name
-        }}</b-breadcrumb-item>
+        <b-breadcrumb-item class="cap" active to=""
+          >Discounts</b-breadcrumb-item
+        >
       </b-breadcrumb>
     </div>
     <div class="row mt-3 mt-md-5">
@@ -20,20 +20,18 @@
           <b-spinner variant="primary" label="Spinning"></b-spinner>
         </p>
         <div v-if="!$fetchState.pending">
-          <div v-if="products.length > 0">
-            <div class="row">
-              <div class="col-12">
-                <h1 class="h2 font-weight-bold mb-5">{{ brand.name }}</h1>
-              </div>
+          <div class="row">
+            <div class="col-12">
+              <h1 class="h2 font-weight-bold mb-5">Discounts 🤑</h1>
             </div>
-            <div class="row">
-              <div
-                class="col-6 col-md-3 mb-3"
-                v-for="(p, index) in products"
-                :key="p.id"
-              >
-                <ProductItem :product="p" :animationDelay="index * 50" />
-              </div>
+          </div>
+          <div v-if="products.length > 0" class="row">
+            <div
+              class="col-6 col-md-3 mb-3"
+              v-for="(p, index) in products"
+              :key="p.id"
+            >
+              <ProductItem :product="p" :animationDelay="index * 50" />
             </div>
           </div>
           <div v-else class="row">
@@ -43,9 +41,9 @@
                 :options="lottieOptions"
                 v-on:animCreated="handleAnimation"
               />
-              <h4 class="font-weight-bold">... Well this is awkward</h4>
+              <h4 class="font-weight-bold">Ahh, you JUST missed it!</h4>
               <p class="text-muted">
-                Browse through other categories as we restock!
+                Make sure to check this space later to avail mad discounts!
               </p>
             </div>
           </div>
@@ -74,7 +72,7 @@
 import { mapState } from "vuex";
 import lottie from "vue-lottie/src/lottie.vue";
 import nuxtjsStickySidebar from "nuxtjs-sticky-sidebar";
-import * as animData from "~/static/lottie/out-of-stock.json";
+import * as animData from "~/static/lottie/miss-discount.json";
 
 export default {
   components: {
@@ -91,32 +89,22 @@ export default {
       currentPage: 1,
       isLoadingMore: false,
       products: [],
-      brand: {
-        name: "",
-      },
     };
   },
   computed: {
     ...mapState({
       serviceArea: (state) => state.locationObj.service_area,
-      hubId: (state) => state.hubId,
     }),
-    brandId() {
-      return this.$route.params.id;
-    },
   },
   mounted() {},
   async fetch() {
     // fetch products by category
     const products = await this.$axios.get(
-      `/qa/v2/public/hub-product/all?brandIds=${this.brandId}&serviceAreaId=${this.serviceArea}&descending=false&hubTypes=INTERNAL&statuses=IN_STOCK&statuses=OUT_OF_STOCK&hubProductCategoryStatus=ACTIVE&role=ROLE_CUSTOMER&sortPropoerties=products.sequenceNumber&hubIds=${this.hubId}`
+      `/qa/v2/public/hub-product/all?serviceAreaId=${this.serviceArea}&descending=true&statuses=IN_STOCK&statuses=OUT_OF_STOCK&role=ROLE_CUSTOMER&hubTypes=INTERNAL&productDiscountStatus=DISCOUNTED`
     );
-    console.log(products.data.data, this.serviceArea);
     this.products = this.$syncProductsWithCart(products.data.data);
+    console.log(products.data.data);
     this.totalPages = products.data.totalPages;
-    // fetch brand
-    const brand = await this.$axios.get(`/qa/v1/public/brands/${this.brandId}`);
-    this.brand = brand.data;
   },
   fetchOnServer: false,
   methods: {
@@ -130,7 +118,7 @@ export default {
         const moreProducts = await this.$axios({
           mode: "cors",
           method: "get",
-          url: `/qa/v2/public/hub-product/all?brandIds=${this.brandId}&serviceAreaId=${this.serviceArea}&descending=false&hubTypes=INTERNAL&statuses=IN_STOCK&statuses=OUT_OF_STOCK&hubProductCategoryStatus=ACTIVE&role=ROLE_CUSTOMER&sortPropoerties=products.sequenceNumber&hubIds=${this.hubId}&pageNumber=${this.currentPage}`,
+          url: `/qa/v2/public/hub-product/all?serviceAreaId=${this.serviceArea}&descending=true&statuses=IN_STOCK&statuses=OUT_OF_STOCK&role=ROLE_CUSTOMER&hubTypes=INTERNAL&productDiscountStatus=DISCOUNTED&pageNumber=${this.currentPage}`,
           headers: {
             "Content-Type": "application/json",
           },

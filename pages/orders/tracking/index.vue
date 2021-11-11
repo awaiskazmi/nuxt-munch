@@ -74,16 +74,21 @@ export default {
       const res = await this.$axios({
         mode: "cors",
         method: "get",
-        url: `/qa/v2/api/orders/list?descending=true&orderStates=COMPLETED&orderStates=IN_PROGRESS&orderStates=SCHEDULED&orderStates=CANCELED`,
+        url: `/qa/v2/api/orders/list?descending=true&orderStates=COMPLETED&orderStates=IN_PROGRESS&orderStates=SCHEDULED&orderStates=CANCELED&orderStates=DISPUTED`,
         headers: {
           Authorization: `Bearer ${this.$store.state.token}`,
         },
       });
-      let orders = res.data.data.map((order) => ({
+
+      console.log(res.data.data);
+      let orders = res.data.data;
+
+      orders = res.data.data.map((order) => ({
         ...order,
         status: this.$orderStatusTypes[order.status].label,
         statusClass: this.$orderStatusTypes[order.status].class,
       }));
+
       this.orders = orders;
     } catch (error) {
       this.$store.dispatch("toast", {

@@ -7,7 +7,7 @@
           <div class="col-auto d-none d-md-flex">
             <img
               @click="close"
-              src="~/assets/images/logo.png"
+              src="~/assets/images/logo.svg"
               alt="Munchies"
               height="40"
               class="cursor-pointer"
@@ -152,6 +152,7 @@ export default {
       serviceArea: (state) => state.locationObj.service_area,
       recent: (state) => state.recentSearches,
       productsKey: (state) => state.products.productsKey,
+      hubId: (state) => state.hubId,
     }),
     ...mapGetters({
       getSearchQuery: "getglobalSearchQuery",
@@ -215,7 +216,7 @@ export default {
     async getSearchResults(query) {
       this.filterId = null;
       let res = await this.$axios.get(
-        `/qa/v2/public/hub-product/all?hubTypes=INTERNAL&keyword=${this.search}&role=ROLE_CUSTOMER&serviceAreaId=${this.serviceArea}&statuses=IN_STOCK&statuses=OUT_OF_STOCK`
+        `/qa/v2/public/hub-product/all?descending=false&keyword=${this.search}&hubTypes=INTERNAL&productDiscountStatus=BOTH&role=ROLE_CUSTOMER&serviceAreaId=${this.serviceArea}&hubIds=${this.hubId}&sortProperties=products.sequenceNumber&hunProductCategoryStatus=ACTIVE&statuses=IN_STOCK&statuses=OUT_OF_STOCK`
       );
       this.categories = res.data.data.map((p) => ({
         id: p.category.id,
@@ -233,7 +234,7 @@ export default {
         const moreProducts = await this.$axios({
           mode: "cors",
           method: "get",
-          url: `/qa/v2/public/hub-product/all?hubTypes=INTERNAL&keyword=${this.search}&role=ROLE_CUSTOMER&serviceAreaId=${this.serviceArea}&statuses=IN_STOCK&statuses=OUT_OF_STOCK&pageNumber=${this.currentPage}`,
+          url: `/qa/v2/public/hub-product/all?descending=false&keyword=${this.search}&hubTypes=INTERNAL&productDiscountStatus=BOTH&role=ROLE_CUSTOMER&serviceAreaId=${this.serviceArea}&hubIds=${this.hubId}&sortProperties=products.sequenceNumber&hunProductCategoryStatus=ACTIVE&statuses=IN_STOCK&statuses=OUT_OF_STOCK&pageNumber=${this.currentPage}`,
           headers: {
             "Content-Type": "application/json",
           },
