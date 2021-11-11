@@ -1,7 +1,10 @@
 <template>
   <nuxt-link :to="`/orders/${id}`" :id="id" class="category">
     <div class="img-wrapper img">
-      <img :src="$config.resourceUrl + imageUrl" :alt="name" />
+      <img
+        :src="isDiscounts ? imageUrl : $config.resourceUrl + imageUrl"
+        :alt="name"
+      />
     </div>
     <h5>{{ name }}</h5>
   </nuxt-link>
@@ -9,7 +12,12 @@
 
 <script>
 export default {
-  props: ["id", "name", "imageUrl"],
+  props: {
+    id: Number,
+    name: String,
+    imageUrl: String,
+    isDiscounts: Boolean,
+  },
 };
 </script>
 

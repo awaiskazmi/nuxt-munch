@@ -177,7 +177,7 @@ export default {
       } catch (error) {
         // session expired, logout user and redirect to login page
         if (error.response.data.code == 4000) {
-          this.$logoutOutSessionExpired();
+          // this.$logoutOutSessionExpired();
         }
       }
     },

@@ -38,7 +38,15 @@
             <p class="desc">{{ product.productDescription }}</p>
             <div class="row align-items-center justify-content-between">
               <div class="col-auto col-md-12">
-                <p class="price m-0">Rs. {{ product.price }}</p>
+                <div class="price" v-if="product.productDiscountDto != null">
+                  <span class="sale"
+                    >Rs. {{ product.productDiscountDto.discountedPrice }}</span
+                  >
+                  <span class="original"
+                    ><s>Rs. {{ product.price }}</s></span
+                  >
+                </div>
+                <p v-else class="price m-0">Rs. {{ product.price }}</p>
               </div>
               <div class="col-auto col-md-12 mt-md-5">
                 <ProductControls
@@ -53,7 +61,6 @@
         </div>
       </div>
       <div class="d-none">
-        <h1>Hello, params {{ this.$route.params }}</h1>
         <pre>{{ product }}</pre>
       </div>
       <div class="row">
@@ -124,6 +131,12 @@ export default {
 .price
   font-weight: 700
   font-size: 34px
+
+  .original
+    font-size: .75em
+    font-weight: 600
+    color: #F95050
+    margin-left: 0.25rem
 
 @media (max-width: 768px)
   .img-wrapper

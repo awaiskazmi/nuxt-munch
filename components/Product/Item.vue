@@ -1,5 +1,6 @@
 <template>
   <div class="product" data-aoses="zoom-in" :data-aoses-delay="animationDelay">
+    <!-- <pre>{{ product }}</pre> -->
     <div class="product-wrapper">
       <!-- <span v-if="off" class="off">off</span> -->
       <span v-if="product.status == 'OUT_OF_STOCK'" class="free-delivery"
@@ -11,13 +12,15 @@
       </div> -->
       <img class="thumb" :src="productImage" />
     </div>
-    <!-- <div class="price" v-if="salePrice">
-      <span class="sale">Rs. {{ salePrice }}</span>
-      <span
+    <div class="price" v-if="product.productDiscountDto != null">
+      <span class="sale"
+        >Rs. {{ product.productDiscountDto.discountedPrice }}</span
+      >
+      <span class="original"
         ><s>Rs. {{ product.price }}</s></span
       >
-    </div> -->
-    <div class="price">
+    </div>
+    <div v-else class="price">
       <span class="sale">Rs. {{ product.price }}</span>
     </div>
     <p class="m-0 name">{{ product.name }}</p>
@@ -106,6 +109,7 @@ export default {
     font-size: 1rem
     font-weight: 600
     color: #F95050
+    margin-left: 0.25rem
 
 .name
   font-weight: 600

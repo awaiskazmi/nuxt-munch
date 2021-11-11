@@ -24,7 +24,12 @@
           <div v-swiper:swiperCategories="options">
             <div class="swiper-wrapper">
               <div class="swiper-slide mb-3">
-                <Category id="discounts" name="Discounts" />
+                <Category
+                  isDiscounts
+                  :imageUrl="require('~/assets/images/logo-circle.svg')"
+                  id="discounts"
+                  name="Discounts"
+                />
               </div>
               <div
                 class="swiper-slide mb-3"

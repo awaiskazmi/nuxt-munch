@@ -138,9 +138,9 @@ export default {
 
   a, button
     transition: all 0.4s ease
-    box-shadow: 1px 3px 7px rgba(0,0,0,0.5)
+    box-shadow: 3px 7px 12px rgba(0,0,0,0.2)
 
     &:hover
       transform: translateY(-4px)
-      box-shadow: 3px 7px 14px rgba(0,0,0,0.4)
+      box-shadow: 3px 9px 15px rgba(0,0,0,0.17)
 </style>

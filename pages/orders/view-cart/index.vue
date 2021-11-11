@@ -32,8 +32,18 @@
               >
                 <h4 class="font-weight-bold mb-3">{{ p.name }}</h4>
                 <!-- <p class="text-muted">{{ p.weight }}</p> -->
-                <div class="d-flex align-items-center justify-content-between">
-                  <h5 class="m-0">Rs. {{ p.price }}</h5>
+                <div class="d-flex align-items-end justify-content-between">
+                  <div class="price" v-if="p.productDiscountDto != null">
+                    <span class="sale">
+                      Rs. {{ p.productDiscountDto.discountedPrice }}
+                    </span>
+                    <span class="original"
+                      ><s>Rs. {{ p.price }}</s></span
+                    >
+                  </div>
+                  <div v-else class="price">
+                    <span class="sale">Rs. {{ p.price }}</span>
+                  </div>
                   <ProductControls :product="{ ...p }" />
                 </div>
               </div>
@@ -52,9 +62,9 @@
                 <div class="px-3">
                   <div class="row py-2">
                     <div class="col">Sub total</div>
-                    <div class="col-auto">Rs. {{ total }}</div>
+                    <div class="col-auto">Rs. {{ subtotal }}</div>
                   </div>
-                  <div class="row py-2 d-none">
+                  <div class="row py-2">
                     <div class="col">Dicsount</div>
                     <div class="col-auto">Rs. {{ discount }}</div>
                   </div>
@@ -85,7 +95,7 @@
                   >
                 </div>
                 <div v-else-if="auth && !orderAlreadyInProgress && total < 100">
-                  <div class="alert alert-light text-center">
+                  <div class="alert text-center">
                     Minimum order amount is Rs. 100
                   </div>
                   <BaseButton disabled full type="primary" url="/orders/"
@@ -166,15 +176,36 @@ export default {
       auth: (state) => state.auth,
       products: (state) => state.products.products,
     }),
-    discount() {
-      return 0;
-    },
-    total() {
+    subtotal() {
       let total = 0;
       this.products.forEach((p) => {
         total = total + parseInt(p.cartQuantity) * parseInt(p.price);
       });
       return parseInt(total);
+    },
+    discount() {
+      let discount = 0;
+      this.products.forEach((p) => {
+        if (p.productDiscountDto != null) {
+          discount +=
+            parseInt(p.cartQuantity) *
+            parseInt(p.price - p.productDiscountDto.discountedPrice);
+        }
+      });
+      return parseInt(discount);
+    },
+    total() {
+      let sub = 0;
+      this.products.forEach((p) => {
+        if (p.productDiscountDto == null) {
+          sub += parseInt(p.cartQuantity) * parseInt(p.price);
+        } else {
+          sub +=
+            parseInt(p.cartQuantity) *
+            parseInt(p.productDiscountDto.discountedPrice);
+        }
+      });
+      return parseInt(sub);
     },
   },
 };
@@ -203,4 +234,16 @@ export default {
     height: 100%
     width: 100%
     object-fit: contain
+
+.price
+  margin-top: 28px
+
+  .sale
+    font-size: 20px
+    font-weight: 700
+  .original
+    font-size: 1rem
+    font-weight: 600
+    color: #F95050
+    margin-left: 0.25rem
 </style>
