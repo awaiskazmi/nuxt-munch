@@ -60,10 +60,10 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: "~/plugins/client.js" },
     // client side only
     { src: "~/plugins/userLogin.client.js" },
     { src: "~/plugins/aos.client" },
+    { src: "~/plugins/client.js" },
     { src: "~/plugins/vue-awesome-swiper.js", ssr: false },
     // { src: "~/plugins/test.server" },
   ],

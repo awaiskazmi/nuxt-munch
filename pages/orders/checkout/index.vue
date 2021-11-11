@@ -26,6 +26,7 @@
             </div>
             <div class="col-auto ml-auto">
               <BaseButton
+                isButton
                 v-b-toggle.sidebar-location
                 type="outline-secondary"
                 variant="sm"

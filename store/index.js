@@ -220,6 +220,7 @@ export const mutations = {
   },
   setServiceArea(state, id) {
     state.serviceArea = id;
+    state.locationObj = { ...state.locationObj, service_area: id };
     localStorage.setItem("m_serviceArea", id);
   },
   setglobalSearchQuery(state, query) {

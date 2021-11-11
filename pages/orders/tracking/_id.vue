@@ -15,33 +15,39 @@
     <p v-if="$fetchState.pending" class="p-5 text-center">
       <b-spinner variant="primary" label="Spinning"></b-spinner>
     </p>
-    <div v-if="!$fetchState.pending" class="card shadow-sm">
-      <div class="card-body">
-        <h5 class="font-weight-bold mb-4">Order Details</h5>
-        <p class="m-0"><small class="text-muted">Status</small></p>
-        <p class="m-0 badge" :class="'badge-' + order.statusClass">
-          {{ order.status }}
-        </p>
-        <hr />
-        <p class="m-0"><small class="text-muted">Total</small></p>
-        <p class="m-0">Rs. {{ order.orderTotal }}</p>
-        <hr />
-        <p class="m-0"><small class="text-muted">Items</small></p>
-        <div v-for="item in order.orderItemList" :key="item.productId">
-          {{ item.productName }} x {{ item.updatedQuantity }} (Rs.
-          {{ item.price }})
+    <div v-else>
+      <div
+        v-if="order.statusClass && order.statusClass.length > 0"
+        class="card shadow-sm"
+      >
+        <div class="card-body">
+          <h5 class="font-weight-bold mb-4">Order Details</h5>
+          <p class="m-0"><small class="text-muted">Status</small></p>
+          <p class="m-0 badge" :class="'badge-' + order.statusClass">
+            {{ order.status }}
+          </p>
+          <hr />
+          <p class="m-0"><small class="text-muted">Total</small></p>
+          <p class="m-0">Rs. {{ order.orderTotal }}</p>
+          <hr />
+          <p class="m-0"><small class="text-muted">Items</small></p>
+          <div v-for="item in order.orderItemList" :key="item.productId">
+            {{ item.productName }} x {{ item.updatedQuantity }} (Rs.
+            {{ item.price }})
+          </div>
+          <hr />
+          <p class="m-0"><small class="text-muted">Deliver to</small></p>
+          <div>{{ order.contactPersonName }}</div>
+          <div>{{ order.contactPersonPhone }}</div>
+          <div>{{ order.address.locationName }}, {{ order.address.poi }}</div>
         </div>
-        <hr />
-        <p class="m-0"><small class="text-muted">Deliver to</small></p>
-        <div>{{ order.contactPersonName }}</div>
-        <div>{{ order.contactPersonPhone }}</div>
-        <div>{{ order.address.locationName }}, {{ order.address.poi }}</div>
       </div>
+      <div v-else class="p-5 text-center">Order does not exist.</div>
     </div>
     <p class="py-3 px-1">
       <nuxt-link
         to="/orders/tracking"
-        class="d-flex align-items-center text-dark text-decoration-none"
+        class="d-inline-flex align-items-center text-dark text-decoration-none"
         ><span class="material-icons mr-1">arrow_back</span>
         <u>Back to orders</u></nuxt-link
       >

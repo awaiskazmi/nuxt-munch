@@ -164,6 +164,7 @@ export default {
         },
       });
       this.savedAddresses = res.data.data;
+      console.log("SAVED ADDRESSES ===", res.data.data);
     } catch (error) {
       this.$store.dispatch("toast", {
         title: "Error",
@@ -231,6 +232,7 @@ export default {
     chooseSavedAddress(address) {
       // this.$emit("update", address);
       this.$store.commit("setAddressId", address.id);
+      this.$store.commit("setServiceArea", address.serviceArea.id);
       this.$store.commit("setUserLocation", address.locationName);
       this.$store.commit("setUserLocationAddress", address);
       this.$root.$emit("bv::toggle::collapse", "sidebar-address");

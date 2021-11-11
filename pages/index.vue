@@ -642,7 +642,7 @@
           <li>
             <button v-b-toggle.sidebar-location>I'm hungry</button>
           </li>
-          <li>
+          <li class="d-none">
             <a target="_blank" href="https://blog.munchieshome.com/">Blog</a>
           </li>
         </ul>

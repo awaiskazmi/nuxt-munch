@@ -4,7 +4,7 @@
     <p v-if="$fetchState.pending" class="p-5 text-center">
       <b-spinner variant="primary" label="Spinning"></b-spinner>
     </p>
-    <div v-if="!$fetchState.pending">
+    <div v-else>
       <div v-if="orders.length > 0">
         <div class="row mt-5">
           <div
