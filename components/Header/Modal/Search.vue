@@ -32,6 +32,7 @@
             </div>
             <div v-else>
               <BaseInput
+                class="search-modal-input"
                 prepend="search"
                 variant="lg"
                 placeholder="I'm craving for"

@@ -32,7 +32,7 @@
           </div>
         </div>
         <div class="col-12 col-md">
-          <div class="px-md-5">
+          <div class="p-3 item-description-wrapper px-md-5">
             <h1 class="name mb-3">{{ product.name }}</h1>
             <!-- <p class="weight">{{ product.weight }}</p> -->
             <p class="desc">{{ product.productDescription }}</p>
@@ -150,4 +150,6 @@ export default {
   .price
     font-weight: 500
     font-size: 20px
+  .item-description-wrapper
+    background-color: #f5f5f5
 </style>

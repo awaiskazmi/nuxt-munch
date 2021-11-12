@@ -114,6 +114,11 @@ export default {
 .name
   font-weight: 600
 
+  @media(max-width: 768px)
+    font-weight: 400
+    line-height: 1.3
+    margin-top: 0.25rem !important
+
 .weight
   color: #7F7F7F
 

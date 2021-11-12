@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav class="d-flex flex-grow-1">
     <!-- Desktop -->
     <ul class="d-none d-md-flex align-items-center">
       <li>
@@ -27,26 +27,37 @@
       </li>
     </ul>
     <!-- Mobile -->
-    <div class="d-block d-md-none mt-4">
-      <div class="d-flex align-items-center mt-4">
-        <span class="icon-user material-icons"> account_circle </span>
-        <p class="h1 my-0 ml-2">Hello, Muncher!</p>
-      </div>
-      <div class="d-flex align-items-center p-3 mt-3 bg-light rounded">
-        <img src="~/assets/images/logo-circle.svg" alt="Promos" height="32" />
-        <div class="ml-3">
-          <p class="h6 font-weight-bold m-0">Rs. 150 off your first order.</p>
-          <p class="p m-0">Sign up and order now!</p>
+    <div
+      class="
+        d-flex
+        flex-column
+        justify-content-between
+        d-md-none
+        mt-4
+        flex-grow-1
+      "
+    >
+      <div>
+        <div class="d-flex align-items-center mt-4">
+          <span class="icon-user material-icons"> account_circle </span>
+          <p class="h1 my-0 ml-2">Hello, Muncher!</p>
         </div>
+        <div class="d-flex align-items-center p-3 mt-3 bg-light rounded">
+          <img src="~/assets/images/logo-circle.svg" alt="Promos" height="32" />
+          <div class="ml-3">
+            <p class="h6 font-weight-bold m-0">Rs. 150 off your first order.</p>
+            <p class="p m-0">Sign up and order now!</p>
+          </div>
+        </div>
+        <BaseButton
+          type="link"
+          url="/login"
+          class="m-btn-align-left mt-2 d-none"
+          icon="local_offer"
+          >Promos</BaseButton
+        >
       </div>
-      <BaseButton
-        type="link"
-        url="/login"
-        class="m-btn-align-left mt-2 d-none"
-        icon="local_offer"
-        >Promos</BaseButton
-      >
-      <BaseButton url="/signup" full class="mt-5 mb-2" type="primary"
+      <BaseButton url="/signup" full class="mb-2" type="primary"
         >Create account or sign in</BaseButton
       >
     </div>

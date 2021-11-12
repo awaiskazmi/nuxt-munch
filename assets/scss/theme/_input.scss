@@ -195,3 +195,8 @@ input:-webkit-autofill:active{
 	box-shadow: 0 0 0 30px #fff inset !important;
 	-webkit-box-shadow: 0 0 0 30px #fff inset !important;
 }
+
+.search-modal-input input, .search-modal-input input:focus {
+	background-color: #f5f5f5;
+	border: none;
+}

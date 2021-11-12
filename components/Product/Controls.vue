@@ -61,7 +61,7 @@ export default {
   width: 118px
   height: 32px
   border-radius: 100px
-  border: 1px solid #fff
+  border: 1px solid #F95050
   box-shadow: 0 1px 3px rgba(0,0,0,0.1)
   overflow: hidden
   background-color: #F95050
@@ -88,9 +88,9 @@ export default {
   width: 32px
   border-radius: 100px
   border: none
-  background-color: #F95050
-  color: #fff
-  border: 1px solid #fff
+  background: none
+  color: #F95050
+  border: 1px solid #F95050
   box-shadow: 0 1px 3px rgba(0,0,0,0.1)
   display: inline-flex
   align-items: center
@@ -99,13 +99,15 @@ export default {
   transition: transform 0.2s ease
 
   &:hover
-    background-color: #f82b2b
+    background-color: #F95050
+    color: #fff
     transform: rotate(90deg)
 
 .controls-label .btn-add
   width: auto
   min-width: 118px
   padding: 0 2rem
+
   &:hover
     transform: none
 </style>

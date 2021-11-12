@@ -24,6 +24,7 @@
       </div>
       <div class="pt-3 pb-2 d-block d-md-none">
         <BaseInput
+          class="search-modal-input"
           v-b-modal.modal-search
           prepend="search"
           placeholder="I'm craving for"
@@ -32,10 +33,10 @@
       </div>
       <client-only>
         <div class="nav-menu" :class="navMenu">
-          <div v-if="!auth">
+          <div class="d-flex flex-grow-1" v-if="!auth">
             <HeaderNavbarNavNotLoggedIn />
           </div>
-          <div v-else>
+          <div class="d-flex flex-grow-1" v-else>
             <HeaderNavbarNavLoggedIn />
           </div>
         </div>
@@ -99,7 +100,7 @@ export default {
       },
     },
     navMenu() {
-      return this.isNavActive ? "active" : "";
+      return this.isNavActive ? "active d-flex" : "";
     },
   },
   methods: {

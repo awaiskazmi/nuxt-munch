@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav class="d-flex flex-grow-1">
     <!-- Desktop -->
     <ul class="d-none d-md-flex align-items-center">
       <li><HeaderToggleSearch /></li>
