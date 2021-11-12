@@ -49,17 +49,23 @@
         <div class="col-6 col-lg">
           <h5>Company</h5>
           <ul class="list-unstyled">
-            <li><NuxtLink to="/">About us</NuxtLink></li>
-            <li><NuxtLink to="#">Privacy Policy</NuxtLink></li>
-            <li><NuxtLink to="#">Terms and Conditions</NuxtLink></li>
+            <!-- <li><NuxtLink to="/">About us</NuxtLink></li> -->
+            <li><NuxtLink to="/privacy-policy">Privacy Policy</NuxtLink></li>
+            <li>
+              <NuxtLink to="/terms-and-conditions"
+                >Terms and Conditions</NuxtLink
+              >
+            </li>
           </ul>
         </div>
         <div class="col-6 col-lg">
           <h5>Product</h5>
           <ul class="list-unstyled">
-            <li><NuxtLink to="/">Our Partners</NuxtLink></li>
-            <li><NuxtLink to="#">Customer Policy</NuxtLink></li>
-            <li><NuxtLink to="#">Referral Policy</NuxtLink></li>
+            <!-- <li><NuxtLink to="/">Our Partners</NuxtLink></li> -->
+            <li>
+              <NuxtLink to="/customer-privacy-policy">Customer Policy</NuxtLink>
+            </li>
+            <li><NuxtLink to="/referral-policy">Referral Policy</NuxtLink></li>
           </ul>
         </div>
         <div class="col-6 col-lg">

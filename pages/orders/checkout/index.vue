@@ -122,11 +122,12 @@
                 <div class="col">
                   <h6 class="text-muted">
                     {{
-                      orderAmountDetails.orderTotal == orderAmountDetails.total
-                        ? "Add promo code"
-                        : "Promo code applied"
+                      promo == null ? "Add promo code" : "Promo code applied!"
                     }}
                   </h6>
+                  <p v-if="promo != null" class="m-0 text-muted">
+                    <small>{{ promo }}</small>
+                  </p>
                 </div>
                 <div class="col-auto">
                   <button v-b-toggle.sidebar-promo-code class="btn m-btn-add">

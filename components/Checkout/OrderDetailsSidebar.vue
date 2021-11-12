@@ -16,6 +16,7 @@
       <div class="d-flex flex-column justify-content-between h-100">
         <div class="pt-6 pb-2 px-3 px-md-4">
           <p class="my-4 h2 font-weight-bold">Order Details</p>
+          <pre>{{ orderAmountDetails }}</pre>
           <div class="mt-5 mt-md-6"></div>
           <div
             v-for="product in products"
@@ -42,7 +43,7 @@
           <div class="row mb-3">
             <div class="col-auto">Delivery charges</div>
             <div class="col-auto ml-auto">
-              <small class="text-secondary">Rs. {{ daliveryCharges }}</small>
+              <small class="text-secondary">Rs. {{ deliveryCharges }}</small>
             </div>
           </div>
           <hr />
@@ -71,14 +72,14 @@ export default {
     discount() {
       return this.orderAmountDetails.discount;
     },
-    daliveryCharges() {
+    deliveryCharges() {
       return this.orderAmountDetails.delivery;
     },
     subtotal() {
       return this.orderAmountDetails.discountedSubTotal;
     },
     total() {
-      return this.orderAmountDetails.orderTotal;
+      return this.orderAmountDetails.orderTotal + this.deliveryCharges;
     },
   },
 };

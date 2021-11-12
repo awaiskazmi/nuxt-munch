@@ -34,14 +34,14 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: "Munchies - Operational only in Karachi",
+    title: "Munchies: Snack Delivery App",
     htmlAttrs: {
       lang: "en",
     },
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: "" },
+      { hid: "description", name: "description", content: "Craving some snacks? We’ve got your back! The best part? You don’t have to move an inch." },
       { name: "format-detection", content: "telephone=no" },
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
