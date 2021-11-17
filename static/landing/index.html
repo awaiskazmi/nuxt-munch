@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Munchies Home - Scroll Magic</title>
+  <link rel='stylesheet'
+    href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap-grid.min.css'
+    integrity='sha512-q0LpKnEKG/pAf1qi1SAyX0lCNnrlJDjAvsyaygu07x8OF4CEOpQhBnYiFW6YDUnOOcyAEiEYlV4S9vEc6akTEw=='
+    crossorigin='anonymous' />
+  <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+  <div id="fixed">
+    <!-- Loading -->
+    <div id="loading" class="loading">
+      <img class="loading-gif" src="./images/loader.gif"
+        alt="Munchies loading..." />
+    </div>
+    <!-- hamburger -->
+    <button style="position: fixed; z-index: 16" class="hamburger-icon">
+      <div class="hamburger-bar"></div>
+    </button>
+    <!--nav menu -->
+    <div style="position: fixed; z-index: 15" id="nav-menu">
+      <ul>
+        <li>
+          <a href="/orders">I'm hungry</a>
+        </li>
+        <li class="d-none">
+          <a target="_blank" href="https://blog.munchieshome.com/">Blog</a>
+        </li>
+      </ul>
+    </div>
+    <img src="./frames/frame-0.jpg" alt="" class="img-canvas" id="img-canvas">
+    <img src="./images/logo.svg" class="nav-logo" alt="">
+    <h3 class="hero-text">Nothing serious. <br /> Only delicious.</h3>
+    <p class="title title-one">We know you rather wish <br /> you were in the
+      Bahamas, <br />sitting by the beach...</p>
+    <p class="title title-two">Sippin' on some juice <br />in a fancy glass, but
+      <br />you're not...
+    </p>
+    <div class="title title-three">
+      <p>Maybe not the views, <br />but we CAN provide
+        <br />the juice!
+      </p>
+      <div>
+        <a href="/orders" class="munch-btn collapsed">
+          Get started
+        </a>
+      </div>
+    </div>
+  </div>
+  <div id="scroll">
+    <!-- scroll indicator -->
+    <div style="position: fixed; z-index: 3" class="scroll-indicator"
+      id="scroll-indicator">
+      <svg width="30" height="64" viewBox="0 0 40 64" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="1" width="38" height="62" rx="19" stroke="white"
+          stroke-width="2" />
+        <circle class="scroll-dot" cx="20" cy="14" r="4" fill="white" />
+      </svg>
+      <p class="m-0 text-white"><span>Keep scrolling</span></p>
+    </div>
+    <div data-trigger="logo"></div>
+    <div data-trigger=""></div>
+    <div data-trigger="title-one"></div>
+    <div data-trigger="title-two"></div>
+    <div data-trigger="title-three"></div>
+    <div id="categories" class="">
+      <h3>Our stash is so good, it's a <br />crime you're not munching
+        <br />right now.
+      </h3>
+      <div id="category-names">
+        <h2>ice cream</h2>
+        <h2>chips</h2>
+        <h2>beverages</h2>
+        <h2>chocolates</h2>
+        <h2>breakfast</h2>
+        <h2>bakery</h2>
+        <h2>biscuits</h2>
+        <h2>candies</h2>
+        <img id="cat-ice-cream" src="./images/ice-cream.png" alt="">
+        <img id="cat-chips" src="./images/chips.png" alt="">
+        <img id="cat-beverages" src="./images/beverages.png" alt="">
+        <img id="cat-chocolates" src="./images/chocolate.png" alt="">
+        <img id="cat-breakfast" src="./images/breakfast.png" alt="">
+        <img id="cat-bakery" src="./images/bakery.png" alt="">
+        <img id="cat-biscuits" src="./images/biscuits.png" alt="">
+        <img id="cat-candies" src="./images/candies.png" alt="">
+      </div>
+    </div>
+    <div id="how-hungry" class="">
+      <img id="how-hungry-text" src="./images/hungry.svg" alt="">
+    </div>
+    <div id="drooling" class="">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-md-8 ml-auto">
+            <h3>
+              Bet you're drooling. <br class="d-none d-md-block">Let's get
+              you some Munchies. <br class="d-none d-md-block">Here's
+              <span class="red font-weight-bold">Rs. 150 off</span> on your
+              <br class="d-none d-md-block">first order!
+            </h3>
+            <div class="row">
+              <div class="col-12 col-md-6"><a href="/orders"
+                  class="munch-btn full collapsed">
+                  Order Munchies
+                </a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"
+    integrity="sha512-HzAEuXwhLxwm/Jj+5ecdjzrRVrjuh2ZeIxyT1Ln37TO5pWNMnKBuU7cfd1wvRQ/k86w1oC174Yk1T7aRlBpIcA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/debug.addIndicators.min.js"
+    integrity="sha512-Ey+nIg+Ue8gUAaCNjR1KHR8nwDjWn9QXoQbynR/X+V66s6u1oqynnuRQ8zSgg5f5gBNb2Bzsu1pItCi3sPkbfA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/animation.gsap.min.js"
+    integrity="sha512-A98SmLRZISk4eIxQBeCm8k0jAcwN3A3lBx4hr7baoMpV1VpxcxlZIhi5fJIZN50sQ5RlCzx8yV+Voy2cR6x0aA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TweenLite.min.js"
+    integrity="sha512-pvDW4tehKKsohH97164HwKwRGFpzayEFWTVbk8HuUoLIQ7Jp+WLN5XYokVuoCj2aT6dy8ihbW8SRTG1k0W4mSQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TimelineLite.min.js"
+    integrity="sha512-tSIDeirKC6suYILHqqPuZH3s0MvD4a5vCHXhBIcdmq4gQXZ2IB3fEYA5x2f3D2p/CbSqzKEvuTEVbS5VZ2u+ew=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/plugins/CSSPlugin.min.js"
+    integrity="sha512-ocsFo48WU8Xq6Y1Lwi7psXRAujG9E4TKNR4q1DbrKzaaxOMTEoao/a+mDoB+cYzY4lwbyxvqjkp/ZA1/MNlfsg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/plugins/ScrollToPlugin.min.js"
+    integrity="sha512-MNrfXoNkJk0uGej2yCbkXsZBIokOU5Fdjiv6ThF3UCH2zbkeMBtL6uHbH+1sdY/58BOh4bRKxBbyFPcKk8I1KA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/plugins/BezierPlugin.min.js"
+    integrity="sha512-plyexAULVlTExvDn2yUZFJV9F8q+53MC/GpU9dEuNGXmrrI3J8Rcffjvxg3OOBALBvF+UILPLIBEoCeF2maqTQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="./js/scroll-magic.js"></script>
+  <script src="./js/hamburger.js"></script>
+</body>
+
+</html>

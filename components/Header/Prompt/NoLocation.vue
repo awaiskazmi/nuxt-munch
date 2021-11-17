@@ -58,7 +58,7 @@ export default {
   },
   mounted() {
     // first ever visit
-    if (this.$route.name != "coming-soon") {
+    if (this.$route.name != "coming-soon" || this.$route.name != "index") {
       if (!this.serviceArea) {
         this.$bvModal.show("prompt-no-location");
       }

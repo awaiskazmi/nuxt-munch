@@ -7,7 +7,7 @@ export default {
   publicRuntimeConfig: {
     googleSheetKey: "${GOOGLE_SHEET_KEY}",
     placeholderImage: "${PLACEHOLDER_IMAGE}",
-    resourceUrl: "${RESOURCE_URL}"
+    resourceUrl: "${RESOURCE_URL}",
   },
   // PRIVATE
   privateRuntimeConfig: {
@@ -22,11 +22,15 @@ export default {
   // SERVER CONFIG
   server: {
     port: 3000, // default: 3000
-    host: '0.0.0.0',
+    host: "0.0.0.0",
     // host: process.env.ENVIRONMENT == 'local' ? "localhost" : '0.0.0.0', // default: localhost,
     // host: "localhost", // default: localhost,
     timing: false,
   },
+
+  serverMiddleware: [
+    // '~/middleware/redirects.js'
+  ],
 
   // Target: https://go.nuxtjs.dev/config-target
   target: "server",
@@ -41,7 +45,12 @@ export default {
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: "Craving some snacks? We’ve got your back! The best part? You don’t have to move an inch." },
+      {
+        hid: "description",
+        name: "description",
+        content:
+          "Craving some snacks? We’ve got your back! The best part? You don’t have to move an inch.",
+      },
       { name: "format-detection", content: "telephone=no" },
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
@@ -50,8 +59,8 @@ export default {
         src: `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_PLACES_API}&libraries=places`,
       },
       {
-        src: '/js/tracking.js',
-      }
+        src: "/js/tracking.js",
+      },
     ],
   },
 
@@ -64,6 +73,8 @@ export default {
     { src: "~/plugins/userLogin.client.js" },
     { src: "~/plugins/aos.client" },
     { src: "~/plugins/client.js" },
+    { src: "~/plugins/scrollmagic.client.js" },
+    { src: "~/plugins/gsap.client.js" },
     { src: "~/plugins/vue-awesome-swiper.js", ssr: false },
     // { src: "~/plugins/test.server" },
   ],
@@ -110,7 +121,7 @@ export default {
       pathRewrite: { "^/api/": "" },
     },
     "/qa/": {
-      target: "https://munchies-production.impact.venturedive.com",
+      target: "https://munchies-qa.impact.venturedive.com",
       pathRewrite: { "^/qa/": "" },
     },
     "/munchies/": {
@@ -149,8 +160,18 @@ export default {
   bootstrapVue: {
     bootstrapCSS: false,
     bootstrapVueCSS: false,
-    componentPlugins: ['Collapse', 'Spinner', 'Modal', 'Sidebar', 'Breadcrumb', 'Card', 'Alert', 'Toast', 'Form-Checkbox'], // Here you can specify which components you want to load and use
-    directivePlugins: ['Toggle']
+    componentPlugins: [
+      "Collapse",
+      "Spinner",
+      "Modal",
+      "Sidebar",
+      "Breadcrumb",
+      "Card",
+      "Alert",
+      "Toast",
+      "Form-Checkbox",
+    ], // Here you can specify which components you want to load and use
+    directivePlugins: ["Toggle"],
   },
 
   styleResources: {
