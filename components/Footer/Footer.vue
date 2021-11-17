@@ -146,7 +146,7 @@
             &copy; Copyright {{ year }} — MUNCHIES — All rights reserved
           </p>
         </div>
-        <div class="col-auto ml-auto">
+        <div class="col-auto ml-auto pl-0">
           <NuxtLink to="/" class="social-icon m-0"
             ><img src="~/assets/images/icon-facebook.svg" height="24"
           /></NuxtLink>

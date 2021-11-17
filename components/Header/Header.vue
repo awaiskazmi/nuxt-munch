@@ -110,8 +110,8 @@ export default {
   },
   mounted() {
     // if coming from landing page on mobile
-    document.body.style.overflow = "unset";
-    document.documentElement.style.overflow = "unset";
+    // document.body.style.overflow = "unset";
+    // document.documentElement.style.overflow = "unset";
   },
 };
 </script>
