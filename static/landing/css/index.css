@@ -136,7 +136,7 @@ header {
 
 .hero-text {
   position: fixed;
-  top: 4rem;
+  top: 2rem;
   left: 4rem;
   font-size: 32px;
   color: #fff;
@@ -398,7 +398,7 @@ br {
 
 .scroll-indicator {
   left: 50%;
-  bottom: 4rem;
+  bottom: 2rem;
   -webkit-transform: translate(-50%, 0px);
           transform: translate(-50%, 0px);
   display: -webkit-box;
@@ -513,7 +513,7 @@ br {
 }
 
 .hamburger-icon {
-  top: 4rem;
+  top: 2rem;
   right: 4rem;
   height: 32px;
   width: 32px;

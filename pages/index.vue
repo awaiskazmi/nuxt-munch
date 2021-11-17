@@ -3,7 +3,7 @@
     <div class="iframe-wrapper">
       <iframe src="/landing/index.html" frameborder="0"></iframe>
     </div>
-    <Footer class="landing-footer" />
+    <!-- <Footer class="landing-footer" /> -->
   </div>
 </template>
 
@@ -23,6 +23,7 @@ body {
   overflow-y: auto;
 }
 iframe {
+  display: block;
   position: relative;
   top: 0;
   left: 0;
@@ -34,8 +35,13 @@ iframe {
 }
 @media (max-width: 768px) {
   iframe {
-    height: 95vh;
     width: 100%;
+  }
+  @supports not (-webkit-touch-callout: none) {
+    /* CSS for other than iOS devices */
+    iframe {
+      height: 95vh;
+    }
   }
 }
 </style>
