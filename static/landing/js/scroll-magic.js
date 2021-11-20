@@ -186,6 +186,27 @@ function initScrollMagic() {
 
 
 
+  // GRADIENT OVERLAY
+
+  const tweenGradintOverlay = new TimelineLite();
+  tweenGradintOverlay.to('#categories-overlay', 1, {
+    autoAlpha: 0
+  }).to('#categories-overlay', 1, {
+    autoAlpha: 1
+  })
+
+  const sceneGradientOverlay = new ScrollMagic.Scene({
+    triggerElement: "#categories",
+    duration: 1000,
+    triggerHook: 1
+  })
+    .setTween(tweenGradintOverlay)
+    .addTo(controller)
+
+
+
+
+
   // CATEGORIES
 
   let startOffset = window.innerWidth < 769 ? 350 : 600;

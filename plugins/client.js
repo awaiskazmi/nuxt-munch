@@ -27,26 +27,6 @@ export default ({ app, route }, inject) => {
     return finalArray;
   })
 
-  // GET IMAGE FROM XXX
-  // inject('getImageFromJSON', (src) => {
-  //   console.log('...I AM HERE...', src);
-  //   return fetch('https://munchies-prod.munchieshome.com/s3?key=application-files-munchies-production/image/1635324330018-image.png', { headers: { 'accept': 'image/jpeg' } }).then(response => response.blob())
-  //     .then(imageBlob => {
-  //       // Then create a local URL for that image and print it 
-  //       const imageObjectURL = URL.createObjectURL(imageBlob);
-  //       console.log(imageObjectURL);
-  //       return imageObjectURL;
-
-  //       // GET IMAGE BASE64
-  //       // var reader = new FileReader();
-  //       // reader.readAsDataURL(blob);
-  //       // reader.onloadend = function () {
-  //       //   var base64data = reader.result;
-  //       //   console.log(base64data);
-  //       // }
-  //     });
-  // })
-
 
 
 

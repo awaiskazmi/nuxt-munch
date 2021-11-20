@@ -26,6 +26,8 @@
     <button style="position: fixed; z-index: 16" class="hamburger-icon">
       <div class="hamburger-bar"></div>
     </button>
+    <!-- overlay gradient -->
+    <div id="categories-overlay"></div>
     <!--nav menu -->
     <div style="position: fixed; z-index: 15" id="nav-menu">
       <ul>
@@ -49,10 +51,12 @@
       <p>Maybe not the views, <br />but we CAN provide
         <br />the juice!
       </p>
-      <div>
-        <a href="/orders" class="munch-btn collapsed">
-          Get started
-        </a>
+      <div class="row">
+        <div class="col-8 col-md-6">
+          <a href="/orders" class="munch-btn full">
+            Get started
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -110,8 +114,8 @@
               <br class="d-none d-md-block">first order!
             </h3>
             <div class="row">
-              <div class="col-12 col-md-6"><a href="/orders"
-                  class="munch-btn full collapsed">
+              <div class="col-8 col-md-5"><a href="/orders"
+                  class="munch-btn full">
                   Order Munchies
                 </a></div>
             </div>
@@ -119,6 +123,62 @@
         </div>
       </div>
     </div>
+    <footer>
+      <div class="container">
+        <img src="./images/app-screenshots.png" class="app-screenshots-img">
+        <div class="row">
+          <div class="col-12">
+            <div class="footer-divider"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <p class="footer-tagline">Nothing serious.
+              <br />Only <span class="red">delicious</span>.
+            </p>
+          </div>
+          <div class="col-8"></div>
+        </div>
+        <div class="row align-items-center app-screenshots">
+          <div class="col-6 d-md-none">
+            <img src="./images/app-screenshot.png" class="img-fluid">
+          </div>
+          <div class="col-6">
+            <div class="footer-badges">
+              <a href="https://munchiespak.page.link/appdownloads">
+                <img src="./images/badge-apple.png" class="img-fluid">
+              </a>
+              <a href="https://munchiespak.page.link/appdownloads">
+                <img src="./images/badge-google.png" class="img-fluid">
+              </a>
+            </div>
+            <div class="footer-social-icons">
+              <a target="_blank"
+                href="https://www.facebook.com/munchiespakistan">
+                <img src="./images/symbol-facebook.svg" alt="">
+              </a>
+              <a target="_blank"
+                href="https://www.instagram.com/munchiespakistan/">
+                <img src="./images/symbol-instagram.svg" alt="">
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="row footer-copyrights">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-12 col-md-auto footer-copyrights-text">&copy;
+                Munchies 2021</div>
+              <div class="col-12 col-md-auto">
+                <a href="/terms-and-conditions"><u>Terms and Conditions</u></a>
+                <a href="/privacy-policy"><u>Privacy
+                    Policy</u></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
   </div>
 
   <script

@@ -147,12 +147,19 @@
           </p>
         </div>
         <div class="col-auto ml-auto pl-0">
-          <NuxtLink to="/" class="social-icon m-0"
+          <a
+            target="_blank"
+            href="https://www.facebook.com/munchiespakistan"
+            class="social-icon m-0"
             ><img src="~/assets/images/icon-facebook.svg" height="24"
-          /></NuxtLink>
-          <NuxtLink to="/" class="social-icon my-0 ml-2">
+          /></a>
+          <a
+            target="_blank"
+            href="https://www.instagram.com/munchiespakistan/"
+            class="social-icon my-0 ml-2"
+          >
             <img src="~/assets/images/icon-instagram.svg" height="24" />
-          </NuxtLink>
+          </a>
         </div>
       </div>
     </div>

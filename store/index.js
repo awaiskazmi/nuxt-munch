@@ -71,7 +71,7 @@ export const actions = {
       console.log("...SERVICE AREA DETAILS...", res);
       newServiceArea = res.data[0].id;
 
-      commit('updateProductsKey');
+      // commit('updateProductsKey');
 
       let cartCount = state.products.products.length;
       console.log("CART COUNT ===", cartCount);
@@ -107,6 +107,7 @@ export const actions = {
       commit("setUserLocationObject", {
         ...payload,
         service_area: newServiceArea,
+        locationName: payload.address
       });
 
       // dispatch GET hubId action
@@ -199,6 +200,7 @@ export const mutations = {
   },
   setUserLocation(state, location) {
     state.location = location;
+    state.locationObj.locationName = location;
     // state.locationObj.address = location;
   },
   setUserLocationAddress(state, address) {

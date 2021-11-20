@@ -30,6 +30,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Greycliff';
+  src: url("../fonts/GreycliffCF-Medium.woff2") format('woff2');
+  font-weight: 900;
+  font-style: normal;
+}
+
 * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -379,9 +386,16 @@ br {
   border-radius: 8px;
   border: none;
   font-size: 24px;
+  font-weight: 500;
   color: #fff;
   font-family: 'Greycliff', sans-serif;
   margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+.munch-btn {
+  padding: 0;
+}
 }
 
 .munch-btn.full {
@@ -630,4 +644,111 @@ br {
     height: 100px;
   }
 }
-/*# sourceMappingURL=index.css.map */
+
+.red {
+  color: #F95050;
+}
+
+footer {
+  overflow: hidden;
+  position: relative;
+  z-index: 5;
+  background-color: #fff;
+  padding-top: 2rem;
+}
+
+.footer-divider {
+  height: 2px;
+  background-color: #000;
+  border-radius: 10px;
+  margin-bottom: 40px;
+}
+
+.footer-tagline {
+  font-size: 32px;
+  font-weight: 500;
+}
+
+footer br {
+  display: block;
+}
+
+.footer-badges {
+  margin-top: 90px;
+}
+
+@media(max-width: 768px) {
+  .footer-badges {
+    margin-top: 0;
+  }
+  .app-screenshots {
+    margin-top: 32px;
+  }
+}
+
+.footer-badges a {
+  text-decoration: none;
+  display: inline-block;
+}
+
+.footer-badges img {
+  height: 64px;
+  margin-right: 16px;
+  object-fit: contain;
+}
+
+.footer-social-icons {
+  margin-top: 40px;
+}
+.footer-social-icons a {
+  display: inline-block;
+  text-decoration: none;
+}
+.footer-social-icons img {
+  height: 48px;
+  margin-right: 24px;
+}
+
+.footer-copyrights {
+  margin-top: 40px;
+  padding-bottom: 48px;
+}
+.footer-copyrights a {
+  font-family: 'Greycliff', sans-serif !important;
+  color: #7F7F7F;
+  margin-right: 32px;
+}
+.footer-copyrights-text {
+  color:#7F7F7F
+}
+.img-fluid {
+  max-width: 100%;
+}
+footer .container {
+  position: relative;
+}
+.app-screenshots-img {
+  position: absolute;
+  width: 50%;
+  bottom: 0;
+  right: 0;
+}
+@media(max-width: 768px) {
+.footer-copyrights-text {
+  margin-bottom: 24px;
+}
+.app-screenshots-img {
+  display: none;
+}
+}
+
+#categories-overlay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 250px;
+  background: linear-gradient(to top, rgba(101, 93, 255, 1), rgba(101, 93, 255, 0));
+  z-index: 2;
+  opacity: 0;
+}
